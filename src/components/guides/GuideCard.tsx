@@ -1,5 +1,6 @@
 import React from 'react';
-import { ExternalLink, Download } from 'lucide-react';
+import { Play, Image as ImageIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { GuideDefinition, GuideStatus, GUIDE_STATUS_LABEL } from '../../app/config/guides';
 
 interface GuideStatusProps {
@@ -17,7 +18,7 @@ export const GuideStatusBadge: React.FC<GuideStatusProps> = ({ status, size = 'm
       border: '1px solid rgba(5,150,105,0.35)',
       color: '#34d399',
     },
-    concept: {
+    conceptual: {
       background: 'rgba(99,102,241,0.10)',
       border: '1px solid rgba(99,102,241,0.30)',
       color: '#a5b4fc',
@@ -107,7 +108,6 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
             filter: 'none',
           }}
           onError={(e) => {
-            // Placeholder se imagem não existir
             const el = e.currentTarget as HTMLImageElement;
             el.style.display = 'none';
           }}
@@ -167,45 +167,37 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
           {guide.description}
         </p>
 
-        {guide.topics && guide.topics.length > 0 && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-            {guide.topics.slice(0, 3).map((topic) => (
-              <span key={topic} className="tag" style={{ fontSize: '10px' }}>
-                {topic}
-              </span>
-            ))}
-          </div>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '11.5px', fontWeight: 600, color: 'var(--text-muted)' }}>
+          <span>{guide.steps.length} passos</span>
+          <span>•</span>
+          <span>{guide.duration}</span>
+        </div>
 
-        <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+        <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+          {/* Navegação principal agora abre o tutorial interativo na plataforma */}
+          <Link
+            to={`/guides/${guide.id}`}
+            className="btn btn-primary"
+            style={{ flex: 1, fontSize: '12px', padding: '8px 14px' }}
+            aria-label={`Iniciar tutorial: ${guide.title}`}
+          >
+            Iniciar tutorial <Play size={12} fill="currentColor" style={{ marginLeft: '4px' }} />
+          </Link>
+          
           <a
             href={imageUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
-            style={{ flex: 1, fontSize: '12px', padding: '8px 14px' }}
-            aria-label={`Ver guia: ${guide.title}`}
-          >
-            Ver guia <ExternalLink size={14} style={{ marginLeft: '2px' }} />
-          </a>
-          <a
-            href={imageUrl}
-            download={guide.image}
             className="btn btn-secondary"
             style={{ fontSize: '12px', padding: '8px 14px' }}
-            title="Baixar guia"
-            aria-label={`Baixar guia: ${guide.title}`}
+            title="Ver pôster / Resumo visual"
+            aria-label={`Ver resumo visual: ${guide.title}`}
           >
-            <Download size={14} />
+            <ImageIcon size={14} />
           </a>
         </div>
-        
-        {!isAvailable && (
-          <p style={{ fontSize: '10px', color: 'var(--text-dim)', textAlign: 'center', marginTop: '2px' }}>
-            Ferramenta ainda em desenvolvimento.
-          </p>
-        )}
       </div>
     </article>
   );
 };
+

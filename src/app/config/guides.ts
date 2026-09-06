@@ -1,128 +1,152 @@
 /**
- * Catálogo Central de Guias — Atratora Forge v0.2.0
- *
- * Única fonte de verdade para o sistema de guias visuais.
- * GuidesList, GuideCard e GuideViewer consomem este objeto.
+ * Catálogo Central de Guias — Atratora Forge v0.2.1
  */
 
-export type GuideStatus = 'available' | 'concept' | 'planned';
+import type { GuideDefinition, GuideStatus } from '../../modules/guides/types';
+import { croquiConverterGuide } from '../../modules/guides/guides/croqui-converter/croquiConverterGuide';
 
-export interface GuideDefinition {
-  /** Slug estável */
-  id: string;
-  /** ID da ferramenta referenciada (deve corresponder a ToolDefinition.id) */
-  toolId: string;
-  /** Título do guia */
-  title: string;
-  /** Descrição do conteúdo do guia */
-  description: string;
-  /** Status do guia */
-  status: GuideStatus;
-  /**
-   * Caminho relativo para a imagem do guia (dentro de /public/guides/).
-   * A imagem deve ser colocada em public/guides/<image>.
-   */
-  image: string;
-  /** Tópicos cobertos */
-  topics?: string[];
-}
+export type { GuideDefinition, GuideStep, GuideStatus } from '../../modules/guides/types';
 
 export const GUIDES_CATALOG: GuideDefinition[] = [
   {
-    id: 'platform-guide',
-    toolId: 'platform',
+    id: 'platform',
     title: 'Guia Geral da Plataforma',
-    description:
-      'Visão completa da Atratora Forge: navegação, módulos, projetos e fluxos de trabalho.',
-    status: 'concept',
+    description: 'Visão completa da Atratora Forge: navegação, módulos e fluxos de trabalho.',
+    status: 'conceptual',
     image: 'platform-guide.png',
-    topics: ['Navegação', 'Módulos', 'Projetos', 'Fluxos de trabalho'],
+    topics: ['Navegação', 'Módulos', 'Processamento local'],
+    duration: '~2 min',
+    steps: [
+      { id: 'intro', title: 'Início', description: 'Visão geral da plataforma.', stage: 'platform-intro' },
+      { id: 'sidebar', title: 'Sidebar', description: 'Navegação lateral de acesso rápido.', stage: 'platform-sidebar' },
+      { id: 'tools', title: 'Diretório de Ferramentas', description: 'Onde todas as ferramentas ativas estão listadas.', stage: 'platform-tools' },
+      { id: 'categories', title: 'Categorias', description: 'Organização das ferramentas por tema.', stage: 'platform-categories' },
+      { id: 'status', title: 'Status', description: 'Disponível vs. Planejado.', stage: 'platform-status' },
+      { id: 'guides', title: 'Guias', description: 'Seção de aprendizado interativo.', stage: 'platform-guides' },
+      { id: 'available', title: 'Ferramentas Disponíveis', description: 'Módulos prontos para uso.', stage: 'platform-available' },
+      { id: 'planned', title: 'Módulos Planejados', description: 'O que está no roadmap.', stage: 'platform-planned' },
+      { id: 'offline', title: 'Processamento Local', description: 'Privacidade de dados garantida.', stage: 'platform-offline' }
+    ]
   },
+  croquiConverterGuide,
   {
-    id: 'croqui-converter-guide',
-    toolId: 'croqui-converter',
-    title: 'Conversor .CROQUI',
-    description:
-      'Passo a passo completo: selecionar imagem, configurar parâmetros, gerar e baixar o arquivo .croqui.',
-    status: 'available',
-    image: 'croqui-converter-guide.png',
-    topics: ['Upload de imagem', 'Parâmetros de conversão', 'Download do .croqui', 'Validação do resultado'],
-  },
-  {
-    id: 'map-studio-guide',
+    id: 'map-studio',
     toolId: 'map-studio',
     title: 'Map Studio',
-    description:
-      'Fluxo conceitual para criação de mapas-base georreferenciados com ortofotos e coordenadas.',
-    status: 'concept',
+    description: 'Fluxo conceitual para criação de mapas-base georreferenciados.',
+    status: 'conceptual',
     image: 'map-studio-guide.png',
-    topics: ['Coordenadas GPS', 'Camadas cartográficas', 'Escala e calibração'],
+    duration: '~3 min',
+    steps: [
+      { id: 'coords', title: 'Coordenadas', description: 'Inserir latitude e longitude.', stage: 'map-coords' },
+      { id: 'loc', title: 'Localização', description: 'Visualizar no mapa esquemático.', stage: 'map-loc' },
+      { id: 'base', title: 'Base visual', description: 'Alternar satélite, mapa ou ortofoto.', stage: 'map-base' },
+      { id: 'bounds', title: 'Enquadramento', description: 'Simular zoom e orientação.', stage: 'map-bounds' },
+      { id: 'elements', title: 'Elementos técnicos', description: 'Norte, escala, coordenadas.', stage: 'map-elements' },
+      { id: 'export', title: 'Exportação', description: 'Gerar saída para o Croqui Studio.', stage: 'map-export' },
+    ]
   },
   {
-    id: 'croqui-studio-guide',
+    id: 'croqui-studio',
     toolId: 'croqui-studio',
     title: 'Croqui Studio',
-    description:
-      'Interface conceitual para composição de croquis técnicos vetoriais com biblioteca de elementos.',
-    status: 'concept',
+    description: 'Composição de croquis técnicos vetoriais com biblioteca de elementos.',
+    status: 'conceptual',
     image: 'croqui-studio-guide.png',
-    topics: ['Camadas vetoriais', 'Biblioteca de elementos', 'Composição assistida'],
+    duration: '~4 min',
+    steps: [
+      { id: 'base', title: 'Mapa-base', description: 'Fundo gerado a partir de outros módulos.', stage: 'croqui-base' },
+      { id: 'elements', title: 'Elementos', description: 'Selecionar cones, veículos, setas.', stage: 'croqui-elements' },
+      { id: 'layers', title: 'Camadas', description: 'Alternar e organizar os elementos.', stage: 'croqui-layers' },
+      { id: 'labels', title: 'Rótulos', description: 'Adicionar textos técnicos.', stage: 'croqui-labels' },
+      { id: 'review', title: 'Revisão', description: 'Auditoria visual final.', stage: 'croqui-review' },
+      { id: 'export', title: 'Exportação', description: 'Gerar arquivo padronizado.', stage: 'croqui-export' },
+    ]
   },
   {
-    id: 'dynamics-guide',
+    id: 'dynamics',
     toolId: 'dynamics',
     title: 'Dynamics',
-    description:
-      'Fluxo planejado para representação de trajetórias, deslocamentos e relações espaciotemporais.',
+    description: 'Representação de trajetórias, deslocamentos e relações espaciotemporais.',
     status: 'planned',
     image: 'dynamics-guide.png',
-    topics: ['Trajetórias', 'Deslocamentos', 'Relações espaciais', 'Relações temporais'],
+    duration: '~2 min',
+    steps: [
+      { id: 'traj-a', title: 'Trajetória A', description: 'Deslocamento do objeto primário.', stage: 'dyn-traja' },
+      { id: 'traj-b', title: 'Trajetória B', description: 'Deslocamento de objeto secundário.', stage: 'dyn-trajb' },
+      { id: 'events', title: 'Eventos', description: 'Marcações de acontecimentos-chave.', stage: 'dyn-events' },
+      { id: 'timeline', title: 'Linha do tempo', description: 'Animação e relação espaciotemporal.', tip: 'Uma trajetória representa deslocamento ao longo do tempo.', stage: 'dyn-timeline' },
+    ]
   },
   {
-    id: 'validator-guide',
+    id: 'validator',
     toolId: 'validator',
     title: 'Validator',
-    description:
-      'Interface planejada para auditoria de consistência estrutural e técnica de projetos.',
+    description: 'Auditoria de consistência estrutural e técnica de projetos.',
     status: 'planned',
     image: 'validator-guide.png',
-    topics: ['Regras de validação', 'Relatório de inconsistências', 'Checklist técnico'],
+    duration: '~3 min',
+    steps: [
+      { id: 'load', title: 'Carregar', description: 'Importar arquivo.', stage: 'val-load' },
+      { id: 'criteria', title: 'Selecionar critérios', description: 'Definir regras da análise.', stage: 'val-criteria' },
+      { id: 'analyze', title: 'Analisar', description: 'Executar análise de consistência.', stage: 'val-analyze' },
+      { id: 'alerts', title: 'Alertas', description: 'Revisar falhas e warnings.', stage: 'val-alerts' },
+      { id: 'fix', title: 'Corrigir', description: 'Ajustar as inconsistências.', stage: 'val-fix' },
+      { id: 'revalidate', title: 'Revalidar', description: 'Confirmar sucesso.', stage: 'val-revalidate' },
+    ]
   },
   {
-    id: 'documents-guide',
+    id: 'documents',
     toolId: 'documents',
     title: 'Documents',
-    description:
-      'Fluxo planejado para estruturação e exportação de relatórios e documentos técnicos.',
+    description: 'Estruturação e exportação de relatórios e documentos técnicos.',
     status: 'planned',
     image: 'documents-guide.png',
-    topics: ['Templates', 'Exportação PDF', 'Campos dinâmicos'],
+    duration: '~2 min',
+    steps: [
+      { id: 'type', title: 'Tipo', description: 'Escolher template (ex: Relatório Técnico).', stage: 'doc-type' },
+      { id: 'data', title: 'Dados', description: 'Preencher campos fixos.', stage: 'doc-data' },
+      { id: 'media', title: 'Mídia', description: 'Anexar imagens ou tabelas.', stage: 'doc-media' },
+      { id: 'gen', title: 'Gerar', description: 'Processar conteúdo estruturado.', stage: 'doc-gen' },
+      { id: 'review', title: 'Revisar', description: 'Leitura final antes de exportar.', stage: 'doc-review' },
+    ]
   },
   {
-    id: 'field-toolkit-guide',
+    id: 'field-toolkit',
     toolId: 'field-toolkit',
     title: 'Field Toolkit',
-    description:
-      'Conceito de organização de coleta de campo: coordenadas, fotos, checklists e observações.',
+    description: 'Organização de coleta de campo.',
     status: 'planned',
     image: 'field-toolkit-guide.png',
-    topics: ['Coleta de dados', 'Fotos georreferenciadas', 'Checklists', 'Exportação'],
+    duration: '~3 min',
+    steps: [
+      { id: 'loc', title: 'Localização', description: 'Coordenadas do fato.', stage: 'field-loc' },
+      { id: 'photo', title: 'Foto', description: 'Captura visual.', stage: 'field-photo' },
+      { id: 'obs', title: 'Observação', description: 'Anotações contextuais.', stage: 'field-obs' },
+      { id: 'measure', title: 'Medição', description: 'Dimensões métricas.', stage: 'field-measure' },
+      { id: 'checklist', title: 'Checklist', description: 'Controle de verificação.', stage: 'field-checklist' },
+      { id: 'export', title: 'Pacote Estruturado', description: 'Dado pronto para envio.', stage: 'field-export' },
+    ]
   },
   {
-    id: 'business-automation-guide',
+    id: 'business-automation',
     toolId: 'business-automation',
     title: 'Business Automation',
-    description:
-      'Fluxo planejado para automação de rotinas de dados, integração e organização no setor privado.',
+    description: 'Automação de rotinas de dados.',
     status: 'planned',
     image: 'business-automation-guide.png',
-    topics: ['Rotinas automatizadas', 'Integração de dados', 'Workflow customizável'],
+    duration: '~2 min',
+    steps: [
+      { id: 'input', title: 'Entrada', description: 'Origem dos dados.', stage: 'biz-input' },
+      { id: 'process', title: 'Processamento', description: 'Transformação intermediária.', stage: 'biz-process' },
+      { id: 'rule', title: 'Regra', description: 'Condicionais e validações.', stage: 'biz-rule' },
+      { id: 'result', title: 'Resultado', description: 'Ação ou saída final.', stage: 'biz-result' },
+    ]
   },
 ];
 
-/** Badge label por status de guia */
 export const GUIDE_STATUS_LABEL: Record<GuideStatus, string> = {
   available: 'Disponível',
-  concept:   'Interface conceitual',
+  conceptual:   'Interface conceitual',
   planned:   'Fluxo planejado',
 };

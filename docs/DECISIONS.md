@@ -93,3 +93,13 @@ Este documento registra as decisões fundamentais de concepção, governança, t
 - **Data**: Setembro de 2026
 - **Decisão**: Manter o documento canônico `docs/PROJECT_MASTER.md` sempre atualizado com o histórico, decisões, pendências e riscos.
 - **Consequência**: Qualquer desenvolvedor ou agente autônomo de inteligência artificial poderá retomar o desenvolvimento da Atratora Forge sem perda de contexto ou desvios de escopo.
+
+---
+
+### D-014: Guia do Conversor sobre a interface real e com definição compartilhada
+- **Data**: Setembro de 2026
+- **Decisão**: O tutorial do Conversor `.CROQUI` utiliza a interface real de `CroquiConverter`, sem cópia visual independente. A rota `#/guides/croqui-converter` e a ajuda contextual futura `? Como usar` em `#/tools/croqui-converter` deverão consumir a mesma definição `src/modules/guides/guides/croqui-converter/croquiConverterGuide.ts` e o mesmo `TourOverlay`.
+- **Contrato**: Os passos são dados TypeScript, sem JSX. `target` contém o valor de `data-guide`, resolvido como `[data-guide="valor"]`, nunca uma classe CSS. Os anchors são `upload`, `preview`, `settings`, `generate`, `result` e `download`. Introdução e conclusão não possuem target. Os IDs do catálogo usam slugs sem `-guide`; links anteriores continuam aceitos pela resolução da rota existente.
+- **Estados reais**: `generate` pertence ao botão de geração; `download` ao botão de download. `result` e `download` só existem após conversão. A implementação posterior deverá lidar com anchors ausentes, configurações recolhidas e preservação do estado da ferramenta entre passos, sem alterar o processamento ou o serializador.
+- **Imagens**: Os PNGs em `public/guides/` permanecem como resumo visual ou pôster para download, não como tutorial principal.
+- **Limite desta preparação**: Consolidar tipos, configuração, anchors e acessibilidade pontual. Preservar o sistema de guias e o `TourOverlay` já iniciados; a conclusão do overlay, a integração da ajuda contextual e os módulos futuros ficam para a próxima implementação. O `implementation_plan.md` mencionado não está salvo no projeto; o usuário autorizou a preparação independente, sem comparação com esse plano.

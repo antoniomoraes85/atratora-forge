@@ -5,7 +5,7 @@ import { GuideCard } from '../../components/guides/GuideCard';
 
 export const Guides: React.FC = () => {
   const availableGuides = GUIDES_CATALOG.filter(g => g.status === 'available');
-  const conceptGuides = GUIDES_CATALOG.filter(g => g.status === 'concept');
+  const conceptGuides = GUIDES_CATALOG.filter(g => g.status === 'conceptual');
   const plannedGuides = GUIDES_CATALOG.filter(g => g.status === 'planned');
 
   const renderSection = (title: string, guides: GuideDefinition[]) => {

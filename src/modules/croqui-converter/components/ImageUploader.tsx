@@ -60,6 +60,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       <input
         ref={fileInputRef}
         type="file"
+        aria-label="Selecionar imagem para conversão"
         accept="image/jpeg,image/png,image/webp,image/bmp"
         style={{ display: 'none' }}
         onChange={(e) => handleFiles(e.target.files)}
@@ -67,6 +68,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
       {!selectedMeta ? (
         <div
+          role="button"
+          tabIndex={0}
+          aria-label="Selecionar imagem para conversão"
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              handleClickUpload();
+            }
+          }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

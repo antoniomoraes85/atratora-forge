@@ -110,6 +110,8 @@ export const ConverterResult: React.FC<ConverterResultProps> = ({ result, onRese
       {/* Actions */}
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
         <button
+          type="button"
+          data-guide="download"
           onClick={handleDownload}
           className="btn btn-success"
           style={{ flex: 1, minWidth: '180px', padding: '12px 20px', fontSize: '14px' }}

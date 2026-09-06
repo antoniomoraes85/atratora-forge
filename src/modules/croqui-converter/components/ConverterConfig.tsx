@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { Sliders, ChevronDown, ChevronUp } from 'lucide-react';
 import { ConversionOptions } from '../types';
 
@@ -8,6 +8,7 @@ interface ConverterConfigProps {
 }
 
 export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onChange }) => {
+  const fieldId = useId();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleWidthChange = (val: number) => {
@@ -34,6 +35,9 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
       {/* Accordion Header */}
       <button
         type="button"
+        id={`${fieldId}-toggle`}
+        aria-expanded={isExpanded}
+        aria-controls={`${fieldId}-panel`}
         onClick={() => setIsExpanded((prev) => !prev)}
         style={{
           width: '100%',
@@ -70,6 +74,9 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
       {/* Accordion Content */}
       {isExpanded && (
         <div
+          id={`${fieldId}-panel`}
+          role="region"
+          aria-labelledby={`${fieldId}-toggle`}
           style={{
             padding: '18px',
             borderTop: '1px solid var(--border-subtle)',
@@ -81,7 +88,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
         >
           {/* Nome do arquivo */}
           <div>
-            <label
+            <label htmlFor={`${fieldId}-name`}
               style={{
                 display: 'block',
                 fontSize: '12px',
@@ -94,6 +101,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
             </label>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <input
+                id={`${fieldId}-name`}
                 type="text"
                 value={options.outputName}
                 onChange={(e) => handleNameChange(e.target.value)}
@@ -135,7 +143,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
           >
             {/* Largura Alvo */}
             <div>
-              <label
+              <label htmlFor={`${fieldId}-width`}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -152,6 +160,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
                 </span>
               </label>
               <input
+                id={`${fieldId}-width`}
                 type="number"
                 min="300"
                 max="4000"
@@ -175,7 +184,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
 
             {/* Qualidade JPEG */}
             <div>
-              <label
+              <label htmlFor={`${fieldId}-quality`}
                 style={{
                   display: 'block',
                   fontSize: '12px',
@@ -187,6 +196,7 @@ export const ConverterConfig: React.FC<ConverterConfigProps> = ({ options, onCha
                 Qualidade JPEG
               </label>
               <select
+                id={`${fieldId}-quality`}
                 value={options.quality.toFixed(2)}
                 onChange={(e) => handleQualityChange(Number(e.target.value))}
                 style={{

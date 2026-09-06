@@ -5,8 +5,9 @@ import {
   Zap,
   Eye,
   AlertCircle,
-  HelpCircle,
+  HelpCircle
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ImageUploader } from '../../modules/croqui-converter/components/ImageUploader';
 import { ConverterConfig } from '../../modules/croqui-converter/components/ConverterConfig';
 import { ConverterResult } from '../../modules/croqui-converter/components/ConverterResult';
@@ -26,6 +27,7 @@ export const CroquiConverter: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [conversionResult, setConversionResult] = useState<ConversionResult | null>(null);
+  const navigate = useNavigate();
 
   const [options, setOptions] = useState<ConversionOptions>({
     targetWidth: 1300,
@@ -91,7 +93,7 @@ export const CroquiConverter: React.FC = () => {
     : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }} className="animate-fade-in">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', padding: '24px' }} className="animate-fade-in">
       {/* Header da Ferramenta */}
       <div
         style={{
@@ -130,23 +132,33 @@ export const CroquiConverter: React.FC = () => {
           </p>
         </div>
 
-        {/* Privacy badge */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: 'var(--success-text)',
-          }}
-        >
-          <ShieldCheck size={16} />
-          <span>Processamento Local e Privado</span>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button
+            onClick={() => navigate('/guides/croqui-converter')}
+            className="btn btn-outline"
+            style={{ fontSize: '12px', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <HelpCircle size={14} /> Como usar (Tutorial)
+          </button>
+          
+          {/* Privacy badge */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 16px',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              fontSize: '12px',
+              fontWeight: 600,
+              color: 'var(--success-text)',
+            }}
+          >
+            <ShieldCheck size={16} />
+            <span style={{ display: 'none' }} className="hide-on-mobile">Processamento Local e Privado</span>
+          </div>
         </div>
       </div>
 
@@ -172,12 +184,14 @@ export const CroquiConverter: React.FC = () => {
               </p>
             </div>
 
-            <ImageUploader
-              selectedMeta={selectedMeta}
-              onImageLoaded={handleImageLoaded}
-              onClear={handleClear}
-              onError={(msg) => setErrorMessage(msg)}
-            />
+            <div data-guide="upload">
+              <ImageUploader
+                selectedMeta={selectedMeta}
+                onImageLoaded={handleImageLoaded}
+                onClear={handleClear}
+                onError={(msg) => setErrorMessage(msg)}
+              />
+            </div>
 
             {/* Mensagem de Erro, se houver */}
             {errorMessage && (
@@ -200,7 +214,7 @@ export const CroquiConverter: React.FC = () => {
             )}
 
             {/* Configurações Avançadas */}
-            <div>
+            <div data-guide="settings">
               <div style={{ marginBottom: '10px' }}>
                 <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-main)' }}>
                   2. Parâmetros de Exportação
@@ -213,6 +227,7 @@ export const CroquiConverter: React.FC = () => {
             <div>
               <button
                 type="button"
+                data-guide="generate"
                 onClick={handleGenerate}
                 disabled={!selectedImage || isProcessing}
                 className="btn btn-primary"
@@ -244,7 +259,9 @@ export const CroquiConverter: React.FC = () => {
 
             {/* Resultado da Conversão */}
             {conversionResult && (
-              <ConverterResult result={conversionResult} onReset={handleClear} />
+              <div data-guide="result">
+                <ConverterResult result={conversionResult} onReset={handleClear} />
+              </div>
             )}
           </section>
 
@@ -278,6 +295,7 @@ export const CroquiConverter: React.FC = () => {
         {/* Painel Direito: Pré-visualização Grande */}
         <section
           className="card"
+          data-guide="preview"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -391,6 +409,11 @@ export const CroquiConverter: React.FC = () => {
         @media (max-width: 1024px) {
           .converter-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hide-on-mobile {
+            display: none !important;
           }
         }
       `}</style>
