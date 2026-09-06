@@ -5,6 +5,11 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato baseia-se em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [0.2.1] - Interactive Learning System
+### Adicionado
+- **Sistema Interativo de Tutoriais**: Novo motor de passo-a-passo (`InteractiveGuide`, `TourOverlay`, `GuideStepper`, `GuideStage`) que se sobrepõe às ferramentas reais ou simula interações para os módulos conceituais.
+- **Modo Guiado no Conversor .CROQUI**: Botão "? Como usar" injetado na própria ferramenta, iniciando o tutorial sem bloqueio (permitindo cliques na interface real, com gating visual).
+
 ## [0.2.0] - Atratora Forge Premium Foundation
 ### Adicionado
 - **Nova Identidade Visual Premium**: Adotado um novo design system técnico e sofisticado (dark theme, paleta com grafite profundo, azul petróleo, ciano elétrico e violeta).

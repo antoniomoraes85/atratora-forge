@@ -75,21 +75,22 @@ export const TourOverlay: React.FC<TourOverlayProps> = ({ targetId, isActive, on
           boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.65), 0 0 15px rgba(99, 102, 241, 0.5)',
           border: '2px solid var(--primary-500)',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          pointerEvents: 'auto', // Bloqueia clique no overlay escuro mas permite no buraco transparente (se estivéssemos delegando, mas aqui deixaremos tudo bloqueado para evitar cliques errados no tutorial visual)
+          pointerEvents: 'none', // Permite que os cliques cheguem à interface real
         }}
       />
       {/* Elemento de "pulso" didático no canto do target */}
       <div 
         style={{
           position: 'absolute',
-          top: top - 6,
-          left: left + width - 6,
+          top: top - 4,
+          right: left - 4,
           width: '12px',
           height: '12px',
           borderRadius: '50%',
           backgroundColor: 'var(--primary-400)',
           animation: 'pulse 1.5s infinite',
           transition: 'all 0.3s ease',
+          pointerEvents: 'none',
         }}
       />
     </div>

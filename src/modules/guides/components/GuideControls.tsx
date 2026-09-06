@@ -8,6 +8,7 @@ interface GuideControlsProps {
   onPrev: () => void;
   onRestart: () => void;
   onExit: () => void;
+  canGoNext?: boolean;
 }
 
 export const GuideControls: React.FC<GuideControlsProps> = ({
@@ -16,7 +17,8 @@ export const GuideControls: React.FC<GuideControlsProps> = ({
   onNext,
   onPrev,
   onRestart,
-  onExit
+  onExit,
+  canGoNext = true
 }) => {
   const isFirst = currentStepIndex === 0;
   const isLast = currentStepIndex === totalSteps - 1;
@@ -65,8 +67,9 @@ export const GuideControls: React.FC<GuideControlsProps> = ({
         </button>
         <button
           onClick={onNext}
+          disabled={!canGoNext}
           className="btn btn-primary"
-          style={{ padding: '8px 24px' }}
+          style={{ padding: '8px 24px', opacity: !canGoNext ? 0.5 : 1 }}
         >
           {isLast ? 'Concluir' : 'Próximo'} <ArrowRight size={16} style={{ marginLeft: '4px' }} />
         </button>

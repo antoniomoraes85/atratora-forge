@@ -60,9 +60,34 @@ export const InteractiveGuide: React.FC = () => {
   const handleRestart = () => setCurrentStepIndex(0);
   const handleExit = () => navigate('/guides');
 
-  // Renderização condicional da "ferramenta real" no background se for o Croqui Converter
-  // Os outros guias usam simulações abstratas em GuideStage
   const isRealTool = guide.toolId === 'croqui-converter';
+
+  // Gating simples baseado no DOM da ferramenta real
+  let canGoNext = true;
+  let showSpotlight = true;
+  
+  if (isRealTool && currentStep) {
+    // 1. Upload: só avança se a imagem já estiver no preview
+    if (currentStep.target === 'upload') {
+      canGoNext = !!document.querySelector('[data-guide="preview"] img');
+    }
+    // 2. Generate: botão de próximo sempre livre, mas o usuário deve clicar em gerar na tela real
+    else if (currentStep.target === 'generate') {
+      canGoNext = true; // Botão de gerar na própria ferramenta
+    }
+    // 3. Result: só avança e só tem spotlight se existir o painel de resultado
+    else if (currentStep.target === 'result') {
+      const hasResult = !!document.querySelector('[data-guide="result"]');
+      canGoNext = hasResult;
+      showSpotlight = hasResult;
+    }
+    // 4. Download: só avança se tiver resultado
+    else if (currentStep.target === 'download') {
+      const hasResult = !!document.querySelector('[data-guide="result"]');
+      canGoNext = hasResult;
+      showSpotlight = hasResult;
+    }
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - var(--header-height))', margin: '-40px' }}>
@@ -104,7 +129,7 @@ export const InteractiveGuide: React.FC = () => {
                 <GuideStage step={currentStep!}>
                   {/* Se for o CroquiConverter, montamos a interface real dele atrás do overlay e limitamos interações */}
                   {isRealTool && (
-                     <div style={{ width: '100%', height: '100%', overflowY: 'auto', position: 'relative', pointerEvents: 'none' /* impede edição real no modo guia */ }}>
+                     <div style={{ width: '100%', height: '100%', overflowY: 'auto', position: 'relative' }}>
                        <Suspense fallback={<div style={{ padding: '20px' }}>Carregando ferramenta...</div>}>
                          <CroquiConverterLazy />
                        </Suspense>
@@ -118,12 +143,13 @@ export const InteractiveGuide: React.FC = () => {
                   onPrev={handlePrev}
                   onRestart={handleRestart}
                   onExit={handleExit}
+                  canGoNext={canGoNext}
                 />
              </div>
           )}
 
-          {/* Overlay de Spotlight (só desenha se não estiver completado e tivermos um target válido) */}
-          {!isCompleted && currentStep?.target && (
+          {/* Overlay de Spotlight (só desenha se não estiver completado e tivermos um highlightTarget válido) */}
+          {!isCompleted && currentStep?.target && currentStep.target !== 'none' && showSpotlight && (
              <TourOverlay 
                targetId={currentStep.target} 
                isActive={true} 

@@ -64,7 +64,7 @@ export const GuideCompletion: React.FC<GuideCompletionProps> = ({ guide, onResta
           Você aprendeu:
         </div>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {guide.steps.filter(s => s.target || s.stage).slice(0, 5).map((step) => (
+          {guide.steps.filter(s => s.target && s.target !== 'none').slice(0, 5).map((step) => (
             <li key={step.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
               <CheckCircle2 size={16} color="var(--success-text)" />
               {step.title}

@@ -141,6 +141,12 @@ Todas as decisões fundamentais encontram-se detalhadas em `docs/DECISIONS.md`:
 
 ## 11. Histórico de Versões
 
+- **v0.2.1** (05/09/2026):
+  - Conclusão do sistema de Guias Interativos.
+  - Implementação do passo a passo dinâmico dentro da interface real do Conversor .CROQUI.
+  - Atualização do painel de resultado com navegação direta para tutoriais.
+  - Refinamentos na UI (TourOverlay sem bloqueio de pointer-events, permissão de scroll, gating simples).
+
 - **v0.1.0** (05/09/2026):
   - Concepção e lançamento da plataforma Atratora Forge.
   - Implementação da identidade visual e dashboard premium da Atratora Labs.

@@ -1,7 +1,7 @@
 {
   "name": "atratora-forge",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "Plataforma de ferramentas inteligentes para automação de fluxos técnicos - Atratora Labs",
   "author": "José Antônio Coutinho de Moraes Filho <Atratora Labs>",
