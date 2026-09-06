@@ -11,27 +11,31 @@ export const Footer: React.FC = () => {
         textAlign: 'center',
       }}
     >
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <p
           style={{
             fontSize: '13px',
-            fontWeight: 600,
+            fontWeight: 700,
             color: 'var(--text-main)',
             letterSpacing: '0.01em',
           }}
         >
-          Desenvolvido por José Antônio Coutinho de Moraes Filho • Atratora Labs
+          Desenvolvido por José Antônio Coutinho de Moraes Filho
         </p>
         <p
           style={{
-            fontSize: '11px',
-            color: 'var(--text-dim)',
-            marginTop: '6px',
+            fontSize: '12px',
+            color: 'var(--text-muted)',
             letterSpacing: '0.02em',
           }}
         >
-          Ferramenta independente, sem vínculo ou chancela institucional.
+          Atratora Labs • Atratora Forge
         </p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '6px' }}>
+           <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Versão 0.2.0</span>
+           <span style={{ fontSize: '11px', color: 'var(--border-default)' }}>|</span>
+           <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Processamento local</span>
+        </div>
       </div>
     </footer>
   );

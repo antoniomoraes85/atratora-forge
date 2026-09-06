@@ -7,12 +7,13 @@
 
 ## 1. Identificação Geral
 
-- **Nome do Produto**: Atratora Forge
-- **Empresa Mantenedora**: Atratora Labs
-- **Desenvolvedor Responsável**: José Antônio Coutinho de Moraes Filho
+# PROMPT MASTER DE EXECUÇÃO — ATRATORA FORGE
+# V0.2.0 — FUNDAÇÃO PREMIUM + SISTEMA DE GUIAS
+# Empresa: Atratora Labs
+# Desenvolvedor: José Antônio Coutinho de Moraes Filho
 - **Posicionamento**: *“Plataforma de ferramentas inteligentes para automação de fluxos técnicos.”*
-- **Versão Atual**: `0.1.0` (V0.1 — Fundação Premium + Conversor de Imagem para .CROQUI)
-- **Status do Projeto**: Em desenvolvimento ativo / v0.1 funcional entregue
+- **Versão Atual**: `0.2.0` (V0.2 — Integração de Sistema de Guias e Melhoria de UX)
+- **Status do Projeto**: Em desenvolvimento ativo / v0.2 em progresso
 
 ---
 

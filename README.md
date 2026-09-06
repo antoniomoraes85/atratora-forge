@@ -1,6 +1,10 @@
 # Atratora Forge
 
-> **Plataforma de ferramentas inteligentes para automação de fluxos técnicos.**  
+**Versão:** 0.2.0  
+**Empresa:** Atratora Labs  
+**Desenvolvedor:** José Antônio Coutinho de Moraes Filho
+
+> Plataforma modular e privada de ferramentas inteligentes para automação, conversão e análise de fluxos técnicos e operacionais.**  
 > Desenvolvida pela **Atratora Labs** sob autoria de **José Antônio Coutinho de Moraes Filho**.
 
 [![Status](https://img.shields.io/badge/Versão-0.1.0-6366f1.svg)](CHANGELOG.md)

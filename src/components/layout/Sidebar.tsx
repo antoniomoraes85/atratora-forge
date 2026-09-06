@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Wrench, FileImage, FolderGit2, Info, X } from 'lucide-react';
+import { Home, Wrench, BookOpen, FolderGit2, Info, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { NAV_ITEMS, NavItem } from '../../app/config/navigation';
 
@@ -12,7 +12,7 @@ interface SidebarProps {
 const iconMap = {
   Home,
   Wrench,
-  FileImage,
+  BookOpen,
   FolderGit2,
   Info,
 };
@@ -134,31 +134,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Bottom Platform Info Box */}
-        <div style={{ padding: '16px', borderTop: '1px solid var(--border-subtle)' }}>
+        <div style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)' }}>
           <div
             style={{
-              padding: '14px',
-              backgroundColor: 'var(--bg-tertiary)',
-              border: '1px solid var(--border-subtle)',
+              padding: '16px',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
               borderRadius: 'var(--radius-md)',
+              boxShadow: 'var(--shadow-xs)'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span
                 style={{
-                  width: '7px',
-                  height: '7px',
+                  width: '8px',
+                  height: '8px',
                   borderRadius: '50%',
                   backgroundColor: 'var(--success-border)',
-                  boxShadow: '0 0 8px var(--success-border)',
+                  boxShadow: '0 0 10px var(--success-border)',
                 }}
               />
-              <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Ambiente Offline
+              <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                Processamento local
               </span>
             </div>
-            <p style={{ fontSize: '11px', color: 'var(--text-dim)', marginTop: '4px', lineHeight: 1.4 }}>
-              Privacidade garantida: todas as ferramentas operam na sua máquina.
+            <p style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.45 }}>
+              Seus arquivos são processados neste dispositivo.
             </p>
           </div>
         </div>

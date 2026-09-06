@@ -1,9 +1,8 @@
 /**
- * Catálogo Central de Ferramentas — Atratora Forge
+ * Catálogo Central de Ferramentas — Atratora Forge v0.2.0
  *
- * Esta é a ÚNICA fonte de verdade para o catálogo de ferramentas da plataforma.
- * Home, catálogo, mecanismos de busca e futuros painéis administrativos
- * devem consumir este objeto.
+ * Única fonte de verdade para o catálogo de ferramentas.
+ * Home, Diretório, Guias e buscas consomem este objeto.
  */
 
 export type ToolStatus = 'available' | 'development' | 'planned';
@@ -14,24 +13,26 @@ export type ToolCategory =
   | 'Croquis'
   | 'Análise'
   | 'Validação'
-  | 'Documentos';
+  | 'Documentos'
+  | 'Operações de Campo'
+  | 'Automação';
 
 export interface ToolDefinition {
-  /** Identificador único da ferramenta (slug estável) */
+  /** Slug estável para rotas e referências cruzadas */
   id: string;
   /** Nome de exibição na interface */
   title: string;
-  /** Descrição concisa para cards e catálogo */
+  /** Descrição concisa */
   description: string;
-  /** Categoria principal para filtragem e agrupamento */
+  /** Categoria para filtros e agrupamento */
   category: ToolCategory;
-  /** Status de disponibilidade atual */
+  /** Status de disponibilidade */
   status: ToolStatus;
-  /** Rota interna (hash) para ferramentas disponíveis */
+  /** Rota hash (apenas para ferramentas disponíveis) */
   path?: string;
-  /** Nome do ícone Lucide a renderizar */
-  iconName: 'FileImage' | 'Layers' | 'Map' | 'Activity' | 'FileCheck2' | 'FileText';
-  /** Versão da plataforma onde será entregue */
+  /** Nome do ícone Lucide */
+  iconName: 'FileImage' | 'Layers' | 'Map' | 'Activity' | 'FileCheck2' | 'FileText' | 'Briefcase' | 'Settings2';
+  /** Versão prevista de entrega */
   deliveryVersion?: string;
   /** Tags para busca de texto livre */
   tags?: string[];
@@ -42,72 +43,93 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
     id: 'croqui-converter',
     title: 'Conversor .CROQUI',
     description:
-      'Converta imagens rasterizadas (fotos aéreas, ortofotos, mapas) para o formato de arquivo .croqui, compatível com editores de canvas baseados em JSON/Fabric.',
+      'Converta imagens rasterizadas para arquivos .croqui diretamente no navegador.',
     category: 'Conversores',
     status: 'available',
     path: '/tools/croqui-converter',
     iconName: 'FileImage',
     deliveryVersion: 'v0.1',
-    tags: ['imagem', 'converter', 'croqui', 'json', 'fabric', 'canvas', 'rasterizado'],
-  },
-  {
-    id: 'croqui-studio',
-    title: 'Croqui Studio',
-    description:
-      'Composição visual e assistida de croquis vetoriais com bibliotecas de vias, sinalização, veículos e vestígios.',
-    category: 'Croquis',
-    status: 'development',
-    iconName: 'Layers',
-    deliveryVersion: 'v0.4',
-    tags: ['vetor', 'canvas', 'pista', 'sinalização', 'desenho', 'diagramação'],
+    tags: ['imagem', 'converter', 'croqui', 'json', 'canvas', 'rasterizado', 'png', 'jpg'],
   },
   {
     id: 'map-studio',
     title: 'Map Studio',
     description:
-      'Criação de bases cartográficas escaladas a partir de coordenadas geográficas, ortofotos de satélite e pontos de referência.',
+      'Crie mapas-base a partir de coordenadas, ortofotos e referências geográficas.',
     category: 'Geoprocessamento',
     status: 'development',
     iconName: 'Map',
     deliveryVersion: 'v0.3',
-    tags: ['mapa', 'coordenadas', 'gps', 'ortofoto', 'satélite', 'escala', 'cartografia'],
+    tags: ['mapa', 'coordenadas', 'gps', 'ortofoto', 'satélite', 'escala', 'cartografia', 'geográfico'],
+  },
+  {
+    id: 'croqui-studio',
+    title: 'Croqui Studio',
+    description:
+      'Monte croquis técnicos com camadas, elementos gráficos e composição assistida.',
+    category: 'Croquis',
+    status: 'development',
+    iconName: 'Layers',
+    deliveryVersion: 'v0.4',
+    tags: ['vetor', 'canvas', 'camadas', 'sinalização', 'desenho', 'composição', 'diagramação'],
   },
   {
     id: 'dynamics',
     title: 'Dynamics',
     description:
-      'Modelagem cinemática de trajetórias, análise temporal de eventos e visualização de relações de causalidade.',
+      'Represente trajetórias, deslocamentos, eventos e relações espaciais ou temporais.',
     category: 'Análise',
     status: 'development',
     iconName: 'Activity',
     deliveryVersion: 'v0.7',
-    tags: ['cinemática', 'trajetória', 'colisão', 'velocidade', 'temporal', 'física'],
+    tags: ['trajetória', 'deslocamento', 'spatial', 'temporal', 'relações', 'eventos'],
   },
   {
     id: 'validator',
     title: 'Validator',
     description:
-      'Motor de verificação e auditoria de consistência lógica e técnica de diagramas, croquis e relatórios.',
+      'Analise consistência estrutural, técnica e visual de arquivos, croquis e projetos.',
     category: 'Validação',
     status: 'development',
     iconName: 'FileCheck2',
     deliveryVersion: 'v0.8',
-    tags: ['validação', 'consistência', 'auditoria', 'regras', 'checklist'],
+    tags: ['validação', 'consistência', 'auditoria', 'regras', 'checklist', 'verificação'],
   },
   {
     id: 'documents',
     title: 'Documents',
     description:
-      'Automação de laudos técnicos e documentos estruturados gerados a partir de projetos e dados coletados na plataforma.',
+      'Estruture relatórios, laudos e documentos técnicos a partir de dados organizados.',
     category: 'Documentos',
     status: 'development',
     iconName: 'FileText',
     deliveryVersion: 'v0.9',
-    tags: ['laudo', 'relatório', 'documento', 'automação', 'template', 'pdf'],
+    tags: ['laudo', 'relatório', 'documento', 'automação', 'template', 'exportação'],
+  },
+  {
+    id: 'field-toolkit',
+    title: 'Field Toolkit',
+    description:
+      'Organize coordenadas, fotos, medições, observações e checklists coletados em campo.',
+    category: 'Operações de Campo',
+    status: 'development',
+    iconName: 'Briefcase',
+    deliveryVersion: 'v1.0',
+    tags: ['campo', 'coordenadas', 'fotos', 'medições', 'checklist', 'observações', 'coleta'],
+  },
+  {
+    id: 'business-automation',
+    title: 'Business Automation',
+    description:
+      'Automatize rotinas de conversão, análise, integração e organização de dados aplicáveis ao setor privado.',
+    category: 'Automação',
+    status: 'development',
+    iconName: 'Settings2',
+    deliveryVersion: 'v1.1',
+    tags: ['automação', 'integração', 'dados', 'rotinas', 'negócios', 'setor privado', 'workflow'],
   },
 ];
 
-/** Categorias disponíveis para filtros, com contagem por status */
 export const TOOL_CATEGORIES: ToolCategory[] = [
   'Conversores',
   'Geoprocessamento',
@@ -115,9 +137,10 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   'Análise',
   'Validação',
   'Documentos',
+  'Operações de Campo',
+  'Automação',
 ];
 
-/** Helpers de filtragem */
 export const getAvailableTools = (): ToolDefinition[] =>
   TOOLS_CATALOG.filter((t) => t.status === 'available');
 

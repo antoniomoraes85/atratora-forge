@@ -6,6 +6,7 @@ import { Tools } from '../../pages/Tools/Tools';
 import { CroquiConverter } from '../../pages/CroquiConverter/CroquiConverter';
 import { Projects } from '../../pages/Projects/Projects';
 import { About } from '../../pages/About/About';
+import { Guides } from '../../pages/Guides/Guides';
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/tools/croqui-converter" element={<CroquiConverter />} />
+          <Route path="/guides" element={<Guides />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Navigate to="/" replace />} />

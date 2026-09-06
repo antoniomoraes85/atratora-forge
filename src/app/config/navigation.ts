@@ -1,7 +1,7 @@
 export interface NavItem {
   label: string;
   path: string;
-  iconName: 'Home' | 'Wrench' | 'FileImage' | 'FolderGit2' | 'Info';
+  iconName: 'Home' | 'Wrench' | 'BookOpen' | 'FolderGit2' | 'Info';
   badge?: string;
   badgeType?: 'primary' | 'success' | 'neutral' | 'accent';
 }
@@ -18,11 +18,9 @@ export const NAV_ITEMS: NavItem[] = [
     iconName: 'Wrench',
   },
   {
-    label: 'Conversor .CROQUI',
-    path: '/tools/croqui-converter',
-    iconName: 'FileImage',
-    badge: 'Disponível',
-    badgeType: 'success',
+    label: 'Guias',
+    path: '/guides',
+    iconName: 'BookOpen',
   },
   {
     label: 'Projetos',
