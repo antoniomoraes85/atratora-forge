@@ -90,10 +90,10 @@ export const InteractiveGuide: React.FC = () => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - var(--header-height))', margin: '-40px' }}>
+    <div className="interactive-guide-wrapper">
       
       {/* Header do Guia */}
-      <div style={{ padding: '16px 24px', backgroundColor: 'var(--bg-primary)', borderBottom: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="guide-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 8px', borderRadius: '4px', backgroundColor: 'rgba(99,102,241,0.1)', color: 'var(--primary-400)', textTransform: 'uppercase' }}>
             Tutorial Interativo
@@ -108,10 +108,10 @@ export const InteractiveGuide: React.FC = () => {
       </div>
 
       {/* Corpo */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <div className="guide-body">
         
         {/* Painel Lateral de Passos (Stepper) */}
-        <div style={{ width: '280px', backgroundColor: 'var(--bg-primary)', padding: '24px 0 24px 24px', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+        <div className="guide-sidebar">
           <GuideStepper 
             steps={steps} 
             currentStepIndex={currentStepIndex} 
@@ -120,12 +120,12 @@ export const InteractiveGuide: React.FC = () => {
         </div>
 
         {/* Palco Principal */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-surface)', position: 'relative' }}>
+        <div className="guide-stage-container">
           
           {isCompleted ? (
              <GuideCompletion guide={guide} onRestart={handleRestart} />
           ) : (
-             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+             <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
                 <GuideStage step={currentStep!}>
                   {/* Se for o CroquiConverter, montamos a interface real dele atrás do overlay e limitamos interações */}
                   {isRealTool && (
@@ -158,6 +158,122 @@ export const InteractiveGuide: React.FC = () => {
 
         </div>
       </div>
+      
+      <style>{`
+        .interactive-guide-wrapper {
+          display: flex;
+          flex-direction: column;
+          min-height: calc(100vh - var(--header-height) - var(--footer-height) - 40px);
+          background-color: var(--bg-surface);
+          border: 1px solid var(--border-subtle);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+        }
+
+        .guide-header {
+          padding: 16px 24px;
+          background-color: var(--bg-primary);
+          border-bottom: 1px solid var(--border-subtle);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+
+        .guide-body {
+          display: flex;
+          flex: 1;
+          overflow: hidden;
+          flex-direction: row;
+        }
+
+        .guide-sidebar {
+          width: 280px;
+          background-color: var(--bg-primary);
+          padding: 24px 0 24px 24px;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          border-right: 1px solid var(--border-subtle);
+        }
+
+        .guide-stepper-container {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          border-right: 1px solid var(--border-subtle);
+          padding-right: 24px;
+          flex: 1;
+          min-height: 0;
+        }
+
+        .guide-stage-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          background-color: var(--bg-surface);
+          position: relative;
+          min-width: 0;
+        }
+
+        .guide-controls-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 16px 24px;
+          background-color: var(--bg-surface);
+          border-top: 1px solid var(--border-subtle);
+          border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+          .guide-body {
+            flex-direction: column;
+            overflow: visible;
+          }
+          
+          .guide-sidebar {
+            width: 100%;
+            padding: 16px;
+            border-right: none;
+            border-bottom: 1px solid var(--border-subtle);
+          }
+
+          .guide-stepper-container {
+            border-right: none;
+            padding-right: 0;
+            gap: 12px;
+          }
+
+          .guide-step-list {
+            display: none !important;
+          }
+          
+          .guide-stage-container {
+            overflow: visible;
+          }
+
+          .guide-controls-container {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px;
+          }
+
+          .guide-controls-actions button {
+            flex: 1;
+            justify-content: center;
+            min-height: 44px; /* Acessibilidade tap target */
+          }
+
+          .hide-on-mobile {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

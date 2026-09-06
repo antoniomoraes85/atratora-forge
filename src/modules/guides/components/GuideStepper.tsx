@@ -11,16 +11,7 @@ export const GuideStepper: React.FC<GuideStepperProps> = ({ steps, currentStepIn
   const displayedStep = Math.min(steps.length, Math.max(0, currentStepIndex + 1));
 
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '24px',
-        borderRight: '1px solid var(--border-subtle)',
-        paddingRight: '24px',
-      }}
-    >
+    <div className="guide-stepper-container">
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Progresso
@@ -53,7 +44,7 @@ export const GuideStepper: React.FC<GuideStepperProps> = ({ steps, currentStepIn
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, overflowY: 'auto', paddingRight: '8px' }}>
+      <div className="guide-step-list" style={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, overflowY: 'auto', paddingRight: '8px' }}>
         {steps.map((step, idx) => {
           const isActive = idx === currentStepIndex;
           const isPast = idx < currentStepIndex;

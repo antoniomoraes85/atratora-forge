@@ -308,6 +308,8 @@ export const CroquiConverter: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px',
               marginBottom: '16px',
               paddingBottom: '12px',
               borderBottom: '1px solid var(--border-subtle)',

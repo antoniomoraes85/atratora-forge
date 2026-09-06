@@ -48,11 +48,30 @@ export const TourOverlay: React.FC<TourOverlayProps> = ({ targetId, isActive, on
 
   // Cria o overlay com um buraco transparente no targetRect usando box-shadow
   // Expandimos um pouco a bounding box (padding de 8px)
-  const padding = 8;
-  const top = targetRect.top - padding;
-  const left = targetRect.left - padding;
-  const width = targetRect.width + padding * 2;
-  const height = targetRect.height + padding * 2;
+  const isMobile = window.innerWidth <= 768;
+  const padding = isMobile ? 4 : 8; // Padding menor em mobile
+  
+  let top = targetRect.top - padding;
+  let left = targetRect.left - padding;
+  let width = targetRect.width + padding * 2;
+  let height = targetRect.height + padding * 2;
+
+  // Clamping para não ultrapassar a viewport
+  if (top < 0) {
+    height += top;
+    top = 0;
+  }
+  if (left < 0) {
+    width += left;
+    left = 0;
+  }
+  if (top + height > window.innerHeight) {
+    height = window.innerHeight - top;
+  }
+  if (left + width > window.innerWidth) {
+    width = window.innerWidth - left;
+  }
+
   const borderRadius = 8;
 
   return (
