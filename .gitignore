@@ -1,0 +1,35 @@
+# Dependências e build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs e diagnósticos
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Configurações de IDE e ambiente
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.gemini/
+
+# Pastas de referência técnica local (CONFIDENCIALIDADE — NÃO PUBLICAR)
+# Contêm manuais e normas institucionais que NUNCA devem ir ao repositório público
+Atendimento de Acidentes/
+Educação para o Trânsito/
+Sistemas PRF/
+
+# Fixtures privadas com dados reais (arquivos .croqui operacionais identificáveis)
+# Manter SOMENTE localmente para referência durante desenvolvimento
+tests/private-fixtures/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conversor de Imagem para .CROQUI - LPST</title>
+<style>
+  :root{--bg:#eef2f6;--card:#fff;--ink:#17202a;--muted:#607080;--line:#d7dee7;--accent:#0b5cab;--accent2:#f2c94c;--ok:#186a3b;--warn:#8a5a00}
+  *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:#12395b;color:#fff;padding:18px 24px;border-bottom:5px solid var(--accent2)}
+  header h1{margin:0;font-size:22px} header p{margin:6px 0 0;color:#dbe8f3;font-size:13px}
+  main{max-width:1050px;margin:24px auto;padding:0 16px 40px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;box-shadow:0 2px 9px rgba(0,0,0,.05)}
+  .card h2{font-size:17px;margin:0 0 14px}.full{grid-column:1/-1}
+  label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}.hint{font-size:12px;color:var(--muted);margin-top:5px}
+  input[type=file],input[type=number],input[type=text],select{width:100%;padding:10px;border:1px solid #bfc9d4;border-radius:6px;background:#fff}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  button{border:0;border-radius:6px;padding:11px 15px;font-weight:700;cursor:pointer}button.primary{background:var(--accent);color:#fff}button.secondary{background:#e9eef4;color:#203040}button:disabled{opacity:.5;cursor:not-allowed}
+  #previewWrap{min-height:300px;display:flex;align-items:center;justify-content:center;background:#f7f9fb;border:1px dashed #bbc5d0;border-radius:8px;overflow:hidden}
+  #preview{max-width:100%;max-height:520px;display:none}.placeholder{color:#778899;text-align:center;padding:30px;font-size:13px}
+  .status{margin-top:12px;padding:10px 12px;border-radius:6px;background:#f4f7fa;font-size:13px;color:#34495e;white-space:pre-wrap}.status.ok{background:#edf8f1;color:var(--ok)}.status.warn{background:#fff6df;color:var(--warn)}
+  ol{margin:8px 0 0;padding-left:20px}li{margin:7px 0}.privacy{font-size:12px;color:var(--muted);line-height:1.45}.code{font-family:Consolas,monospace;background:#f5f7fa;border:1px solid var(--line);border-radius:5px;padding:2px 5px}
+  footer{max-width:1050px;margin:0 auto 28px;padding:0 16px;color:#6f7f8f;font-size:11px}
+  @media(max-width:760px){.grid,.row{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Conversor de Imagem para .CROQUI - LPST</h1>
+  <p>Ferramenta local/offline para encapsular uma imagem no formato de croqui baseado em JSON/Fabric.js.</p>
+</header>
+<main>
+  <div class="grid">
+    <section class="card">
+      <h2>1. Selecionar imagem</h2>
+      <label for="imgFile">Arquivo</label>
+      <input id="imgFile" type="file" accept="image/jpeg,image/png,image/webp,image/bmp">
+      <div class="hint">Aceita JPG/JPEG, PNG, WEBP e BMP. O processamento ocorre somente neste navegador.</div>
+
+      <div class="row">
+        <div>
+          <label for="targetWidth">Largura de saída (px)</label>
+          <input id="targetWidth" type="number" min="300" max="4000" value="1300">
+        </div>
+        <div>
+          <label for="quality">Qualidade JPEG</label>
+          <select id="quality">
+            <option value="0.80">80% - arquivo menor</option>
+            <option value="0.90" selected>90% - recomendado</option>
+            <option value="0.95">95% - alta qualidade</option>
+            <option value="1.00">100% - maior arquivo</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="outName">Nome do arquivo de saída</label>
+      <input id="outName" type="text" value="croqui_convertido">
+      <div class="hint">A extensão <span class="code">.croqui</span> será adicionada automaticamente.</div>
+
+      <div class="actions">
+        <button id="generateBtn" class="primary" disabled>Gerar .CROQUI</button>
+        <button id="downloadBtn" class="secondary" disabled>Baixar arquivo</button>
+      </div>
+      <div id="status" class="status">Aguardando uma imagem.</div>
+    </section>
+
+    <section class="card">
+      <h2>Pré-visualização</h2>
+      <div id="previewWrap">
+        <img id="preview" alt="Pré-visualização da imagem selecionada">
+        <div id="placeholder" class="placeholder">A imagem aparecerá aqui após a seleção.</div>
+      </div>
+    </section>
+
+    <section class="card full">
+      <h2>Como usar no LPST</h2>
+      <ol>
+        <li>Selecione a imagem do mapa/croqui e mantenha, em regra, <b>1300 px</b> e <b>90%</b>.</li>
+        <li>Clique em <b>Gerar .CROQUI</b> e depois em <b>Baixar arquivo</b>.</li>
+        <li>No editor de croqui do LPST, use a opção de <b>importar croqui</b> e selecione o arquivo gerado.</li>
+      </ol>
+      <p class="privacy"><b>Importante:</b> esta é uma ferramenta auxiliar não oficial, construída a partir da estrutura de um arquivo <span class="code">.croqui</span> real. Antes de uso operacional amplo, valide o arquivo em ambiente LPST com um caso de teste. Nenhuma imagem é enviada para servidor: o processamento é local no navegador.</p>
+    </section>
+  </div>
+</main>
+<footer>Conversor local de apoio. Recomenda-se validação institucional antes de distribuição definitiva.</footer>
+<script>
+(() => {
+  const fileEl = document.getElementById('imgFile');
+  const preview = document.getElementById('preview');
+  const placeholder = document.getElementById('placeholder');
+  const widthEl = document.getElementById('targetWidth');
+  const qualityEl = document.getElementById('quality');
+  const outNameEl = document.getElementById('outName');
+  const generateBtn = document.getElementById('generateBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const status = document.getElementById('status');
+  let sourceImage = null;
+  let outputBlob = null;
+
+  function safeName(s){
+    s = (s || 'croqui_convertido').trim().replace(/\.croqui$/i,'');
+    return s.replace(/[\\/:*?"<>|]+/g,'_') || 'croqui_convertido';
+  }
+  function humanBytes(n){
+    const u=['B','KB','MB']; let i=0; while(n>=1024 && i<u.length-1){n/=1024;i++} return n.toFixed(i?1:0)+' '+u[i];
+  }
+  fileEl.addEventListener('change', () => {
+    outputBlob = null; downloadBtn.disabled = true;
+    const f = fileEl.files && fileEl.files[0];
+    if(!f){ generateBtn.disabled=true; return; }
+    const url = URL.createObjectURL(f);
+    const img = new Image();
+    img.onload = () => {
+      sourceImage = img;
+      preview.src = url; preview.style.display='block'; placeholder.style.display='none';
+      generateBtn.disabled = false;
+      const base = f.name.replace(/\.[^.]+$/,''); outNameEl.value = base + '_LPST';
+      status.className='status ok';
+      status.textContent = `Imagem carregada: ${img.naturalWidth} × ${img.naturalHeight} px | ${humanBytes(f.size)}`;
+    };
+    img.onerror = () => {
+      sourceImage=null; generateBtn.disabled=true;
+      status.className='status warn'; status.textContent='Não foi possível abrir essa imagem.';
+    };
+    img.src = url;
+  });
+
+  generateBtn.addEventListener('click', () => {
+    if(!sourceImage) return;
+    const targetW = Math.max(300, Math.min(4000, Number(widthEl.value) || 1300));
+    const scale = Math.min(1, targetW / sourceImage.naturalWidth);
+    const w = Math.round(sourceImage.naturalWidth * scale);
+    const h = Math.round(sourceImage.naturalHeight * scale);
+    const canvas = document.createElement('canvas'); canvas.width=w; canvas.height=h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(sourceImage,0,0,w,h);
+    const q = Number(qualityEl.value) || .90;
+    const dataUrl = canvas.toDataURL('image/jpeg', q);
+
+    const imageObject = {
+      type:'image', originX:'left', originY:'top', left:0, top:0, width:w, height:h,
+      fill:'rgb(0,0,0)', stroke:null, strokeWidth:0, strokeDashArray:null,
+      strokeLineCap:'butt', strokeLineJoin:'miter', strokeMiterLimit:10,
+      scaleX:1, scaleY:1, angle:0, flipX:false, flipY:false, opacity:1,
+      shadow:null, visible:true, clipTo:null, backgroundColor:'', fillRule:'nonzero',
+      globalCompositeOperation:'source-over', transformMatrix:null, skewX:0, skewY:0,
+      selectable:true, hasBorders:true, hasControls:true, lockMovementX:false, lockMovementY:false,
+      filters:[], src:dataUrl, crossOrigin:'', alignX:'none', alignY:'none', meetOrSlice:'meet'
+    };
+    const payload = JSON.stringify({objects:[imageObject]});
+    outputBlob = new Blob([payload], {type:'application/json;charset=utf-8'});
+    downloadBtn.disabled = false;
+    status.className='status ok';
+    status.textContent = `CROQUI gerado: ${w} × ${h} px | ${humanBytes(outputBlob.size)}\nPronto para baixar e testar no importador do LPST.`;
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if(!outputBlob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(outputBlob);
+    a.download = safeName(outNameEl.value) + '.croqui';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+})();
+</script>
+</body>
+</html>

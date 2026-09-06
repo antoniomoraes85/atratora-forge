@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="afGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="afAccent" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded hexagon/tile -->
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="#0f121d" stroke="url(#afGrad)" stroke-width="2"/>
+  
+  <!-- Stylized Geometric A & F Forge Core -->
+  <path d="M24 8 L37 32 H29 L24 21 L19 32 H11 Z" fill="url(#afGrad)" opacity="0.95"/>
+  <path d="M22 26 H34 V30 H22 Z" fill="url(#afAccent)"/>
+  <path d="M24 16 L31 30 H25 L24 27 Z" fill="#ffffff" opacity="0.4"/>
+  <circle cx="24" cy="11" r="2.5" fill="#38bdf8"/>
+</svg>
