@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExternalLink, Download } from 'lucide-react';
 import { GuideDefinition, GuideStatus, GUIDE_STATUS_LABEL } from '../../app/config/guides';
 
 interface GuideStatusProps {
@@ -60,15 +61,18 @@ export const GuideStatusBadge: React.FC<GuideStatusProps> = ({ status, size = 'm
 
 interface GuideCardProps {
   guide: GuideDefinition;
-  onView: (guide: GuideDefinition) => void;
 }
 
-export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
+export const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
   const isAvailable = guide.status === 'available';
+  
+  // Utilizar BASE_URL para não quebrar no GitHub Pages e afins
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const imageUrl = `${baseUrl}guides/${guide.image}`.replace('//', '/');
 
   return (
     <article
-      className={`card ${isAvailable ? 'card-hover' : ''}`}
+      className={`card card-hover`}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -90,7 +94,7 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
         }}
       >
         <img
-          src={`./guides/${guide.image}`}
+          src={imageUrl}
           alt={`Guia: ${guide.title}`}
           loading="lazy"
           style={{
@@ -99,8 +103,8 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: isAvailable ? 1 : 0.45,
-            filter: isAvailable ? 'none' : 'grayscale(40%)',
+            opacity: isAvailable ? 1 : 0.9,
+            filter: 'none',
           }}
           onError={(e) => {
             // Placeholder se imagem não existir
@@ -109,7 +113,7 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
           }}
         />
 
-        {/* Overlay para guias não disponíveis */}
+        {/* Overlay leve para guias não disponíveis (para evidenciar o status, mas sem esconder a imagem) */}
         {!isAvailable && (
           <div
             style={{
@@ -118,22 +122,23 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(7,9,16,0.55)',
-              backdropFilter: 'blur(2px)',
+              background: 'rgba(4, 10, 20, 0.15)',
+              pointerEvents: 'none'
             }}
           >
             <span
               style={{
                 fontSize: '11px',
                 fontWeight: 700,
-                color: '#94a3b8',
+                color: '#e2e8f0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
                 textAlign: 'center',
                 padding: '6px 12px',
-                background: 'rgba(7,9,16,0.7)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(7,9,16,0.85)',
+                border: '1px solid rgba(255,255,255,0.15)',
                 borderRadius: '8px',
+                boxShadow: 'var(--shadow-md)'
               }}
             >
               {GUIDE_STATUS_LABEL[guide.status]}
@@ -143,13 +148,13 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
       </div>
 
       {/* Body */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px', flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
           <h3
             style={{
               fontSize: '15px',
               fontWeight: 700,
-              color: isAvailable ? 'var(--text-primary)' : 'var(--text-muted)',
+              color: 'var(--text-primary)',
               lineHeight: 1.3,
             }}
           >
@@ -158,7 +163,7 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
           <GuideStatusBadge status={guide.status} size="sm" />
         </div>
 
-        <p style={{ fontSize: '12.5px', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+        <p style={{ fontSize: '12.5px', color: 'var(--text-dim)', lineHeight: 1.5, flex: 1 }}>
           {guide.description}
         </p>
 
@@ -172,16 +177,34 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, onView }) => {
           </div>
         )}
 
-        <button
-          id={`guide-view-${guide.id}`}
-          onClick={() => onView(guide)}
-          disabled={!isAvailable}
-          className={isAvailable ? 'btn btn-primary' : 'btn btn-secondary'}
-          style={{ width: '100%', marginTop: '4px', fontSize: '12px', padding: '8px 14px' }}
-          aria-label={`Ver guia: ${guide.title}`}
-        >
-          {isAvailable ? 'Ver guia' : 'Disponível em breve'}
-        </button>
+        <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+          <a
+            href={imageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            style={{ flex: 1, fontSize: '12px', padding: '8px 14px' }}
+            aria-label={`Ver guia: ${guide.title}`}
+          >
+            Ver guia <ExternalLink size={14} style={{ marginLeft: '2px' }} />
+          </a>
+          <a
+            href={imageUrl}
+            download={guide.image}
+            className="btn btn-secondary"
+            style={{ fontSize: '12px', padding: '8px 14px' }}
+            title="Baixar guia"
+            aria-label={`Baixar guia: ${guide.title}`}
+          >
+            <Download size={14} />
+          </a>
+        </div>
+        
+        {!isAvailable && (
+          <p style={{ fontSize: '10px', color: 'var(--text-dim)', textAlign: 'center', marginTop: '2px' }}>
+            Ferramenta ainda em desenvolvimento.
+          </p>
+        )}
       </div>
     </article>
   );

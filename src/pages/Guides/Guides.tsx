@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BookOpen } from 'lucide-react';
 import { GUIDES_CATALOG, GuideDefinition } from '../../app/config/guides';
 import { GuideCard } from '../../components/guides/GuideCard';
-import { GuideViewer } from '../../components/guides/GuideViewer';
 
 export const Guides: React.FC = () => {
-  const [selectedGuide, setSelectedGuide] = useState<GuideDefinition | null>(null);
-
   const availableGuides = GUIDES_CATALOG.filter(g => g.status === 'available');
   const conceptGuides = GUIDES_CATALOG.filter(g => g.status === 'concept');
   const plannedGuides = GUIDES_CATALOG.filter(g => g.status === 'planned');
@@ -20,7 +17,7 @@ export const Guides: React.FC = () => {
         </h2>
         <div className="grid-3">
           {guides.map((guide) => (
-            <GuideCard key={guide.id} guide={guide} onView={setSelectedGuide} />
+            <GuideCard key={guide.id} guide={guide} />
           ))}
         </div>
       </section>
@@ -59,15 +56,10 @@ export const Guides: React.FC = () => {
 
       {/* Sections */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-        {renderSection('Ferramentas Disponíveis', availableGuides)}
-        {renderSection('Interfaces Conceituais', conceptGuides)}
-        {renderSection('Módulos Planejados', plannedGuides)}
+        {renderSection('GUIAS DISPONÍVEIS', availableGuides)}
+        {renderSection('INTERFACES CONCEITUAIS', conceptGuides)}
+        {renderSection('FLUXOS PLANEJADOS', plannedGuides)}
       </div>
-
-      {/* Modal */}
-      {selectedGuide && (
-        <GuideViewer guide={selectedGuide} onClose={() => setSelectedGuide(null)} />
-      )}
     </div>
   );
 };
