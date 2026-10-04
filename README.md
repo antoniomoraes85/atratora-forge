@@ -1,170 +1,533 @@
 # Atratora Forge
 
-**Versão:** 0.2.0  
+**Versão:** 0.3.0  
 **Empresa:** Atratora Labs  
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
 
-> Plataforma modular e privada de ferramentas inteligentes para automação, conversão e análise de fluxos técnicos e operacionais.**  
+> Plataforma modular e privada de ferramentas inteligentes para automação, conversão e análise de fluxos técnicos, operacionais e analíticos.  
 > Desenvolvida pela **Atratora Labs** sob autoria de **José Antônio Coutinho de Moraes Filho**.
 
-[![Status](https://img.shields.io/badge/Versão-0.1.0-6366f1.svg)](CHANGELOG.md)
+[![Versão](https://img.shields.io/badge/Versão-0.3.0-6366f1.svg)](CHANGELOG.md)
 [![Licença](https://img.shields.io/badge/Licença-Proprietária%20Atratora%20Labs-10b981.svg)](#)
 [![Privacidade](https://img.shields.io/badge/Processamento-100%25%20Local-38bdf8.svg)](#privacidade-e-segurança)
-[![Build](https://img.shields.io/badge/Deploy-GitHub%20Pages-blueviolet.svg)](#publicação-no-github-pages)
+[![Deploy](https://img.shields.io/badge/Deploy-GitHub%20Pages-blueviolet.svg)](#publicação-no-github-pages)
 
 ---
 
 ## 1. Visão Geral
 
-O **Atratora Forge** é uma plataforma independente criada para centralizar, acelerar e modernizar fluxos operacionais técnicos, incluindo geoprocessamento, croquis, mapas, diagramas, análises periciais e validações documentais.
+O **Atratora Forge** é uma plataforma independente criada para centralizar, acelerar e modernizar fluxos técnicos, operacionais e analíticos.
 
-Projetada com arquitetura modular e estética profissional de alto padrão (SaaS), a plataforma opera sob o paradigma **Local-First**: todo o processamento de imagens e arquivos é executado diretamente na sandbox do navegador, sem envio de dados a servidores remotos, sem banco de dados intermediário e com zero telemetria.
+Sua arquitetura modular permite a incorporação progressiva de ferramentas voltadas a conversão de arquivos, análises técnicas, geoprocessamento, croquis, dinâmica, validação documental, coleta de campo e automação.
 
----
+A plataforma adota o paradigma **Local-First**: os dados são processados diretamente no navegador do usuário, sem necessidade de backend para as funcionalidades atualmente disponíveis, sem telemetria e sem armazenamento externo dos dados técnicos analisados.
 
-## 2. Primeira Ferramenta Funcional: Conversor .CROQUI
+### Acesso à aplicação
 
-Na versão **v0.1**, a plataforma disponibiliza sua primeira ferramenta prática: o **Conversor de Imagem para `.CROQUI`**.
+**Atratora Forge:**  
+https://antoniomoraes85.github.io/atratora-forge/
 
-- **Objetivo**: Permitir que imagens comuns (fotos aéreas, ortofotos de satélite, mapas do Google Maps ou OpenStreetMap, diagramas de vias) sejam encapsuladas no formato `.croqui` para importação direta no editor de croquis do LPST e ferramentas compatíveis com Fabric.js.
-- **Formatos de Entrada**: `JPG`, `JPEG`, `PNG`, `WEBP`, `BMP`.
-- **Formato de Saída**: `.croqui` (JSON compatível com o método `canvas.loadFromJSON()` do Fabric.js).
-- **Recursos**:
-  - Drag & Drop com upload instantâneo e pré-visualização proporcional.
-  - Exibição de metadados: dimensões originais, formato detectado e tamanho em bytes.
-  - Ajuste inteligente de resolução (padrão de **1300 px**, otimizado para o LPST).
-  - Controle de qualidade JPEG (**80%**, **90% - recomendado**, **95%**, **100%**).
-  - Sanitização de nome de arquivo para evitar caracteres especiais no sistema operacional.
-  - Download imediato com feedback visual.
+### Ferramentas atualmente disponíveis
+
+- **Vetor Forense** — análise técnica de velocidade e dinâmica em sinistros de trânsito.
+- **Conversor .CROQUI** — conversão de imagens rasterizadas para arquivos `.croqui`.
 
 ---
 
-## 3. Tecnologias Utilizadas
+# 2. Ferramentas Ativas
 
-- **Interface & Componentização**: React 18 + TypeScript.
-- **Ferramenta de Build & Bundler**: Vite 5.
-- **Roteamento Estático**: React Router DOM (HashRouter, compatível com GitHub Pages sem erros 404).
-- **Iconografia**: Lucide React.
-- **Estilização**: CSS moderno estruturado com Design Tokens (Dark Graphite `#0a0c10`, Deep Indigo `#6366f1`, Electric Cyan `#38bdf8`, Emerald `#10b981`).
-- **Testes Automatizados**: Vitest.
-- **CI / CD**: GitHub Actions para deploy estático automatizado.
+## 2.1 Vetor Forense
+
+O **Vetor Forense** é um módulo de análise técnica destinado à estimativa de velocidade e avaliação de dinâmica a partir dos vestígios e informações disponíveis em um sinistro de trânsito.
+
+O sistema foi projetado para trabalhar com múltiplas variáveis, veículos, trechos e métodos, preservando a rastreabilidade das informações utilizadas.
+
+### Principais recursos
+
+- Wizard estruturado em etapas para criação da análise.
+- Cadastro de múltiplos veículos.
+- Caracterização da via e das condições ambientais.
+- Registro de diferentes tipos de vestígios.
+- Cadastro de múltiplos trechos de dissipação.
+- Seleção automática de parâmetros técnicos quando disponíveis.
+- Possibilidade de informar parâmetros externos de forma identificada e justificada.
+- Identificação automática dos métodos tecnicamente aplicáveis.
+- Diferenciação entre métodos quantitativos e indicadores auxiliares.
+- Cálculo por dissipação de energia em um ou múltiplos trechos.
+- Consideração da inclinação longitudinal quando informada.
+- Análise de motocicleta tombada.
+- Análise de veículo deslizando sobre o teto.
+- Suporte a registros eletrônicos de velocidade.
+- Avaliação auxiliar de danos.
+- Avaliação de distância de reação e parada.
+- Cálculo de intervalos mínimo, central e máximo de velocidade.
+- Geração automática de texto técnico descritivo.
+- Persistência local das análises.
+- Duplicação de análises.
+- Exportação estruturada em JSON.
+- Explicabilidade dos cálculos e parâmetros utilizados.
+
+### Indicadores de qualidade
+
+O Vetor Forense utiliza indicadores internos para auxiliar na interpretação da robustez da análise:
+
+**IFT — Índice de Fidedignidade Técnica**
+
+Avalia aspectos relacionados à:
+
+- qualidade das medições;
+- qualidade dos parâmetros;
+- preservação do sítio;
+- completude das informações;
+- rastreabilidade dos dados.
+
+**ICA — Índice de Convergência Analítica**
+
+Avalia a convergência entre dois ou mais métodos quantitativos independentes.
+
+Quando existe apenas um método independente disponível, o ICA não é apresentado como aferível.
+
+**IAE — Índice de Assertividade da Estimativa**
+
+Indicador interno derivado da qualidade dos dados e da convergência dos métodos disponíveis.
+
+> **Importante:** IFT, ICA e IAE são indicadores internos de apoio à análise e não representam probabilidades estatísticas ou garantias científicas de acerto.
+
+### Filosofia de análise
+
+O Vetor Forense não procura gerar apenas um número isolado.
+
+O fluxo adotado é:
+
+**vestígios → variáveis → parâmetros → métodos → cálculos independentes → convergência → intervalo estimado → limitações**
+
+Sempre que possível, o resultado é apresentado como um **intervalo de velocidade**, acompanhado das respectivas premissas e limitações.
+
+### Acesso direto
+
+https://antoniomoraes85.github.io/atratora-forge/#/tools/vetor-forense
 
 ---
 
-## 4. Estrutura do Projeto
+## 2.2 Conversor de Imagem para `.CROQUI`
 
-```
-Atratora Forge/
-├── public/                 # Favicon vetorial e manifesto
+O **Conversor .CROQUI** transforma imagens rasterizadas em arquivos `.croqui` para utilização em editores e ferramentas compatíveis com sua estrutura.
+
+### Formatos de entrada
+
+- JPG
+- JPEG
+- PNG
+- WEBP
+- BMP
+
+### Formato de saída
+
+`.croqui`
+
+Estrutura JSON preparada para interoperabilidade com ferramentas baseadas em canvas/Fabric.js.
+
+### Recursos
+
+- Drag & Drop.
+- Upload instantâneo.
+- Pré-visualização proporcional.
+- Exibição de dimensões da imagem.
+- Identificação do formato.
+- Exibição do tamanho do arquivo.
+- Ajuste inteligente de resolução.
+- Controle de qualidade JPEG.
+- Sanitização do nome do arquivo.
+- Download local.
+- Processamento integral no navegador.
+
+### Acesso direto
+
+https://antoniomoraes85.github.io/atratora-forge/#/tools/croqui-converter
+
+---
+
+# 3. Sistema Interativo de Tutoriais
+
+O Atratora Forge possui uma infraestrutura própria de aprendizado interativo.
+
+Os guias podem orientar o usuário diretamente durante a utilização das ferramentas ou apresentar fluxos demonstrativos.
+
+Entre os recursos disponíveis estão:
+
+- tutorial passo a passo;
+- destaque visual dos elementos da interface;
+- navegação entre etapas;
+- modo demonstrativo;
+- integração do tutorial com ferramentas reais;
+- seção central de Guias.
+
+O objetivo é reduzir a curva de aprendizado sem transformar a interface operacional em documentação extensa.
+
+---
+
+# 4. Tecnologias Utilizadas
+
+- **Interface:** React 18.
+- **Linguagem:** TypeScript.
+- **Build e Bundler:** Vite 5.
+- **Roteamento:** React Router DOM com `HashRouter`.
+- **Iconografia:** Lucide React.
+- **Estilização:** CSS moderno baseado em Design Tokens.
+- **Testes:** Vitest.
+- **Validação TypeScript:** `tsc`.
+- **Lint:** ESLint.
+- **CI/CD:** GitHub Actions.
+- **Hospedagem:** GitHub Pages.
+- **Persistência atual:** armazenamento local no navegador.
+- **Arquitetura:** modular e Local-First.
+
+### Design system
+
+A identidade visual utiliza principalmente:
+
+- Dark Graphite `#0a0c10`
+- Deep Indigo `#6366f1`
+- Electric Cyan `#38bdf8`
+- Emerald `#10b981`
+
+---
+
+# 5. Estrutura do Projeto
+
+```text
+atratora-forge/
+├── public/
+│   ├── guides/
+│   └── assets/
+│
 ├── src/
-│   ├── app/                # Rotas e configurações de navegação
-│   ├── components/         # Componentes compartilhados de layout, header, footer e UI
+│   ├── app/
+│   │   ├── config/
+│   │   │   ├── tools.ts
+│   │   │   └── guides.ts
+│   │   └── routes/
+│   │       └── AppRoutes.tsx
+│   │
+│   ├── components/
+│   │   ├── layout/
+│   │   └── ui/
+│   │
 │   ├── modules/
-│   │   └── croqui-converter/  # Módulo do conversor de imagem para .croqui
-│   │       ├── components/    # Uploader, preview, configurações
-│   │       ├── serializer/    # Serializador e validador do formato .croqui
-│   │       ├── services/      # Processamento de imagem em canvas offscreen
-│   │       └── types/         # Tipos e interfaces TypeScript
-│   ├── pages/              # Telas: Home, Ferramentas, Conversor, Projetos, Sobre
-│   ├── styles/             # Design tokens e folhas de estilo globais
-│   └── main.tsx            # Ponto de entrada da aplicação
-├── docs/                   # Documentação canônica técnica
-│   ├── PROJECT_MASTER.md   # Registro mestre de continuidade
-│   ├── ARCHITECTURE.md     # Padrões arquiteturais e decisões técnicas
-│   ├── ROADMAP.md          # Planejamento das versões v0.1 até v1.0
-│   ├── DECISIONS.md        # Registro formal de decisões arquiteturais (ADR)
-│   ├── KNOWLEDGE_INDEX.md  # Inventário dos manuais de referência locais
-│   └── CROQUI_FORMAT.md    # Especificação do formato .croqui
-├── legacy/                 # Versões funcionais preservadas para integridade
-│   └── converter-v0.1.html # Conversor original preservado
-├── tests/                  # Testes automatizados e fixtures reais (.croqui)
-│   └── fixtures/           # Fixtures de validação estrutural
-├── .github/workflows/      # Deploy automático no GitHub Pages
-├── CHANGELOG.md            # Histórico de alterações
+│   │   ├── croqui-converter/
+│   │   │   ├── components/
+│   │   │   ├── serializer/
+│   │   │   ├── services/
+│   │   │   └── types/
+│   │   │
+│   │   ├── vetor-forense/
+│   │   │   ├── components/
+│   │   │   │   └── wizard/
+│   │   │   ├── data/
+│   │   │   ├── engine/
+│   │   │   ├── storage/
+│   │   │   └── types/
+│   │   │
+│   │   └── guides/
+│   │       ├── components/
+│   │       ├── guides/
+│   │       └── types/
+│   │
+│   ├── pages/
+│   │   ├── Home/
+│   │   ├── Tools/
+│   │   ├── CroquiConverter/
+│   │   ├── Guides/
+│   │   ├── Projects/
+│   │   └── About/
+│   │
+│   ├── styles/
+│   └── main.tsx
+│
+├── docs/
+│   ├── PROJECT_MASTER.md
+│   ├── ARCHITECTURE.md
+│   ├── ROADMAP.md
+│   ├── DECISIONS.md
+│   ├── KNOWLEDGE_INDEX.md
+│   └── CROQUI_FORMAT.md
+│
+├── legacy/
+│
+├── tests/
+│   └── fixtures/
+│
+├── .github/
+│   └── workflows/
+│
+├── CHANGELOG.md
+├── package.json
 └── README.md
 ```
 
 ---
 
-## 5. Como Executar Localmente
+# 6. Como Executar Localmente
 
-### Pré-requisitos
-- Node.js (versão 18 ou superior, recomendado v22.x).
-- npm (versão 9 ou superior).
+## Pré-requisitos
 
-### Instalação e Execução
+- Node.js 18 ou superior.
+- Recomendado: Node.js 22.x ou versão LTS compatível.
+- npm 9 ou superior.
+
+## Clonar o projeto
+
 ```bash
-# 1. Clonar o repositório
-git clone https://github.com/atratora-labs/atratora-forge.git
+git clone https://github.com/antoniomoraes85/atratora-forge.git
 cd atratora-forge
-
-# 2. Instalar as dependências
-npm install
-
-# 3. Iniciar o servidor de desenvolvimento
-npm run dev
-
-# 4. Acessar a aplicação no navegador
-# Normalmente em: http://localhost:5173
 ```
 
-### Execução de Testes
+## Instalar dependências
+
 ```bash
-# Rodar todos os testes unitários e de regressão
+npm install
+```
+
+## Executar em desenvolvimento
+
+```bash
+npm run dev
+```
+
+A aplicação normalmente ficará disponível em:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# 7. Testes e Validação
+
+## Executar testes
+
+```bash
 npm test
 ```
 
-### Compilação de Produção
+## Verificar tipos
+
 ```bash
-# Gerar o bundle de produção otimizado na pasta dist/
+npm run typecheck
+```
+
+## Executar lint
+
+```bash
+npm run lint
+```
+
+## Gerar build de produção
+
+```bash
 npm run build
 ```
 
----
-
-## 6. Publicação no GitHub Pages
-
-O projeto está configurado para deploy automático no **GitHub Pages** através do fluxo em `.github/workflows/deploy.yml`.
-
-1. No repositório no GitHub, acesse **Settings > Pages**.
-2. Na seção **Build and deployment > Source**, selecione **GitHub Actions**.
-3. A cada push na branch `main`, a suite de testes será executada e a versão de produção será publicada no endereço:
-   `https://<usuario-ou-org>.github.io/atratora-forge/`
+O processo de produção executa a validação TypeScript antes da geração do bundle pelo Vite.
 
 ---
 
-## 7. Privacidade e Segurança
+# 8. Publicação no GitHub Pages
 
-- **Processamento 100% no Cliente**: As imagens selecionadas pelo usuário são carregadas diretamente na memória do navegador.
-- **Zero Rastreamento**: Não há Google Analytics, telemetria, cookies de rastreamento ou chamadas de telemetria de terceiros.
-- **Zero Armazenamento Externo**: Nenhuma imagem é gravada ou transmitida para qualquer servidor em nuvem.
+O projeto possui deploy automatizado através do **GitHub Actions**.
+
+O workflow encontra-se em:
+
+```text
+.github/workflows/
+```
+
+A publicação segue o fluxo:
+
+```text
+alteração
+   ↓
+commit
+   ↓
+push para main
+   ↓
+GitHub Actions
+   ↓
+testes/build
+   ↓
+GitHub Pages
+```
+
+Com o workflow configurado, alterações enviadas à branch `main` são automaticamente processadas e publicadas.
+
+### Aplicação pública
+
+https://antoniomoraes85.github.io/atratora-forge/
 
 ---
 
-## 8. Roadmap Resumido
+# 9. Privacidade e Segurança
 
-- **V0.1** (Atual): Fundação Premium + Conversor de Imagem para `.CROQUI`.
-- **V0.2**: Armazenamento local de projetos com IndexedDB.
-- **V0.3**: *Map Studio* — Coordenadas, satélite e mapas base.
-- **V0.4**: *Croqui Studio* — Canvas vetorial interativo com vias, veículos e vestígios.
-- **V0.5**: Exportador multiobjeto e conversão para SVG, PDF e GeoJSON.
-- **V0.6**: Domínio pericial de acidentes de trânsito e cálculos de física forense.
-- **V0.7 - V1.0**: Módulos *Dynamics*, *Validator*, *Documents* e plugins de extensibilidade.
+O Atratora Forge foi estruturado com prioridade para processamento local e minimização da exposição de informações técnicas.
 
-Consulte o documento completo em [`docs/ROADMAP.md`](docs/ROADMAP.md).
+### Processamento local
+
+As funcionalidades atualmente ativas são executadas diretamente no navegador.
+
+### Zero telemetria
+
+A plataforma não utiliza mecanismos próprios de:
+
+- rastreamento de comportamento;
+- análise de navegação;
+- telemetria operacional;
+- perfilamento do usuário.
+
+### Zero armazenamento externo dos casos
+
+Os casos e análises locais não dependem de banco de dados remoto para seu funcionamento atual.
+
+### Persistência local
+
+Quando necessária, a persistência é realizada no ambiente local do navegador.
+
+O usuário deve considerar que a limpeza dos dados do navegador poderá remover informações que não tenham sido previamente exportadas.
 
 ---
 
-## 9. Declaração de Independência e Disclaimer Institucional
+# 10. Princípios Técnicos
 
-A compatibilidade de determinados módulos do **Atratora Forge** com formatos de arquivo (como `.croqui`) ou fluxos técnicos utilizados por órgãos públicos ou sistemas de terceiros tem finalidade estritamente técnica de interoperabilidade.
+O Atratora Forge adota os seguintes princípios:
 
-**O Atratora Forge é uma plataforma independente da iniciativa privada, sem qualquer vínculo, convênio, homologação, parceria ou chancela oficial por parte da Polícia Rodoviária Federal (PRF), do Ministério da Justiça e Segurança Pública ou de qualquer outro órgão governamental.**
+### Local-First
+
+Priorizar execução no dispositivo do usuário.
+
+### Modularidade
+
+Cada ferramenta funciona como módulo independente integrado à plataforma.
+
+### Auditabilidade
+
+Cálculos técnicos devem permitir identificação das variáveis, parâmetros e fórmulas utilizadas.
+
+### Rastreabilidade
+
+Sempre que aplicável, parâmetros técnicos devem manter referência à respectiva fonte.
+
+### Determinismo
+
+Motores matemáticos devem produzir o mesmo resultado para as mesmas entradas.
+
+### Separação entre cálculo e interpretação
+
+O motor quantitativo deve permanecer separado das camadas de interface e apresentação.
+
+### Não invenção de dados
+
+Ausência de informação não deve ser automaticamente substituída por valores arbitrários.
 
 ---
 
-## 10. Créditos e Autoria
+# 11. Roadmap
+
+## Entregas concluídas
+
+### v0.1.x — Fundação
+
+- Estrutura inicial React + TypeScript + Vite.
+- Arquitetura modular.
+- Conversor de Imagem para `.CROQUI`.
+- Testes automatizados.
+- Deploy GitHub Pages.
+
+### v0.2.0 — Premium Foundation
+
+- Nova identidade visual.
+- Novo catálogo de ferramentas.
+- Dashboard reformulado.
+- Sistema de guias.
+- Expansão das categorias de ferramentas.
+- Melhorias de responsividade e design.
+
+### v0.2.1 — Interactive Learning System
+
+- Sistema interativo de tutoriais.
+- `InteractiveGuide`.
+- `TourOverlay`.
+- `GuideStepper`.
+- `GuideStage`.
+- Tutorial integrado ao Conversor `.CROQUI`.
+
+### v0.3.0 — Vetor Forense
+
+- Novo módulo de análise técnica.
+- Wizard de análise.
+- Cadastro de veículos.
+- Caracterização da via.
+- Cadastro de vestígios.
+- Base técnica parametrizada.
+- Motor de cálculo físico determinístico.
+- Múltiplos trechos de dissipação.
+- Seleção de métodos aplicáveis.
+- Intervalos de velocidade.
+- IFT.
+- ICA.
+- IAE.
+- Resultado técnico automatizado.
+- Persistência local.
+- Exportação da análise.
+- Integração à Home e ao diretório de ferramentas.
+
+## Próximos módulos
+
+- **Map Studio**
+- **Croqui Studio**
+- **Dynamics**
+- **Validator**
+- **Documents**
+- **Field Toolkit**
+- **Business Automation**
+
+O planejamento detalhado deve ser mantido em:
+
+[`docs/ROADMAP.md`](docs/ROADMAP.md)
+
+---
+
+# 12. Status das Ferramentas
+
+| Ferramenta | Categoria | Status |
+|---|---|---|
+| **Vetor Forense** | Análise | 🟢 Disponível |
+| **Conversor .CROQUI** | Conversores | 🟢 Disponível |
+| Map Studio | Geoprocessamento | 🟡 Em desenvolvimento |
+| Croqui Studio | Croquis | 🟡 Em desenvolvimento |
+| Dynamics | Análise | 🟡 Em desenvolvimento |
+| Validator | Validação | 🟡 Em desenvolvimento |
+| Documents | Documentos | 🟡 Em desenvolvimento |
+| Field Toolkit | Operações de Campo | 🟡 Em desenvolvimento |
+| Business Automation | Automação | 🟡 Em desenvolvimento |
+
+---
+
+# 13. Declaração de Independência e Disclaimer Institucional
+
+A compatibilidade de determinados módulos do **Atratora Forge** com formatos de arquivo, documentos, metodologias ou fluxos técnicos utilizados por órgãos públicos ou sistemas de terceiros possui finalidade exclusivamente técnica, analítica ou de interoperabilidade.
+
+O **Atratora Forge** é uma plataforma independente da iniciativa privada.
+
+**Não existe vínculo, convênio, homologação, parceria ou chancela oficial por parte da Polícia Rodoviária Federal, do Ministério da Justiça e Segurança Pública ou de qualquer outro órgão governamental, salvo declaração formal expressa em sentido contrário.**
+
+Os resultados produzidos por ferramentas de análise técnica dependem da qualidade, quantidade e confiabilidade dos dados fornecidos pelo usuário e não substituem o levantamento técnico, a perícia competente ou a avaliação individualizada do caso.
+
+---
+
+# 14. Créditos e Autoria
 
 **Desenvolvido por:**  
-**José Antônio Coutinho de Moraes Filho**  
-*Atratora Labs*
+**José Antônio Coutinho de Moraes Filho**
+
+**Atratora Labs**
+
+Plataforma idealizada e desenvolvida para criação de ferramentas técnicas, analíticas e operacionais com foco em modularidade, privacidade, rastreabilidade e processamento local.
