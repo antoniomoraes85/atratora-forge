@@ -1,0 +1,330 @@
+import React, { useState } from 'react';
+import { PlusCircle, Trash2, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import type { ForensicAnalysis, TrackSegment, TrackType, TrackMoment, MeasurementMethod, DataSource, ContactMode } from '../../types/analysis';
+import type { SurfaceType, SurfaceCondition } from '../../data/technicalBase';
+import {
+  TRACK_TYPE_LABELS, TRACK_MOMENT_LABELS, MEASUREMENT_METHOD_LABELS,
+  DATA_SOURCE_LABELS, CONTACT_MODE_LABELS, SURFACE_LABELS, CONDITION_LABELS,
+  SURFACE_OPTIONS, CONDITION_OPTIONS,
+} from '../../utils/labels';
+import { getBestFrictionParameter } from '../../data/technicalBase';
+
+interface Props {
+  analysis: ForensicAnalysis;
+  onChange: (partial: Partial<ForensicAnalysis>) => void;
+}
+
+function createTrack(vehicleId: string): TrackSegment {
+  return {
+    id: crypto.randomUUID(),
+    type: 'frenagem',
+    vehicleId,
+    moment: 'nao-determinado',
+    distanceM: 0,
+    surface: 'asfalto',
+    condition: 'seca',
+    contactMode: 'pneus',
+    measurementMethod: 'trena',
+    dataSource: 'medicao-direta',
+  };
+}
+
+const Field: React.FC<{ label: string; tooltip?: string; children: React.ReactNode }> = ({ label, tooltip, children }) => (
+  <div>
+    <label style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+      {label}
+      {tooltip && <span title={tooltip} style={{ color: 'var(--text-dim)', cursor: 'help' }}>ⓘ</span>}
+    </label>
+    {children}
+  </div>
+);
+
+export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const updateTrack = (id: string, partial: Partial<TrackSegment>) => {
+    onChange({ tracks: analysis.tracks.map(t => t.id === id ? { ...t, ...partial } : t) });
+  };
+
+  const addTrack = () => {
+    const vehicleId = analysis.vehicles[0]?.id ?? 'V1';
+    const newTrack = createTrack(vehicleId);
+    onChange({ tracks: [...analysis.tracks, newTrack] });
+    setExpanded(newTrack.id);
+  };
+
+  const removeTrack = (id: string) => {
+    onChange({ tracks: analysis.tracks.filter(t => t.id !== id) });
+    if (expanded === id) setExpanded(null);
+  };
+
+  const getSuggestedMu = (track: TrackSegment) => {
+    const vehicle = analysis.vehicles.find(v => v.id === track.vehicleId);
+    return getBestFrictionParameter({
+      surface: track.surface,
+      condition: track.condition,
+      vehicleType: vehicle?.type ?? null,
+      tireCondition: vehicle?.tireCondition ?? null,
+      contactMode: track.contactMode,
+    });
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div>
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>Vestígios</h2>
+        <p style={{ fontSize: '13.5px', color: 'var(--text-muted)' }}>
+          Cadastre cada trecho de vestígio identificado. O sistema sugerirá o coeficiente de atrito automaticamente.
+        </p>
+      </div>
+
+      {analysis.tracks.map((track) => {
+        const suggestedMu = getSuggestedMu(track);
+        const isExpanded = expanded === track.id;
+
+        return (
+          <div
+            key={track.id}
+            style={{
+              background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-md)', overflow: 'hidden',
+            }}
+          >
+            {/* Header colapsável */}
+            <div
+              onClick={() => setExpanded(isExpanded ? null : track.id)}
+              style={{
+                padding: '16px 20px', display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between', cursor: 'pointer',
+                background: isExpanded ? 'var(--bg-elevated)' : 'transparent',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{
+                  fontSize: '11px', fontWeight: 700, padding: '2px 8px',
+                  background: 'rgba(56,189,248,0.12)', border: '1px solid rgba(56,189,248,0.25)',
+                  borderRadius: 'var(--radius-full)', color: '#38bdf8',
+                }}>
+                  {track.vehicleId}
+                </span>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                  {TRACK_TYPE_LABELS[track.type]}
+                </span>
+                {track.distanceM > 0 && (
+                  <span style={{ fontSize: '12px', color: 'var(--text-dim)' }}>
+                    {track.distanceM} m
+                  </span>
+                )}
+                {suggestedMu && (
+                  <span style={{ fontSize: '11px', color: '#38bdf8', padding: '2px 6px', background: 'rgba(56,189,248,0.1)', borderRadius: '4px' }}>
+                    µ={suggestedMu.muCentral}
+                  </span>
+                )}
+                {!suggestedMu && (
+                  <span style={{ fontSize: '11px', color: 'var(--warning-text)', padding: '2px 6px', background: 'var(--warning-bg)', borderRadius: '4px' }}>
+                    Parâmetro não cadastrado
+                  </span>
+                )}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <button
+                  onClick={e => { e.stopPropagation(); removeTrack(track.id); }}
+                  style={{ background: 'transparent', border: 'none', color: 'var(--danger-text)', cursor: 'pointer', padding: '2px' }}
+                >
+                  <Trash2 size={14} />
+                </button>
+                {isExpanded ? <ChevronUp size={16} color="var(--text-dim)" /> : <ChevronDown size={16} color="var(--text-dim)" />}
+              </div>
+            </div>
+
+            {/* Campos expandidos */}
+            {isExpanded && (
+              <div style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '14px', marginBottom: '20px' }}>
+                  <Field label="Tipo *">
+                    <select value={track.type} onChange={e => updateTrack(track.id, { type: e.target.value as TrackType })} style={{ width: '100%' }}>
+                      {Object.entries(TRACK_TYPE_LABELS).map(([k, lbl]) => (
+                        <option key={k} value={k}>{lbl}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Veículo *">
+                    <select value={track.vehicleId} onChange={e => updateTrack(track.id, { vehicleId: e.target.value })} style={{ width: '100%' }}>
+                      {analysis.vehicles.map(v => (
+                        <option key={v.id} value={v.id}>{v.id}</option>
+                      ))}
+                      {analysis.vehicles.length === 0 && <option value="V1">V1</option>}
+                    </select>
+                  </Field>
+
+                  <Field label="Momento">
+                    <select value={track.moment} onChange={e => updateTrack(track.id, { moment: e.target.value as TrackMoment })} style={{ width: '100%' }}>
+                      {Object.entries(TRACK_MOMENT_LABELS).map(([k, lbl]) => (
+                        <option key={k} value={k}>{lbl}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Distância (m) *" tooltip="Comprimento efetivamente medido entre início e fim do vestígio.">
+                    <input
+                      type="number"
+                      value={track.distanceM || ''}
+                      onChange={e => updateTrack(track.id, { distanceM: Number(e.target.value) })}
+                      placeholder="Ex.: 42.3"
+                      min={0}
+                      step={0.1}
+                      style={{ width: '100%' }}
+                    />
+                  </Field>
+
+                  <Field label="Superfície">
+                    <select value={track.surface} onChange={e => updateTrack(track.id, { surface: e.target.value as SurfaceType })} style={{ width: '100%' }}>
+                      {SURFACE_OPTIONS.map(s => (
+                        <option key={s} value={s}>{SURFACE_LABELS[s]}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Condição">
+                    <select value={track.condition} onChange={e => updateTrack(track.id, { condition: e.target.value as SurfaceCondition })} style={{ width: '100%' }}>
+                      {CONDITION_OPTIONS.map(c => (
+                        <option key={c} value={c}>{CONDITION_LABELS[c]}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Modo de contato">
+                    <select value={track.contactMode} onChange={e => updateTrack(track.id, { contactMode: e.target.value as ContactMode })} style={{ width: '100%' }}>
+                      {Object.entries(CONTACT_MODE_LABELS).map(([k, lbl]) => (
+                        <option key={k} value={k}>{lbl}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Método de medição">
+                    <select value={track.measurementMethod} onChange={e => updateTrack(track.id, { measurementMethod: e.target.value as MeasurementMethod })} style={{ width: '100%' }}>
+                      {Object.entries(MEASUREMENT_METHOD_LABELS).map(([k, lbl]) => (
+                        <option key={k} value={k}>{lbl}</option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Fonte dos dados">
+                    <select value={track.dataSource} onChange={e => updateTrack(track.id, { dataSource: e.target.value as DataSource })} style={{ width: '100%' }}>
+                      {Object.entries(DATA_SOURCE_LABELS).map(([k, lbl]) => (
+                        <option key={k} value={k}>{lbl}</option>
+                      ))}
+                    </select>
+                  </Field>
+                </div>
+
+                {/* Coeficiente sugerido */}
+                <div style={{
+                  padding: '14px 16px',
+                  background: suggestedMu ? 'rgba(56,189,248,0.07)' : 'var(--warning-bg)',
+                  border: `1px solid ${suggestedMu ? 'rgba(56,189,248,0.2)' : 'var(--warning-border)'}`,
+                  borderRadius: 'var(--radius-sm)',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                    <Info size={14} color={suggestedMu ? '#38bdf8' : 'var(--warning-text)'} />
+                    <span style={{ fontSize: '12px', fontWeight: 700, color: suggestedMu ? '#38bdf8' : 'var(--warning-text)' }}>
+                      Coeficiente sugerido (fonte técnica)
+                    </span>
+                  </div>
+                  {suggestedMu ? (
+                    <div>
+                      <div style={{ display: 'flex', gap: '16px', fontSize: '13px', marginBottom: '6px' }}>
+                        <span style={{ color: 'var(--text-dim)' }}>Min: <strong style={{ color: 'var(--text-primary)' }}>{suggestedMu.muMin}</strong></span>
+                        <span style={{ color: '#38bdf8' }}>Central: <strong>{suggestedMu.muCentral}</strong></span>
+                        <span style={{ color: 'var(--text-dim)' }}>Max: <strong style={{ color: 'var(--text-primary)' }}>{suggestedMu.muMax}</strong></span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-dim)', lineHeight: 1.5 }}>
+                        Fonte técnica: {suggestedMu.source} — {suggestedMu.chapter}
+                        {suggestedMu.note && <><br />{suggestedMu.note}</>}
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: '12px', color: 'var(--warning-text)' }}>
+                      Parâmetro não cadastrado para esta combinação. Informe manualmente abaixo com fonte e justificativa.
+                    </div>
+                  )}
+                </div>
+
+                {/* Override manual */}
+                <div style={{ marginTop: '14px' }}>
+                  <details>
+                    <summary style={{ fontSize: '12px', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: 600 }}>
+                      Substituir coeficiente manualmente (parâmetro externo)
+                    </summary>
+                    <div style={{ paddingTop: '12px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
+                      <Field label="µ mínimo">
+                        <input type="number" step={0.01} min={0} max={2}
+                          value={track.frictionOverride?.muMin ?? ''}
+                          onChange={e => updateTrack(track.id, { frictionOverride: { ...track.frictionOverride, muMin: Number(e.target.value), muCentral: track.frictionOverride?.muCentral ?? 0, muMax: track.frictionOverride?.muMax ?? 0, source: track.frictionOverride?.source ?? '', justification: track.frictionOverride?.justification ?? '' } })}
+                          placeholder="0.00" style={{ width: '100%' }}
+                        />
+                      </Field>
+                      <Field label="µ central">
+                        <input type="number" step={0.01} min={0} max={2}
+                          value={track.frictionOverride?.muCentral ?? ''}
+                          onChange={e => updateTrack(track.id, { frictionOverride: { ...track.frictionOverride, muMin: track.frictionOverride?.muMin ?? 0, muCentral: Number(e.target.value), muMax: track.frictionOverride?.muMax ?? 0, source: track.frictionOverride?.source ?? '', justification: track.frictionOverride?.justification ?? '' } })}
+                          placeholder="0.00" style={{ width: '100%' }}
+                        />
+                      </Field>
+                      <Field label="µ máximo">
+                        <input type="number" step={0.01} min={0} max={2}
+                          value={track.frictionOverride?.muMax ?? ''}
+                          onChange={e => updateTrack(track.id, { frictionOverride: { ...track.frictionOverride, muMin: track.frictionOverride?.muMin ?? 0, muCentral: track.frictionOverride?.muCentral ?? 0, muMax: Number(e.target.value), source: track.frictionOverride?.source ?? '', justification: track.frictionOverride?.justification ?? '' } })}
+                          placeholder="0.00" style={{ width: '100%' }}
+                        />
+                      </Field>
+                      <Field label="Fonte *">
+                        <input type="text"
+                          value={track.frictionOverride?.source ?? ''}
+                          onChange={e => updateTrack(track.id, { frictionOverride: { ...track.frictionOverride, muMin: track.frictionOverride?.muMin ?? 0, muCentral: track.frictionOverride?.muCentral ?? 0, muMax: track.frictionOverride?.muMax ?? 0, source: e.target.value, justification: track.frictionOverride?.justification ?? '' } })}
+                          placeholder="Ex.: Ensaio UFSC 2024"
+                          style={{ width: '100%' }}
+                        />
+                      </Field>
+                      <Field label="Justificativa *">
+                        <input type="text"
+                          value={track.frictionOverride?.justification ?? ''}
+                          onChange={e => updateTrack(track.id, { frictionOverride: { ...track.frictionOverride, muMin: track.frictionOverride?.muMin ?? 0, muCentral: track.frictionOverride?.muCentral ?? 0, muMax: track.frictionOverride?.muMax ?? 0, source: track.frictionOverride?.source ?? '', justification: e.target.value } })}
+                          placeholder="Razão técnica para adoção do valor"
+                          style={{ width: '100%' }}
+                        />
+                      </Field>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <button
+        onClick={addTrack}
+        disabled={analysis.vehicles.length === 0}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '12px 20px', border: '1px dashed var(--border-default)',
+          borderRadius: 'var(--radius-md)', background: 'transparent',
+          color: analysis.vehicles.length === 0 ? 'var(--text-dim)' : 'var(--text-muted)',
+          fontSize: '13px', fontWeight: 600,
+          cursor: analysis.vehicles.length === 0 ? 'not-allowed' : 'pointer',
+          opacity: analysis.vehicles.length === 0 ? 0.5 : 1,
+        }}
+      >
+        <PlusCircle size={16} /> Adicionar trecho
+      </button>
+
+      {analysis.vehicles.length === 0 && (
+        <div style={{ fontSize: '12px', color: 'var(--warning-text)', padding: '10px 14px', background: 'var(--warning-bg)', border: '1px solid var(--warning-border)', borderRadius: 'var(--radius-sm)' }}>
+          Cadastre pelo menos um veículo antes de adicionar vestígios.
+        </div>
+      )}
+    </div>
+  );
+};

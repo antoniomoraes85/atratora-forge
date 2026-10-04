@@ -12,6 +12,7 @@ import {
   Settings2,
   Search,
   Filter,
+  Zap,
 } from 'lucide-react';
 import {
   TOOL_CATEGORIES,
@@ -29,7 +30,8 @@ const ICON_MAP: Record<ToolDefinition['iconName'], React.ElementType> = {
   FileCheck2,
   FileText,
   Briefcase,
-  Settings2
+  Settings2,
+  Zap,
 };
 
 // Cores accent por categoria (Premium Palette)

@@ -31,7 +31,7 @@ export interface ToolDefinition {
   /** Rota hash (apenas para ferramentas disponíveis) */
   path?: string;
   /** Nome do ícone Lucide */
-  iconName: 'FileImage' | 'Layers' | 'Map' | 'Activity' | 'FileCheck2' | 'FileText' | 'Briefcase' | 'Settings2';
+  iconName: 'FileImage' | 'Layers' | 'Map' | 'Activity' | 'FileCheck2' | 'FileText' | 'Briefcase' | 'Settings2' | 'Zap';
   /** Versão prevista de entrega */
   deliveryVersion?: string;
   /** Tags para busca de texto livre */
@@ -39,6 +39,18 @@ export interface ToolDefinition {
 }
 
 export const TOOLS_CATALOG: ToolDefinition[] = [
+  {
+    id: 'vetor-forense',
+    title: 'Vetor Forense',
+    description:
+      'Análise técnica de velocidade e dinâmica em sinistros de trânsito. Reconstrução baseada em vestígios, cinemática e dinâmica.',
+    category: 'Análise',
+    status: 'available',
+    path: '/tools/vetor-forense',
+    iconName: 'Zap',
+    deliveryVersion: 'v0.3',
+    tags: ['velocidade', 'perícia', 'sinistro', 'acidente', 'trânsito', 'dinâmica', 'cinemática', 'atrito', 'frenagem', 'vestígio', 'forense'],
+  },
   {
     id: 'croqui-converter',
     title: 'Conversor .CROQUI',
