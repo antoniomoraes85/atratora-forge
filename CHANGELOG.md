@@ -5,6 +5,27 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato baseia-se em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [0.3.0] - Vetor Forense
+
+### Adicionado
+- Vetor Forense como nova ferramenta ativa de análise técnica de velocidade e dinâmica.
+- Wizard estruturado para criação de análises.
+- Cadastro de veículos, via e vestígios.
+- Motor determinístico de cálculos físicos.
+- Processamento de múltiplos trechos de dissipação.
+- Seleção automática de métodos aplicáveis.
+- Base técnica parametrizada e rastreável.
+- Índices IFT, ICA e IAE.
+- Persistência local das análises.
+- Exportação estruturada.
+- Resultado técnico automatizado.
+- Integração com Home, catálogo de ferramentas e roteamento.
+
+### Alterado
+- Home reorganizada para priorizar ferramentas efetivamente disponíveis.
+- Diretório de ferramentas atualizado para destacar funcionalidades ativas.
+- Documentação atualizada para refletir o estado real da plataforma.
+
 ## [0.2.1] - Interactive Learning System
 ### Adicionado
 - **Sistema Interativo de Tutoriais**: Novo motor de passo-a-passo (`InteractiveGuide`, `TourOverlay`, `GuideStepper`, `GuideStage`) que se sobrepõe às ferramentas reais ou simula interações para os módulos conceituais.

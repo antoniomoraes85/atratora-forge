@@ -4,7 +4,7 @@ Plano de lançamento e evolução contínua da plataforma **Atratora Forge**, de
 
 ---
 
-## V0.1 — Fundação Premium + Conversor `.croqui` (Versão Atual)
+## V0.1 — Fundação Premium + Conversor `.croqui`
 - [x] Fundação profissional da plataforma web (React 18, TypeScript, Vite).
 - [x] Dashboard premium e responsiva (Dark Graphite, Indigo/Cyan, Microinterações).
 - [x] Arquitetura modular extensível.
@@ -24,11 +24,13 @@ Plano de lançamento e evolução contínua da plataforma **Atratora Forge**, de
 
 ---
 
-## V0.3 — Map Studio (Módulo Geográfico)
-- [ ] Busca e inserção de coordenadas geográficas (Lat/Long, UTM, marcos quilométricos).
-- [ ] Integração com camadas de mapas livres (OpenStreetMap, ortofotos de satélite públicas).
-- [ ] Ferramenta de enquadramento, escala métrica e rotação orientada ao norte.
-- [ ] Captura de mapa base em alta resolução e envio direto para conversão `.croqui`.
+## V0.3 — Vetor Forense & Map Studio (Versão Atual)
+- [x] Vetor Forense: Ferramenta ativa de análise técnica de velocidade e dinâmica.
+- [x] Vetor Forense: Motor determinístico de cálculos físicos, base técnica e índices de confiabilidade.
+- [ ] Map Studio: Busca e inserção de coordenadas geográficas (Lat/Long, UTM, marcos quilométricos).
+- [ ] Map Studio: Integração com camadas de mapas livres (OpenStreetMap, ortofotos de satélite públicas).
+- [ ] Map Studio: Ferramenta de enquadramento, escala métrica e rotação orientada ao norte.
+- [ ] Map Studio: Captura de mapa base em alta resolução e envio direto para conversão `.croqui`.
 
 ---
 

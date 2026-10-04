@@ -1,5 +1,5 @@
 /**
- * Catálogo Central de Ferramentas — Atratora Forge v0.2.0
+ * Catálogo Central de Ferramentas — Atratora Forge v0.3.0
  *
  * Única fonte de verdade para o catálogo de ferramentas.
  * Home, Diretório, Guias e buscas consomem este objeto.

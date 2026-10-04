@@ -8,11 +8,11 @@
 ## 1. Identificação Geral
 
 # PROMPT MASTER DE EXECUÇÃO — ATRATORA FORGE
-# V0.2.0 — FUNDAÇÃO PREMIUM + SISTEMA DE GUIAS
+# V0.3.0 — FUNDAÇÃO PREMIUM + SISTEMA DE GUIAS
 # Empresa: Atratora Labs
 # Desenvolvedor: José Antônio Coutinho de Moraes Filho
 - **Posicionamento**: *“Plataforma de ferramentas inteligentes para automação de fluxos técnicos.”*
-- **Versão Atual**: `0.2.0` (V0.2 — Integração de Sistema de Guias e Melhoria de UX)
+- **Versão Atual**: `0.3.0` (V0.2 — Integração de Sistema de Guias e Melhoria de UX)
 - **Status do Projeto**: Em desenvolvimento ativo / v0.2 em progresso
 
 ---
@@ -141,7 +141,7 @@ Todas as decisões fundamentais encontram-se detalhadas em `docs/DECISIONS.md`:
 
 ## 11. Histórico de Versões
 
-- **v0.2.1** (05/09/2026):
+- **v0.3.0** (05/09/2026):
   - Conclusão do sistema de Guias Interativos.
   - Implementação do passo a passo dinâmico dentro da interface real do Conversor .CROQUI.
   - Atualização do painel de resultado com navegação direta para tutoriais.

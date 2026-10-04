@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
               {title}
             </h2>
             <span className="badge badge-primary" style={{ fontSize: '10px' }}>
-              v0.2.0
+              v0.3.0
             </span>
           </div>
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>

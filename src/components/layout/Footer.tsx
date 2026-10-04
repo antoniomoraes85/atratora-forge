@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
           Atratora Labs • Atratora Forge
         </p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '6px' }}>
-           <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Versão 0.2.0</span>
+           <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Versão 0.3.0</span>
            <span style={{ fontSize: '11px', color: 'var(--border-default)' }}>|</span>
            <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Processamento local</span>
         </div>

@@ -1,5 +1,5 @@
 /**
- * Catálogo Central de Guias — Atratora Forge v0.2.1
+ * Catálogo Central de Guias — Atratora Forge v0.3.0
  */
 
 import type { GuideDefinition, GuideStatus } from '../../modules/guides/types';
