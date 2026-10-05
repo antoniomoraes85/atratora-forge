@@ -57,8 +57,7 @@ export const VetorForense: React.FC = () => {
       </div>
 
       {/* ── HEADER DO MÓDULO ── */}
-      <div style={{
-        className="vf-module-header",
+      <div className="vf-module-header" style={{
         padding: '28px 32px',
         background: 'linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(99,102,241,0.06) 100%)',
         border: '1px solid rgba(56,189,248,0.15)',
@@ -122,8 +121,7 @@ export const VetorForense: React.FC = () => {
       </div>
 
       {/* ── SUBNAVEGAÇÃO ── */}
-      <div style={{
-        className="vf-subnav",
+      <div className="vf-subnav" style={{
         display: 'flex', gap: '4px', flexWrap: 'wrap',
         padding: '6px', background: 'var(--bg-surface)',
         border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)',
