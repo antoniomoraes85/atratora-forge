@@ -1,11 +1,18 @@
+import { createDemoAnalysis } from '../data/demoCase';
+import { resolveTrack } from '../engine/trackValidation';
+import { saveAnalysis } from '../store/localStore';
 import React, { useState } from 'react';
 import { AlertTriangle, CheckCircle, ChevronRight, ChevronLeft, BookOpen } from 'lucide-react';
 import type { VFTab } from './VetorForense';
 
 interface VFTutorialProps {
-  onNavigate: (tab: VFTab) => void;
+  onNavigate: (tab: VFTab, analysisId?: string) => void;
 }
 
+const demo = createDemoAnalysis();
+const demoMethod = demo.methods.find(m => m.status === 'suficiente')!;
+const demoMu = resolveTrack(demo.tracks[0], demo).mu!;
+const fmt = (v: number) => v.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
 const TUTORIAL_STEPS = [
   {
     id: 1,
@@ -65,11 +72,11 @@ O sistema buscará automaticamente o coeficiente de atrito correspondente na bas
     content: `Com base na superfície (asfalto seco) e no tipo de pneu (usados), o sistema sugere:
 
 Coeficiente de atrito sugerido (fonte técnica):
-• µ mínimo: 0,60
-• µ central: 0,70
-• µ máximo: 0,80
+• µ mínimo: ${fmt(demoMu.muMin)}
+• µ central: ${fmt(demoMu.muCentral)}
+• µ máximo: ${fmt(demoMu.muMax)}
 
-Fonte: M_015 — Manual de Atendimento e Perícia de Acidentes de Trânsito
+Fonte técnica disponível na etapa Vestígios e na Base Técnica.
 
 O usuário pode aceitar o valor sugerido ou substituí-lo manualmente (exige fonte e justificativa).`,
     tip: 'O parâmetro "externo" fica visualmente identificado na interface.',
@@ -80,14 +87,14 @@ O usuário pode aceitar o valor sugerido ou substituí-lo manualmente (exige fon
     content: `O sistema verifica automaticamente quais métodos têm dados suficientes:
 
 ✓ Dissipação por atrito — V1
-   Dados: distância = 42,3 m | µ = 0,60 / 0,70 / 0,80
+   Dados: distância = 42,3 m | µ = ${fmt(demoMu.muMin)} / ${fmt(demoMu.muCentral)} / ${fmt(demoMu.muMax)}
    Status: Dados suficientes
 
 △ Danos
    Status: Indicador auxiliar
 
-✕ Quantidade de movimento
-   Status: Dados insuficientes (massa necessária)`,
+○ Quantidade de movimento
+   Status: Não disponível nesta versão`,
     tip: 'Dois vestígios do mesmo tipo (ex: duas frenagens de V1) contam como um único método.',
   },
   {
@@ -98,14 +105,11 @@ O usuário pode aceitar o valor sugerido ou substituí-lo manualmente (exige fon
 Fórmula: v = √(2 × g × µ × d)
 g = 9,80665 m/s²
 
-Para µ mínimo (0,60):
-v = √(2 × 9,80665 × 0,60 × 42,3) = √(497,6) ≈ 22,3 m/s = 80,3 km/h
+µ mínimo: ${fmt(demoMu.muMin)} → ${fmt(demoMethod.minKmh!)} km/h
+µ central: ${fmt(demoMu.muCentral)} → ${fmt(demoMethod.centralKmh!)} km/h
+µ máximo: ${fmt(demoMu.muMax)} → ${fmt(demoMethod.maxKmh!)} km/h
 
-Para µ central (0,70):
-v = √(2 × 9,80665 × 0,70 × 42,3) = √(580,5) ≈ 24,1 m/s = 86,7 km/h
-
-Para µ máximo (0,80):
-v = √(2 × 9,80665 × 0,80 × 42,3) = √(663,4) ≈ 25,8 m/s = 92,8 km/h`,
+Valores gerados pelo mesmo motor da análise real.`,
     tip: 'O botão "Como foi calculado?" em cada método mostra todas as variáveis e cálculos intermediários.',
   },
   {
@@ -113,26 +117,25 @@ v = √(2 × 9,80665 × 0,80 × 42,3) = √(663,4) ≈ 25,8 m/s = 92,8 km/h`,
     title: 'Interpretar intervalo de velocidade',
     content: `Resultado do método de dissipação por atrito — V1:
 
-     80 ────────── 87 ────────── 93 km/h
+     ${fmt(demoMethod.minKmh!)} ───── ${fmt(demoMethod.centralKmh!)} ───── ${fmt(demoMethod.maxKmh!)} km/h
    (min)        (central)       (max)
 
 Este é o intervalo estimado para a velocidade de V1 no início da marca de frenagem.
 
-O valor central não é uma velocidade "exata" — é o ponto médio do intervalo.`,
+O valor central não é uma velocidade "exata" — é calculado com o coeficiente central adotado.`,
     tip: 'Evite apresentar o valor central isoladamente. O intervalo é a informação técnica relevante.',
   },
   {
     id: 9,
     title: 'Interpretar fidedignidade e convergência',
-    content: `IFT — Índice de Fidedignidade Técnica: 72%
-Classificação: Moderada
+    content: `IFT — Índice de Fidedignidade Técnica: ${fmt(demo.ift!)}%
 
-Composição do IFT neste caso:
-• Qualidade da medição (distanciômetro): 85/100 → contribui 25,5
-• Qualidade do parâmetro (base técnica): 85/100 → contribui 21,3
-• Preservação (parcialmente preservada): 60/100 → contribui 9,0
-• Completude: 65/100 → contribui 9,8
-• Rastreabilidade: 80/100 → contribui 12,0
+Composição calculada pelo motor:
+• Qualidade da medição: ${fmt(demo.iftInput!.measurementQuality)}/100
+• Qualidade do parâmetro: ${fmt(demo.iftInput!.parameterQuality)}/100
+• Preservação: ${fmt(demo.iftInput!.preservation)}/100
+• Completude: ${fmt(demo.iftInput!.completeness)}/100
+• Rastreabilidade: ${fmt(demo.iftInput!.traceability)}/100
 
 ICA: Não aferível (apenas 1 método independente quantitativo)
 IAE: Não aferível (requer ICA)
@@ -145,12 +148,10 @@ ATENÇÃO: IFT é índice interno de qualidade dos dados. Não representa probab
     title: 'Analisar limitações e resultado técnico',
     content: `Lacunas identificadas que poderiam melhorar esta estimativa:
 • Ensaio de atrito no local (µ medido)
-• Inclinação da via (não informada)
-• Massa de V1 (não informada)
 • Registro eletrônico (não disponível)
 
 Texto técnico gerado automaticamente:
-"Com base nos dados informados e nos métodos disponíveis, a velocidade de V1 no início da fase analisada foi estimada entre 80 e 93 km/h, com valor central de referência de 87 km/h. O índice de fidedignidade técnica (IFT) foi de 72%. A estimativa está condicionada às premissas e limitações apresentadas na análise."
+${demo.technicalSummary}
 
 Este é um caso demonstrativo — os dados são fictícios.`,
     tip: 'O texto gerado nunca inclui atribuição de culpa, crime ou certeza absoluta.',
@@ -167,6 +168,7 @@ export const VFTutorial: React.FC<VFTutorialProps> = ({ onNavigate }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
+      <button onClick={() => { const example = createDemoAnalysis(); saveAnalysis(example); onNavigate('nova-analise', example.id); }}>Usar este caso demonstrativo</button>
       {/* Banner tutorial */}
       <div style={{
         padding: '12px 16px',

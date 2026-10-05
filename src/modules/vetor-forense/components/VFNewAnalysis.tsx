@@ -1,3 +1,5 @@
+import { hasQuantitativeResult } from '../engine/trackValidation';
+import type { AnalysisIssue } from '../types/analysis';
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Save, Check } from 'lucide-react';
 import { saveAnalysis, loadAnalyses } from '../store/localStore';
@@ -28,7 +30,7 @@ function createEmptyAnalysis(): ForensicAnalysis {
   return {
     id: crypto.randomUUID(),
     title: 'Nova análise',
-    date: now.slice(0, 10),
+    date: new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' }),
     createdAt: now,
     updatedAt: now,
     availableElements: [],
@@ -63,6 +65,7 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
     }
     return createEmptyAnalysis();
   });
+  const [correction, setCorrection] = useState<AnalysisIssue>();
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -110,9 +113,19 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
   const isFirst = stepIndex === 0;
   const isLast = stepIndex === WIZARD_STEPS.length - 1;
 
+  const currentMethods = computeMethods(analysis);
+  const canShowResult = hasQuantitativeResult(currentMethods);
+  const issues = currentMethods.flatMap(m => m.issues ?? []);
+  const correct = (issue: AnalysisIssue) => {
+    setCorrection(issue);
+    setCurrentStep(issue.step);
+    if (issue.step !== 'vestigios') setTimeout(() => document.getElementById(issue.field)?.focus(), 0);
+  };
+  const navigateStep = (step: WizardStep) => setCurrentStep(step === 'resultado' && !canShowResult ? 'metodos' : step);
+
   const goNext = () => {
     if (!isLast) {
-      setCurrentStep(WIZARD_STEPS[stepIndex + 1].id);
+      navigateStep(WIZARD_STEPS[stepIndex + 1].id);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -134,7 +147,7 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
           return (
             <button
               key={step.id}
-              onClick={() => setCurrentStep(step.id)}
+              onClick={() => navigateStep(step.id)}
               style={{
                 display: 'flex', alignItems: 'center', gap: '6px',
                 padding: '8px 16px', border: 'none',
@@ -179,16 +192,23 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
           <WizardStepVia analysis={analysis} onChange={update} />
         )}
         {currentStep === 'vestigios' && (
-          <WizardStepVestigios analysis={analysis} onChange={update} />
+          <WizardStepVestigios correction={correction} analysis={analysis} onChange={update} />
         )}
         {currentStep === 'metodos' && (
-          <WizardStepMetodos analysis={analysis} onChange={update} />
+          <WizardStepMetodos onCorrect={correct} analysis={analysis} onChange={update} />
         )}
-        {currentStep === 'resultado' && (
+        {currentStep === 'resultado' && canShowResult && (
           <WizardStepResultado analysis={analysis} onSave={handleSave} />
         )}
       </div>
 
+      {currentStep === 'metodos' && !canShowResult && <section role="alert">
+        <h2>Ainda não é possível estimar a velocidade</h2>
+        <p>{issues.length ? `Faltam ${issues.length} informações:` : 'Cadastre um vestígio de método implementado com distância e coeficiente válido.'}</p>
+        <ul>{issues.map((issue, i) => <li key={i}>{issue.message}</li>)}</ul>
+        <button onClick={() => correct(issues[0] ?? { step: analysis.vehicles.length ? 'vestigios' : 'veiculos', field: 'add-track', message: '' })}>Corrigir dados</button>
+        <button onClick={handleSave}>{saved ? 'Salvo!' : 'Salvar e continuar depois'}</button>
+      </section>}
       {/* Controles */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',

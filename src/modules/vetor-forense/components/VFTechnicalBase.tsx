@@ -86,7 +86,7 @@ export const VFTechnicalBase: React.FC = () => {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
           <thead>
             <tr style={{ background: 'var(--bg-elevated)', borderBottom: '1px solid var(--border-default)' }}>
-              {['Superfície', 'Condição', 'Contato', 'µ min', 'µ central', 'µ max', 'Fonte técnica', ''].map(h => (
+              {['Superfície', 'Condição', 'Contato', 'Veículo / pneus', 'µ min', 'µ central', 'µ max', 'Fonte técnica', ''].map(h => (
                 <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
                   {h}
                 </th>
@@ -109,6 +109,7 @@ export const VFTechnicalBase: React.FC = () => {
                   <td style={{ padding: '10px 12px', color: 'var(--text-muted)', fontSize: '12px' }}>
                     {p.contactMode ?? 'pneus'}
                   </td>
+                  <td>{p.vehicleType ?? 'Todos'} / {p.tireCondition ?? 'Não específico'}</td>
                   <td style={{ padding: '10px 12px', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
                     {p.muMin.toFixed(2)}
                   </td>
@@ -130,7 +131,7 @@ export const VFTechnicalBase: React.FC = () => {
                 </tr>
                 {expandedId === p.id && (
                   <tr style={{ background: 'var(--bg-surface)' }}>
-                    <td colSpan={8} style={{ padding: '16px 20px' }}>
+                    <td colSpan={9} style={{ padding: '16px 20px' }}>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                         <div>
                           <div style={{ fontSize: '11px', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '6px' }}>Referência completa</div>
@@ -151,6 +152,8 @@ export const VFTechnicalBase: React.FC = () => {
                             {p.vehicleType ? `Veículo: ${p.vehicleType}` : 'Genérico (todos os veículos)'}
                           </div>
                           <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                            Contato: {p.contactMode ?? 'pneus'}<br />
+                            Faixa de velocidade: não especificada na base.<br />
                             {p.tireCondition ? `Pneu: ${p.tireCondition}` : 'Condição de pneu não específica'}
                           </div>
                         </div>

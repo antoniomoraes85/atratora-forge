@@ -138,7 +138,8 @@ export type MethodStatus =
   | 'suficiente'
   | 'insuficiente'
   | 'auxiliar'
-  | 'nao-aplicavel';
+  | 'nao-aplicavel'
+  | 'nao-disponivel';
 
 export type ParameterSource = 'tecnico' | 'externo';
 
@@ -242,6 +243,7 @@ export interface MethodResult {
   availabilityReason: string;
   /** Qualidade deste método: 0–100 */
   qualityScore: number;
+  issues?: AnalysisIssue[];
   /** Parâmetro técnico usado */
   parameterRef?: string;
   /** Fórmula usada */
@@ -326,3 +328,10 @@ export type WizardStep =
   | 'vestigios'
   | 'metodos'
   | 'resultado';
+
+export interface AnalysisIssue {
+  message: string;
+  step: WizardStep;
+  field: string;
+  trackId?: string;
+}

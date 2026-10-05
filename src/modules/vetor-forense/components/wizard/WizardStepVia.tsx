@@ -83,7 +83,7 @@ export const WizardStepVia: React.FC<Props> = ({ analysis, onChange }) => {
           <Field label="Inclinação (%)" tooltip="Positivo = aclive, negativo = declive. Influencia o cálculo de velocidade.">
             <input
               type="number"
-              value={road.gradePercent ?? ''}
+              id="gradePercent" value={road.gradePercent ?? ''}
               onChange={e => update({ gradePercent: e.target.value !== '' ? Number(e.target.value) : undefined })}
               placeholder="Opcional"
               step={0.1}

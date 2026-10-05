@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PlusCircle, Trash2, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import type { ForensicAnalysis, TrackSegment, TrackType, TrackMoment, MeasurementMethod, DataSource, ContactMode } from '../../types/analysis';
 import type { SurfaceType, SurfaceCondition } from '../../data/technicalBase';
@@ -7,10 +7,12 @@ import {
   DATA_SOURCE_LABELS, CONTACT_MODE_LABELS, SURFACE_LABELS, CONDITION_LABELS,
   SURFACE_OPTIONS, CONDITION_OPTIONS,
 } from '../../utils/labels';
-import { getBestFrictionParameter } from '../../data/technicalBase';
+import { resolveTrack } from '../../engine/trackValidation';
+import type { AnalysisIssue } from '../../types/analysis';
 
 interface Props {
   analysis: ForensicAnalysis;
+  correction?: AnalysisIssue;
   onChange: (partial: Partial<ForensicAnalysis>) => void;
 }
 
@@ -39,16 +41,26 @@ const Field: React.FC<{ label: string; tooltip?: string; children: React.ReactNo
   </div>
 );
 
-export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => {
-  const [expanded, setExpanded] = useState<string | null>(null);
+export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange, correction }) => {
+  const [expanded, setExpanded] = useState<string | null>(analysis.tracks[0]?.id ?? null);
+
+  useEffect(() => {
+    if (correction?.trackId) setExpanded(correction.trackId);
+  }, [correction]);
+  useEffect(() => {
+    if (!correction) return;
+    const element = document.getElementById(correction.trackId ? `${correction.trackId}-${correction.field}` : correction.field);
+    element?.scrollIntoView({ block: 'center' });
+    element?.focus();
+  }, [correction, expanded]);
 
   const updateTrack = (id: string, partial: Partial<TrackSegment>) => {
-    onChange({ tracks: analysis.tracks.map(t => t.id === id ? { ...t, ...partial } : t) });
+    onChange({ tracks: analysis.tracks.map(t => t.id === id ? { ...t, ...partial, parameterRefId: ['surface', 'condition', 'contactMode', 'vehicleId', 'type'].some(k => k in partial) ? undefined : ('parameterRefId' in partial ? partial.parameterRefId : t.parameterRefId) } : t) });
   };
 
   const addTrack = () => {
     const vehicleId = analysis.vehicles[0]?.id ?? 'V1';
-    const newTrack = createTrack(vehicleId);
+    const newTrack = { ...createTrack(vehicleId), surface: analysis.road.surface, condition: analysis.road.condition };
     onChange({ tracks: [...analysis.tracks, newTrack] });
     setExpanded(newTrack.id);
   };
@@ -58,16 +70,6 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
     if (expanded === id) setExpanded(null);
   };
 
-  const getSuggestedMu = (track: TrackSegment) => {
-    const vehicle = analysis.vehicles.find(v => v.id === track.vehicleId);
-    return getBestFrictionParameter({
-      surface: track.surface,
-      condition: track.condition,
-      vehicleType: vehicle?.type ?? null,
-      tireCondition: vehicle?.tireCondition ?? null,
-      contactMode: track.contactMode,
-    });
-  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -78,8 +80,9 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
         </p>
       </div>
 
+      <p><strong>Obrigatórios para calcular:</strong> veículo, tipo de vestígio, distância, superfície e condição. Confira também o contato e o coeficiente adotado.</p>
       {analysis.tracks.map((track) => {
-        const suggestedMu = getSuggestedMu(track);
+        const { parameter: suggestedMu, candidates, mu, issues } = resolveTrack(track, analysis);
         const isExpanded = expanded === track.id;
 
         return (
@@ -115,14 +118,14 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                     {track.distanceM} m
                   </span>
                 )}
-                {suggestedMu && (
+                {mu && (
                   <span style={{ fontSize: '11px', color: '#38bdf8', padding: '2px 6px', background: 'rgba(56,189,248,0.1)', borderRadius: '4px' }}>
-                    µ={suggestedMu.muCentral}
+                    µ={mu.muCentral}
                   </span>
                 )}
-                {!suggestedMu && (
+                {!mu && (
                   <span style={{ fontSize: '11px', color: 'var(--warning-text)', padding: '2px 6px', background: 'var(--warning-bg)', borderRadius: '4px' }}>
-                    Parâmetro não cadastrado
+                    {candidates.length > 1 ? 'Escolha o coeficiente' : 'Parâmetro não cadastrado'}
                   </span>
                 )}
               </div>
@@ -137,12 +140,15 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
               </div>
             </div>
 
+            <div role="status" style={{ padding: '8px 20px', color: issues.length ? 'var(--warning-text)' : 'var(--success-text)' }}>
+              {issues.length ? `⚠ ${issues.length === 1 ? 'Falta 1 informação' : `Faltam ${issues.length} informações`}: ${issues.map(i => i.message).join(' ')}` : '✓ Dados suficientes para cálculo'}
+            </div>
             {/* Campos expandidos */}
             {isExpanded && (
               <div style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '14px', marginBottom: '20px' }}>
                   <Field label="Tipo *">
-                    <select value={track.type} onChange={e => updateTrack(track.id, { type: e.target.value as TrackType })} style={{ width: '100%' }}>
+                    <select id={`${track.id}-type`} aria-label="type" value={track.type} onChange={e => updateTrack(track.id, { type: e.target.value as TrackType, contactMode: e.target.value === 'motocicleta-tombada' ? 'motocicleta-tombada' : e.target.value === 'sobre-teto' ? 'teto' : e.target.value === 'deslizamento-lateral' ? 'lateral' : 'pneus' })} style={{ width: '100%' }}>
                       {Object.entries(TRACK_TYPE_LABELS).map(([k, lbl]) => (
                         <option key={k} value={k}>{lbl}</option>
                       ))}
@@ -150,11 +156,12 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                   </Field>
 
                   <Field label="Veículo *">
-                    <select value={track.vehicleId} onChange={e => updateTrack(track.id, { vehicleId: e.target.value })} style={{ width: '100%' }}>
+                    <select id={`${track.id}-vehicleId`} aria-label="vehicleId" value={track.vehicleId} onChange={e => updateTrack(track.id, { vehicleId: e.target.value })} style={{ width: '100%' }}>
+                      <option value="">Selecione o veículo</option>
                       {analysis.vehicles.map(v => (
                         <option key={v.id} value={v.id}>{v.id}</option>
                       ))}
-                      {analysis.vehicles.length === 0 && <option value="V1">V1</option>}
+
                     </select>
                   </Field>
 
@@ -168,7 +175,7 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
 
                   <Field label="Distância (m) *" tooltip="Comprimento efetivamente medido entre início e fim do vestígio.">
                     <input
-                      type="number"
+                      id={`${track.id}-distanceM`} aria-label="Distância do vestígio" type="number"
                       value={track.distanceM || ''}
                       onChange={e => updateTrack(track.id, { distanceM: Number(e.target.value) })}
                       placeholder="Ex.: 42.3"
@@ -178,16 +185,16 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                     />
                   </Field>
 
-                  <Field label="Superfície">
-                    <select value={track.surface} onChange={e => updateTrack(track.id, { surface: e.target.value as SurfaceType })} style={{ width: '100%' }}>
+                  <Field label="Superfície *">
+                    <select id={`${track.id}-surface`} aria-label="surface" value={track.surface} onChange={e => updateTrack(track.id, { surface: e.target.value as SurfaceType })} style={{ width: '100%' }}>
                       {SURFACE_OPTIONS.map(s => (
                         <option key={s} value={s}>{SURFACE_LABELS[s]}</option>
                       ))}
                     </select>
                   </Field>
 
-                  <Field label="Condição">
-                    <select value={track.condition} onChange={e => updateTrack(track.id, { condition: e.target.value as SurfaceCondition })} style={{ width: '100%' }}>
+                  <Field label="Condição *">
+                    <select id={`${track.id}-condition`} aria-label="condition" value={track.condition} onChange={e => updateTrack(track.id, { condition: e.target.value as SurfaceCondition })} style={{ width: '100%' }}>
                       {CONDITION_OPTIONS.map(c => (
                         <option key={c} value={c}>{CONDITION_LABELS[c]}</option>
                       ))}
@@ -195,7 +202,7 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                   </Field>
 
                   <Field label="Modo de contato">
-                    <select value={track.contactMode} onChange={e => updateTrack(track.id, { contactMode: e.target.value as ContactMode })} style={{ width: '100%' }}>
+                    <select id={`${track.id}-contactMode`} aria-label="contactMode" value={track.contactMode} onChange={e => updateTrack(track.id, { contactMode: e.target.value as ContactMode })} style={{ width: '100%' }}>
                       {Object.entries(CONTACT_MODE_LABELS).map(([k, lbl]) => (
                         <option key={k} value={k}>{lbl}</option>
                       ))}
@@ -219,6 +226,13 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                   </Field>
                 </div>
 
+                {candidates.length > 1 && !track.frictionOverride && <Field label="Escolher coeficiente compatível">
+                  <p>As opções diferem por veículo, pneus ou condições de aplicação. Escolha conforme o observado.</p>
+                  <select id={`${track.id}-parameterRefId`} aria-label="Coeficiente compatível" value={suggestedMu?.id ?? ''} onChange={e => updateTrack(track.id, { parameterRefId: e.target.value })}>
+                    <option value="">Selecione o parâmetro</option>
+                    {candidates.map(p => <option key={p.id} value={p.id}>{p.vehicleType ?? 'Veículos em geral'} · pneus {p.tireCondition ?? 'não específicos'} · µ {p.muMin} / {p.muCentral} / {p.muMax} · {p.note ?? p.id}</option>)}
+                  </select>
+                </Field>}
                 {/* Coeficiente sugerido */}
                 <div style={{
                   padding: '14px 16px',
@@ -229,34 +243,34 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                     <Info size={14} color={suggestedMu ? '#38bdf8' : 'var(--warning-text)'} />
                     <span style={{ fontSize: '12px', fontWeight: 700, color: suggestedMu ? '#38bdf8' : 'var(--warning-text)' }}>
-                      Coeficiente sugerido (fonte técnica)
+                      {track.frictionOverride ? 'Coeficiente manual adotado' : 'Coeficiente sugerido'}
                     </span>
                   </div>
-                  {suggestedMu ? (
+                  {mu ? (
                     <div>
                       <div style={{ display: 'flex', gap: '16px', fontSize: '13px', marginBottom: '6px' }}>
-                        <span style={{ color: 'var(--text-dim)' }}>Min: <strong style={{ color: 'var(--text-primary)' }}>{suggestedMu.muMin}</strong></span>
-                        <span style={{ color: '#38bdf8' }}>Central: <strong>{suggestedMu.muCentral}</strong></span>
-                        <span style={{ color: 'var(--text-dim)' }}>Max: <strong style={{ color: 'var(--text-primary)' }}>{suggestedMu.muMax}</strong></span>
+                        <span style={{ color: 'var(--text-dim)' }}>Min: <strong style={{ color: 'var(--text-primary)' }}>{mu.muMin}</strong></span>
+                        <span style={{ color: '#38bdf8' }}>Central: <strong>{mu.muCentral}</strong></span>
+                        <span style={{ color: 'var(--text-dim)' }}>Max: <strong style={{ color: 'var(--text-primary)' }}>{mu.muMax}</strong></span>
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-                        Fonte técnica: {suggestedMu.source} — {suggestedMu.chapter}
-                        {suggestedMu.note && <><br />{suggestedMu.note}</>}
+                        {track.frictionOverride ? `Fonte externa: ${track.frictionOverride.source}` : <details><summary>Fonte técnica disponível</summary>{suggestedMu?.source} — {suggestedMu?.chapter}<br />{suggestedMu?.note}</details>}
                       </div>
                     </div>
                   ) : (
                     <div style={{ fontSize: '12px', color: 'var(--warning-text)' }}>
-                      Parâmetro não cadastrado para esta combinação. Informe manualmente abaixo com fonte e justificativa.
+                      {candidates.length > 1 ? 'Escolha uma das opções compatíveis acima.' : 'Nenhum coeficiente compatível foi encontrado na base técnica. Informe manualmente com fonte e justificativa.'}
                     </div>
                   )}
                 </div>
 
                 {/* Override manual */}
                 <div style={{ marginTop: '14px' }}>
-                  <details>
-                    <summary style={{ fontSize: '12px', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: 600 }}>
+                  <details open={!!track.frictionOverride || correction?.field === 'frictionOverride' || correction?.field === 'parameterRefId'}>
+                    <summary id={`${track.id}-${candidates.length === 0 && correction?.field === 'parameterRefId' ? 'parameterRefId' : 'frictionOverride'}`} tabIndex={-1} style={{ fontSize: '12px', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: 600 }}>
                       Substituir coeficiente manualmente (parâmetro externo)
                     </summary>
+                    {track.frictionOverride && <button onClick={() => updateTrack(track.id, { frictionOverride: undefined })}>Usar coeficiente da base técnica</button>}
                     <div style={{ paddingTop: '12px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
                       <Field label="µ mínimo">
                         <input type="number" step={0.01} min={0} max={2}
@@ -305,7 +319,7 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange }) => 
       })}
 
       <button
-        onClick={addTrack}
+        id="add-track" onClick={addTrack}
         disabled={analysis.vehicles.length === 0}
         style={{
           display: 'flex', alignItems: 'center', gap: '8px',

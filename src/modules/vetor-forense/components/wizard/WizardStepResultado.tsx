@@ -236,7 +236,7 @@ export const WizardStepResultado: React.FC<Props> = ({ analysis, onSave }) => {
       </div>
 
       {/* Resultado por método */}
-      {methods.filter(m => m.status !== 'insuficiente').length > 0 && (
+      {methods.filter(m => (m.status === 'suficiente' || m.status === 'auxiliar')).length > 0 && (
         <div>
           <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '12px' }}>
             Resultado por método
@@ -253,7 +253,7 @@ export const WizardStepResultado: React.FC<Props> = ({ analysis, onSave }) => {
                 </tr>
               </thead>
               <tbody>
-                {methods.filter(m => m.status !== 'insuficiente').map(m => (
+                {methods.filter(m => (m.status === 'suficiente' || m.status === 'auxiliar')).map(m => (
                   <React.Fragment key={m.id}>
                     <tr style={{ borderBottom: '1px solid var(--border-subtle)', opacity: m.status === 'auxiliar' ? 0.7 : 1 }}>
                       <td style={{ padding: '10px 12px', color: 'var(--text-primary)', fontWeight: 500 }}>{m.name}</td>

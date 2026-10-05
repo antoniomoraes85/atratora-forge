@@ -38,17 +38,17 @@ export const WizardStepVeiculos: React.FC<Props> = ({ analysis, onChange }) => {
   const updateVehicle = (idx: number, partial: Partial<Vehicle>) => {
     const next = [...analysis.vehicles];
     next[idx] = { ...next[idx], ...partial };
-    // Renomeia IDs sequencialmente
-    onChange({ vehicles: next.map((v, i) => ({ ...v, id: `V${i + 1}` })) });
+    // Mantém o identificador estável para preservar as associações.
+    onChange({ vehicles: next });
   };
 
   const addVehicle = () => {
-    onChange({ vehicles: [...analysis.vehicles, createVehicle(analysis.vehicles.length)] });
+    onChange({ vehicles: [...analysis.vehicles, createVehicle(Math.max(0, ...[...analysis.vehicles.map(v => v.id), ...analysis.tracks.map(t => t.vehicleId)].map(id => Number(id.replace('V', '')) || 0)))] });
   };
 
   const removeVehicle = (idx: number) => {
     const next = analysis.vehicles.filter((_, i) => i !== idx);
-    onChange({ vehicles: next.map((v, i) => ({ ...v, id: `V${i + 1}` })) });
+    onChange({ vehicles: next });
   };
 
   return (
@@ -178,7 +178,7 @@ export const WizardStepVeiculos: React.FC<Props> = ({ analysis, onChange }) => {
       ))}
 
       <button
-        onClick={addVehicle}
+        id="vehicleId" onClick={addVehicle}
         style={{
           display: 'flex', alignItems: 'center', gap: '8px',
           padding: '12px 20px', border: '1px dashed var(--border-default)',

@@ -76,8 +76,8 @@ export const VFMethods: React.FC = () => {
       independent: true,
       description: 'Análise da dinâmica de colisão usando conservação do momentum linear. Módulo avançado — não implementado nesta versão.',
       formula: 'm₁v₁ + m₂v₂ = (m₁+m₂)v_final (colisão inelástica)',
-      requires: ['Massa dos veículos', 'Posição final', 'Deslizamento pós-colisão', 'Ângulo de impacto'],
-      limitations: ['Requer dados precisos de massa e posição', 'Módulo avançado não implementado nesta versão'],
+      requires: ['Não disponível nesta versão'],
+      limitations: ['Preencher dados adicionais não habilita este método nesta versão'],
       source: 'Dinâmica clássica newtoniana',
     },
   ];

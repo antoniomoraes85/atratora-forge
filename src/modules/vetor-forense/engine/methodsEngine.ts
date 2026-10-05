@@ -1,3 +1,4 @@
+import { resolveTrack } from './trackValidation';
 /**
  * Vetor Forense — Motor de Métodos
  *
@@ -13,7 +14,6 @@ import {
   stoppingDistance,
 } from './calculator';
 import {
-  findFrictionParameters,
   REACTION_TIMES,
 } from '../data/technicalBase';
 import type { ForensicAnalysis, MethodResult, IFTInput, TrackSegment } from '../types/analysis';
@@ -48,12 +48,12 @@ function getMeasurementQuality(tracks: TrackSegment[]): number {
   return avg;
 }
 
-function getParameterQuality(tracks: TrackSegment[]): number {
+function getParameterQuality(tracks: TrackSegment[], analysis: ForensicAnalysis): number {
   // Parâmetro da base técnica = 80+, override externo = 50, sem parâmetro = 30
   if (tracks.length === 0) return 30;
   const scores = tracks.map(t => {
     if (t.frictionOverride) return 50;
-    if (t.parameterRefId) return 85;
+    if (resolveTrack(t, analysis).parameter) return 85;
     return 40;
   });
   return scores.reduce((s, v) => s + v, 0) / scores.length;
@@ -67,38 +67,11 @@ function getMuForTrack(track: TrackSegment, analysis: ForensicAnalysis): {
   muMin: number; muCentral: number; muMax: number;
   source: string; paramId?: string;
 } {
-  // Override manual tem prioridade
-  if (track.frictionOverride) {
-    return {
-      muMin: track.frictionOverride.muMin,
-      muCentral: track.frictionOverride.muCentral,
-      muMax: track.frictionOverride.muMax,
-      source: `[Externo] ${track.frictionOverride.source}`,
-    };
-  }
-
-  const vehicle = analysis.vehicles.find(v => v.id === track.vehicleId);
-
-  const params = findFrictionParameters({
-    surface: track.surface,
-    condition: track.condition,
-    vehicleType: vehicle?.type ?? null,
-    tireCondition: vehicle?.tireCondition ?? null,
-    contactMode: track.contactMode,
-  });
-
-  if (params.length > 0) {
-    const p = params[0];
-    return {
-      muMin: p.muMin,
-      muCentral: p.muCentral,
-      muMax: p.muMax,
-      source: `${p.source} — ${p.chapter}`,
-      paramId: p.id,
-    };
-  }
-
-  return { muMin: 0, muCentral: 0, muMax: 0, source: 'Parâmetro não cadastrado.' };
+  const { mu, parameter } = resolveTrack(track, analysis);
+  return mu ? { muMin: mu.muMin, muCentral: mu.muCentral, muMax: mu.muMax,
+    source: track.frictionOverride ? `[Externo] ${track.frictionOverride.source}` : `${parameter?.source} — ${parameter?.chapter}`,
+    paramId: track.frictionOverride ? undefined : parameter?.id,
+  } : { muMin: 0, muCentral: 0, muMax: 0, source: 'Parâmetro não cadastrado.' };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -108,163 +81,37 @@ function getMuForTrack(track: TrackSegment, analysis: ForensicAnalysis): {
 export function computeMethods(analysis: ForensicAnalysis): MethodResult[] {
   const results: MethodResult[] = [];
 
-  // ── MÉTODO A: Frenagem / Derrapagem / Arrastamento / Trilha ──────────────
-  const frictionTracks = analysis.tracks.filter(t =>
-    ['frenagem', 'derrapagem', 'arrastamento', 'trilha', 'friccao', 'sulcagem'].includes(t.type)
-  );
-
-  // Agrupa por veículo
-  const vehicleIds = [...new Set(frictionTracks.map(t => t.vehicleId))];
-
-  for (const vid of vehicleIds) {
-    const vTracks = frictionTracks.filter(t => t.vehicleId === vid);
-    const vehicle = analysis.vehicles.find(v => v.id === vid);
-    const vehicleLabel = vehicle ? `V${vehicle.id}` : vid;
-
-    const hasDistance = vTracks.every(t => t.distanceM > 0);
-    const hasMu = vTracks.some(t => {
-      const mu = getMuForTrack(t, analysis);
-      return mu.muCentral > 0;
-    });
-
-    if (!hasDistance || !hasMu) {
-      results.push({
-        id: `friction-${vid}`,
-        name: `Dissipação por atrito — ${vehicleLabel}`,
-        description: 'Estimativa de velocidade pela dissipação de energia cinética em vestígios de frenagem/deslizamento.',
-        status: 'insuficiente',
-        isIndependent: true,
-        availabilityReason: !hasDistance
-          ? 'Distância não informada para um ou mais trechos.'
-          : 'Parâmetro de atrito não disponível.',
-        qualityScore: 0,
-      });
+  // Agrupa todos os trechos implementados por veículo e modalidade.
+  const groups = new Map<string, TrackSegment[]>();
+  for (const track of analysis.tracks) {
+    const kind = track.type === 'motocicleta-tombada' ? 'moto-tombada' : track.type === 'sobre-teto' ? 'sobre-teto' :
+      ['frenagem', 'derrapagem', 'arrastamento', 'trilha', 'friccao', 'sulcagem'].includes(track.type) ? 'friction' : null;
+    if (!kind) {
+      results.push({ id: `unsupported-${track.id}`, name: `Vestígio — ${track.type}`, description: 'Vestígio registrado.', status: 'auxiliar', isIndependent: false, availabilityReason: 'Contribui para interpretação; sem cálculo quantitativo independente nesta versão.', qualityScore: 0 });
       continue;
     }
-
-    // Prepara segmentos para o motor
-    const segments = vTracks.map(t => {
-      const mu = getMuForTrack(t, analysis);
-      return {
-        distanceM: t.distanceM,
-        muMin: mu.muMin || 0.001,
-        muCentral: mu.muCentral || 0.001,
-        muMax: mu.muMax || 0.001,
-        gradePercent: analysis.road.gradePercent ?? 0,
-      };
-    });
-
+    const key = `${kind}-${track.vehicleId}`;
+    groups.set(key, [...(groups.get(key) ?? []), track]);
+  }
+  for (const [id, tracks] of groups) {
+    const issues = tracks.flatMap(t => resolveTrack(t, analysis).issues);
+    const name = `${id.startsWith('moto-') ? 'Deslizamento — Motocicleta tombada' : id.startsWith('sobre-') ? 'Deslizamento — Veículo sobre teto' : 'Dissipação por atrito'} — ${tracks[0].vehicleId}`;
+    const base = { id, name, description: 'Estimativa pela energia dissipada nos trechos informados.', isIndependent: true };
+    if (issues.length) {
+      results.push({ ...base, status: 'insuficiente', availabilityReason: issues.map(i => i.message).join(' '), issues, qualityScore: 0 });
+      continue;
+    }
+    const segments = tracks.map(t => ({ distanceM: t.distanceM, ...getMuForTrack(t, analysis), gradePercent: analysis.road.gradePercent ?? 0 }));
     const result = multiSegmentFrictionSpeed(segments);
-    const mu = getMuForTrack(vTracks[0], analysis);
-    const totalDist = vTracks.reduce((s, t) => s + t.distanceM, 0);
-
-    const variables: Record<string, string | number> = {
-      'g (m/s²)': 9.80665,
-      'Trechos': segments.length,
-      'Distância total (m)': totalDist.toFixed(2),
-      'µ central adotado': mu.muCentral,
-      'Inclinação (%)': analysis.road.gradePercent ?? 0,
-    };
-
-    results.push({
-      id: `friction-${vid}`,
-      name: `Dissipação por atrito — ${vehicleLabel}`,
-      description: `Velocidade estimada a partir de ${vTracks.length} trecho(s) de vestígio de ${vehicleLabel}.`,
-      status: 'suficiente',
-      isIndependent: true,
-      minKmh: result.minKmh,
-      centralKmh: result.centralKmh,
-      maxKmh: result.maxKmh,
-      availabilityReason: 'Dados suficientes para cálculo.',
-      qualityScore: getMeasurementQuality(vTracks),
-      parameterRef: mu.source,
-      parameterSource: mu.paramId ? 'técnico' : 'externo',
-      formula: 'v = √(2 × Σ(µ_eff_i × g × d_i))',
-      variables,
+    results.push({ ...base, status: 'suficiente', ...result, availabilityReason: 'Dados suficientes para cálculo.',
+      qualityScore: getMeasurementQuality(tracks), parameterRef: segments.map(s => s.source).join('; '),
+      parameterSource: tracks.some(t => t.frictionOverride) ? 'externo' : 'técnico', formula: 'v = √(2 × Σ(µ_eff_i × g × d_i))',
+      variables: Object.fromEntries(segments.flatMap((s, i) => [[`Trecho ${i + 1}: distância (m)`, s.distanceM], [`Trecho ${i + 1}: µ min / central / max`, `${s.muMin} / ${s.muCentral} / ${s.muMax}`], [`Trecho ${i + 1}: inclinação (%)`, s.gradePercent]])),
     });
   }
-
-  // ── MÉTODO B: Motocicleta tombada ─────────────────────────────────────────
-  const motoTracks = analysis.tracks.filter(t => t.type === 'motocicleta-tombada');
-  if (motoTracks.length > 0) {
-    const moto = motoTracks[0];
-    const mu = getMuForTrack(moto, analysis);
-    const hasData = moto.distanceM > 0 && mu.muCentral > 0;
-
-    if (hasData) {
-      const result = multiSegmentFrictionSpeed([{
-        distanceM: moto.distanceM,
-        muMin: mu.muMin,
-        muCentral: mu.muCentral,
-        muMax: mu.muMax,
-        gradePercent: analysis.road.gradePercent ?? 0,
-      }]);
-
-      results.push({
-        id: 'moto-tombada',
-        name: 'Deslizamento — Motocicleta tombada',
-        description: 'Estimativa de velocidade pelo deslizamento da motocicleta tombada.',
-        status: 'suficiente',
-        isIndependent: true,
-        minKmh: result.minKmh,
-        centralKmh: result.centralKmh,
-        maxKmh: result.maxKmh,
-        availabilityReason: 'Dados suficientes.',
-        qualityScore: MEASUREMENT_QUALITY[moto.measurementMethod] ?? 50,
-        parameterRef: mu.source,
-        formula: 'v = √(2 × µ_eff × g × d)',
-        variables: {
-          'µ min': mu.muMin,
-          'µ central': mu.muCentral,
-          'µ max': mu.muMax,
-          'd (m)': moto.distanceM,
-          'g (m/s²)': 9.80665,
-        },
-      });
-    } else {
-      results.push({
-        id: 'moto-tombada',
-        name: 'Deslizamento — Motocicleta tombada',
-        description: 'Estimativa de velocidade pelo deslizamento da motocicleta tombada.',
-        status: 'insuficiente',
-        isIndependent: true,
-        availabilityReason: !hasData ? 'Distância ou parâmetro de atrito não disponível.' : '',
-        qualityScore: 0,
-      });
-    }
-  }
-
-  // ── MÉTODO C: Veículo sobre teto ──────────────────────────────────────────
-  const tetoTracks = analysis.tracks.filter(t => t.type === 'sobre-teto');
-  if (tetoTracks.length > 0) {
-    const teto = tetoTracks[0];
-    const mu = getMuForTrack(teto, analysis);
-
-    if (teto.distanceM > 0 && mu.muCentral > 0) {
-      const result = multiSegmentFrictionSpeed([{
-        distanceM: teto.distanceM,
-        muMin: mu.muMin,
-        muCentral: mu.muCentral,
-        muMax: mu.muMax,
-        gradePercent: analysis.road.gradePercent ?? 0,
-      }]);
-
-      results.push({
-        id: 'sobre-teto',
-        name: 'Deslizamento — Veículo sobre teto',
-        description: 'Estimativa de velocidade pelo deslizamento do veículo sobre o teto.',
-        status: 'suficiente',
-        isIndependent: true,
-        minKmh: result.minKmh,
-        centralKmh: result.centralKmh,
-        maxKmh: result.maxKmh,
-        availabilityReason: 'Dados suficientes.',
-        qualityScore: MEASUREMENT_QUALITY[teto.measurementMethod] ?? 50,
-        parameterRef: mu.source,
-        formula: 'v = √(2 × µ_eff × g × d)',
-        variables: { 'µ central': mu.muCentral, 'd (m)': teto.distanceM },
-      });
-    }
+  if (!analysis.tracks.length && analysis.availableElements.some(e => ['frenagem', 'derrapagem', 'arrastamento', 'trilha', 'friccao', 'sulcagem', 'motocicleta-tombada', 'veiculo-sobre-teto'].includes(e))) {
+    const issue = { step: 'vestigios' as const, field: 'add-track', message: 'Falta cadastrar o trecho do vestígio com veículo, distância, superfície e condição.' };
+    results.push({ id: 'missing-track', name: 'Dissipação por atrito', description: '', status: 'insuficiente', isIndependent: true, availabilityReason: issue.message, issues: [issue], qualityScore: 0 });
   }
 
   // ── MÉTODO D: Distância disponível para parada ────────────────────────────
@@ -342,16 +189,13 @@ export function computeMethods(analysis: ForensicAnalysis): MethodResult[] {
   }
 
   // ── Quantidade de movimento (não implementado nesta versão) ───────────────
-  const hasTwoVehicles = analysis.vehicles.length >= 2;
   results.push({
     id: 'momentum',
     name: 'Quantidade de movimento',
     description: 'Análise da dinâmica de colisão usando conservação do momentum.',
-    status: 'insuficiente',
-    isIndependent: true,
-    availabilityReason: hasTwoVehicles
-      ? 'Massa e posição final necessários. Módulo avançado não implementado nesta versão.'
-      : 'Requer pelo menos dois veículos com massa conhecida.',
+    status: 'nao-disponivel',
+    isIndependent: false,
+    availabilityReason: 'Não disponível nesta versão.',
     qualityScore: 0,
   });
 
@@ -369,10 +213,10 @@ export function computeIndices(
   const frictionTracks = analysis.tracks;
 
   const measurementQuality = getMeasurementQuality(frictionTracks);
-  const parameterQuality = getParameterQuality(frictionTracks);
+  const parameterQuality = getParameterQuality(frictionTracks, analysis);
   const preservation = PRESERVATION_QUALITY[analysis.road.sceneCondition] ?? 40;
   const completeness = computeCompleteness(analysis);
-  const traceability = computeTraceability(frictionTracks);
+  const traceability = computeTraceability(frictionTracks, analysis);
 
   const iftInput: IFTInput = {
     measurementQuality,
@@ -417,7 +261,7 @@ function computeCompleteness(analysis: ForensicAnalysis): number {
   return max > 0 ? (score / max) * 100 : 0;
 }
 
-function computeTraceability(tracks: TrackSegment[]): number {
+function computeTraceability(tracks: TrackSegment[], analysis: ForensicAnalysis): number {
   if (tracks.length === 0) return 40;
   const scores = tracks.map(t => {
     let s = 0;
@@ -426,7 +270,7 @@ function computeTraceability(tracks: TrackSegment[]): number {
     else if (t.dataSource === 'croqui') s += 20;
     else if (t.dataSource === 'fotografia' || t.dataSource === 'video') s += 25;
     else s += 10;
-    if (t.parameterRefId) s += 30;
+    if (resolveTrack(t, analysis).parameter && !t.frictionOverride) s += 30;
     else s += 10;
     return Math.min(100, s);
   });

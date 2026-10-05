@@ -465,38 +465,24 @@ export function findFrictionParameters(criteria: {
   tireCondition?: TireCondition | null;
   contactMode?: ContactMode | null;
 }): FrictionParameter[] {
-  const results = FRICTION_PARAMETERS.filter(p => {
-    if (p.surface !== criteria.surface) return false;
-    if (p.condition !== criteria.condition) return false;
-    if (criteria.contactMode && p.contactMode !== criteria.contactMode) return false;
-    return true;
-  });
-
-  // Ordena: mais específico primeiro
-  return results.sort((a, b) => {
-    let scoreA = 0;
-    let scoreB = 0;
-    if (criteria.vehicleType) {
-      if (a.vehicleType === criteria.vehicleType) scoreA += 2;
-      else if (a.vehicleType !== null) scoreA -= 1;
-      if (b.vehicleType === criteria.vehicleType) scoreB += 2;
-      else if (b.vehicleType !== null) scoreB -= 1;
-    }
-    if (criteria.tireCondition) {
-      if (a.tireCondition === criteria.tireCondition) scoreA += 2;
-      if (b.tireCondition === criteria.tireCondition) scoreB += 2;
-    }
-    return scoreB - scoreA;
-  });
+  const matches = FRICTION_PARAMETERS.filter(p =>
+    p.surface === criteria.surface && p.condition === criteria.condition &&
+    (p.contactMode ?? 'pneus') === (criteria.contactMode ?? 'pneus') &&
+    (!criteria.vehicleType || !p.vehicleType || p.vehicleType === criteria.vehicleType) &&
+    (!criteria.tireCondition || criteria.tireCondition === 'nao-determinado' ||
+      !p.tireCondition || p.tireCondition === criteria.tireCondition)
+  );
+  const score = (p: FrictionParameter) =>
+    Number(!!criteria.vehicleType && p.vehicleType === criteria.vehicleType) +
+    Number(!!criteria.tireCondition && criteria.tireCondition !== 'nao-determinado' && p.tireCondition === criteria.tireCondition);
+  const best = Math.max(...matches.map(score));
+  return matches.filter(p => score(p) === best);
 }
 
-/**
- * Retorna o parâmetro mais adequado (primeiro da lista ordenada).
- * Retorna null se não houver parâmetro cadastrado.
- */
+/** Só sugere automaticamente quando há uma única opção compatível. */
 export function getBestFrictionParameter(criteria: Parameters<typeof findFrictionParameters>[0]): FrictionParameter | null {
   const results = findFrictionParameters(criteria);
-  return results.length > 0 ? results[0] : null;
+  return results.length === 1 ? results[0] : null;
 }
 
 /**
