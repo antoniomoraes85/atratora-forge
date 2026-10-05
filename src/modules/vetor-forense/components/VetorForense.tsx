@@ -25,7 +25,8 @@ export const VetorForense: React.FC = () => {
   const [parallax, setParallax] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setParallax(Math.min(24, window.scrollY * 0.08));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const onScroll = () => setParallax(reduceMotion ? 0 : Math.min(24, window.scrollY * 0.08));
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -57,6 +58,7 @@ export const VetorForense: React.FC = () => {
 
       {/* ── HEADER DO MÓDULO ── */}
       <div style={{
+        className="vf-module-header",
         padding: '28px 32px',
         background: 'linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(99,102,241,0.06) 100%)',
         border: '1px solid rgba(56,189,248,0.15)',
@@ -121,6 +123,7 @@ export const VetorForense: React.FC = () => {
 
       {/* ── SUBNAVEGAÇÃO ── */}
       <div style={{
+        className="vf-subnav",
         display: 'flex', gap: '4px', flexWrap: 'wrap',
         padding: '6px', background: 'var(--bg-surface)',
         border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)',

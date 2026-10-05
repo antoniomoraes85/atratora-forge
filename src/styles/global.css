@@ -311,6 +311,13 @@ code {
 }
 @media (max-width: 768px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+
+  .vf-module-header { padding: 20px 18px !important; }
+  .vf-module-header h1 { font-size: 19px !important; }
+  .vf-module-header > div[aria-hidden="true"] { right: 14px !important; bottom: 12px !important; transform: scale(.82) !important; transform-origin: right bottom; }
+  .vf-subnav { overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: thin; }
+  .vf-subnav button { flex: 0 0 auto; min-height: 42px; }
+  input, select, textarea, button { max-width: 100%; }
 }
 
 /* ── Prefers Reduced Motion ──────────────────── */
