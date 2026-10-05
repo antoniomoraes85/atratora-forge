@@ -1,7 +1,7 @@
 import { resolveTrack } from '../../engine/trackValidation';
 import { VEHICLE_TYPE_LABELS, TIRE_CONDITION_LABELS, TRACK_TYPE_LABELS, SURFACE_LABELS, CONDITION_LABELS, CONTACT_MODE_LABELS, MEASUREMENT_METHOD_LABELS } from '../../utils/labels';
 import React, { useMemo } from 'react';
-import { CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import { CheckCircle, XCircle, AlertTriangle, CarFront, Ruler, Waves, Calculator, ArrowRight } from 'lucide-react';
 import { computeMethods } from '../../engine/methodsEngine';
 import type { ForensicAnalysis, AnalysisIssue } from '../../types/analysis';
 
@@ -40,7 +40,9 @@ export const WizardStepMetodos: React.FC<Props> = ({ analysis, onCorrect }) => {
         background: s.bg, border: `1px solid ${s.border}`,
         display: 'flex', alignItems: 'flex-start', gap: '12px',
       }}>
-        <StatusIcon status={method.status} />
+        <div style={{ width: 34, height: 34, borderRadius: 10, display: 'grid', placeItems: 'center', background: s.border, flexShrink: 0 }}>
+          {method.id.startsWith('friction') ? <Waves size={17} color={s.color} /> : method.id === 'momentum' ? <CarFront size={17} color={s.color} /> : <StatusIcon status={method.status} />}
+        </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -77,17 +79,20 @@ export const WizardStepMetodos: React.FC<Props> = ({ analysis, onCorrect }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       <section>
-        <h2>Dados considerados</h2>
+        <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Calculator size={20} color="#38bdf8" /> Dados considerados</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', margin: '12px 0 16px', color: 'var(--text-dim)', fontSize: 11 }}>
+          <span style={{ padding: '6px 9px', borderRadius: 8, background: 'rgba(56,189,248,.1)' }}>1. Vestígios</span><ArrowRight size={13} /><span style={{ padding: '6px 9px', borderRadius: 8, background: 'rgba(56,189,248,.1)' }}>2. Parâmetros</span><ArrowRight size={13} /><span style={{ padding: '6px 9px', borderRadius: 8, background: 'rgba(16,185,129,.12)', color: 'var(--success-text)' }}>3. Cálculo</span>
+        </div>
         {analysis.tracks.map(t => {
           const v = analysis.vehicles.find(v => v.id === t.vehicleId);
           const { mu } = resolveTrack(t, analysis);
-          return <div key={t.id} style={{ padding: '12px', marginTop: '8px', border: '1px solid var(--border-default)', borderRadius: '8px' }}>
-            <strong>{t.vehicleId} — {v ? VEHICLE_TYPE_LABELS[v.type] : 'Veículo não cadastrado'}</strong>
+          return <div key={t.id} style={{ padding: '14px', marginTop: '8px', border: '1px solid var(--border-default)', borderRadius: '10px', background: 'linear-gradient(120deg, rgba(56,189,248,.06), transparent)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><CarFront size={16} color="#38bdf8" /><strong>{t.vehicleId} — {v ? VEHICLE_TYPE_LABELS[v.type] : 'Veículo não cadastrado'}</strong></div>
             <p>{TRACK_TYPE_LABELS[t.type]} — {t.distanceM || 'Distância não informada'} m</p>
             <p>{SURFACE_LABELS[t.surface] ?? 'Superfície não informada'} · {CONDITION_LABELS[t.condition] ?? 'Condição não informada'} · {CONTACT_MODE_LABELS[t.contactMode]}</p>
             <p>Pneus: {v ? TIRE_CONDITION_LABELS[v.tireCondition] : 'não informados'} · Inclinação: {analysis.road.gradePercent ?? 0}%</p>
             <p>µ adotado: {mu ? `${mu.muMin}–${mu.muMax} (central ${mu.muCentral})` : 'Pendente'}{t.frictionOverride ? ' · Manual' : ''}</p>
-            <p>Medição: {MEASUREMENT_METHOD_LABELS[t.measurementMethod]}</p>
+            <p style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Ruler size={14} color="var(--text-dim)" /> Medição: {MEASUREMENT_METHOD_LABELS[t.measurementMethod]}</p>
           </div>;
         })}
         {!analysis.tracks.length && <p>Nenhum trecho cadastrado.</p>}
