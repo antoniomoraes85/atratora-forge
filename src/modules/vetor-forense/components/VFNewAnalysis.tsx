@@ -1,7 +1,7 @@
 import { hasQuantitativeResult } from '../engine/trackValidation';
 import type { AnalysisIssue } from '../types/analysis';
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Save, Check } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Save, Check, FileText, ListChecks, CarFront, Map, Ruler, Calculator, Gauge } from 'lucide-react';
 import { saveAnalysis, loadAnalyses } from '../store/localStore';
 import { computeMethods, computeIndices, generateTechnicalSummary } from '../engine/methodsEngine';
 import type { ForensicAnalysis, WizardStep, RoadInfo } from '../types/analysis';
@@ -24,6 +24,7 @@ const WIZARD_STEPS: { id: WizardStep; label: string }[] = [
   { id: 'metodos', label: 'Métodos' },
   { id: 'resultado', label: 'Resultado' },
 ];
+const STEP_ICONS: Record<WizardStep, React.ElementType> = { caso: FileText, elementos: ListChecks, veiculos: CarFront, via: Map, vestigios: Ruler, metodos: Calculator, resultado: Gauge };
 
 function createEmptyAnalysis(): ForensicAnalysis {
   const now = new Date().toISOString();
@@ -144,6 +145,7 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
         {WIZARD_STEPS.map((step, idx) => {
           const isActive = step.id === currentStep;
           const isDone = idx < stepIndex;
+          const StepIcon = STEP_ICONS[step.id];
           return (
             <button
               key={step.id}
@@ -171,6 +173,7 @@ export const VFNewAnalysis: React.FC<VFNewAnalysisProps> = ({ analysisId }) => {
                   {idx + 1}
                 </span>
               )}
+              {isActive && <StepIcon size={14} />}
               {step.label}
             </button>
           );

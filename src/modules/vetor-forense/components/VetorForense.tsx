@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BarChart2, PlusCircle, BookOpen, Database, List, Home, ChevronRight } from 'lucide-react';
+import { BarChart2, PlusCircle, BookOpen, Database, List, Home, ChevronRight, CarFront, Waves, Ruler, Sparkles } from 'lucide-react';
 import { VFDashboard } from './VFDashboard';
 import { VFNewAnalysis } from './VFNewAnalysis';
 import { VFAnalysesList } from './VFAnalysesList';
@@ -22,6 +22,13 @@ const TABS: { id: VFTab; label: string; icon: React.ElementType }[] = [
 export const VetorForense: React.FC = () => {
   const [activeTab, setActiveTab] = useState<VFTab>('dashboard');
   const [editingAnalysisId, setEditingAnalysisId] = useState<string | null>(null);
+  const [parallax, setParallax] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => setParallax(Math.min(24, window.scrollY * 0.08));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Permite que sub-componentes naveguem entre abas
   const navigate = (tab: VFTab, analysisId?: string) => {
@@ -63,7 +70,11 @@ export const VetorForense: React.FC = () => {
           position: 'absolute', top: '-20px', right: '-20px', width: '200px', height: '200px',
           background: 'radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)',
           pointerEvents: 'none',
+          transform: `translate3d(0, ${parallax}px, 0)`, transition: 'transform 120ms linear',
         }} />
+        <div aria-hidden="true" style={{ position: 'absolute', right: 30, bottom: 18, display: 'flex', alignItems: 'center', gap: 8, opacity: .8, transform: `translate3d(0, ${parallax * -0.5}px, 0)` }}>
+          {[CarFront, Waves, Ruler].map((Icon, i) => <span key={i} style={{ width: 32, height: 32, borderRadius: 9, display: 'grid', placeItems: 'center', background: 'rgba(15,23,42,.55)', border: '1px solid rgba(125,211,252,.25)', color: i === 1 ? '#a78bfa' : '#7dd3fc' }}><Icon size={16} /></span>)}
+        </div>
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
@@ -102,6 +113,9 @@ export const VetorForense: React.FC = () => {
           <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginTop: '6px', fontStyle: 'italic' }}>
             Reconstrução baseada em vestígios, cinemática e dinâmica.
           </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 16 }}>
+            {['Dados locais', 'Cálculo rastreável', 'Intervalos explicados'].map(label => <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 9px', borderRadius: 8, background: 'rgba(15,23,42,.38)', color: 'var(--text-muted)', fontSize: 11 }}><Sparkles size={12} color="#a78bfa" />{label}</span>)}
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { PlusCircle, Trash2, CarFront } from 'lucide-react';
 import type { ForensicAnalysis, Vehicle, VehicleType, TireCondition, TireInflation, ABS, BrakeFailure } from '../../types/analysis';
 import {
   VEHICLE_TYPE_LABELS, TIRE_CONDITION_LABELS, TIRE_INFLATION_LABELS,
@@ -70,6 +70,7 @@ export const WizardStepVeiculos: React.FC<Props> = ({ analysis, onChange }) => {
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <CarFront size={20} color="#38bdf8" />
               <span style={{
                 padding: '4px 12px', fontSize: '13px', fontWeight: 800,
                 background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)',
@@ -91,7 +92,7 @@ export const WizardStepVeiculos: React.FC<Props> = ({ analysis, onChange }) => {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-            <Field label="Tipo *">
+          <Field label="Tipo *" tooltip="Define quais parâmetros técnicos podem ser compatíveis.">
               <select value={v.type} onChange={e => updateVehicle(idx, { type: e.target.value as VehicleType })} style={{ width: '100%' }}>
                 {Object.entries(VEHICLE_TYPE_LABELS).map(([k, lbl]) => (
                   <option key={k} value={k}>{lbl}</option>

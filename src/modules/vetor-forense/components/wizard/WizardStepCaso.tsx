@@ -1,4 +1,5 @@
 import React from 'react';
+import { FileText, Hash, CalendarDays, ShieldCheck } from 'lucide-react';
 import type { ForensicAnalysis } from '../../types/analysis';
 
 interface Props {
@@ -18,8 +19,8 @@ export const WizardStepCaso: React.FC<Props> = ({ analysis, onChange }) => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
         <div>
-          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-            Título da análise *
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <FileText size={14} color="#38bdf8" /> Título da análise *
           </label>
           <input
             type="text"
@@ -31,8 +32,8 @@ export const WizardStepCaso: React.FC<Props> = ({ analysis, onChange }) => {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-            Nº do caso (opcional)
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <Hash size={14} color="#a78bfa" /> Nº do caso (opcional)
           </label>
           <input
             type="text"
@@ -44,8 +45,8 @@ export const WizardStepCaso: React.FC<Props> = ({ analysis, onChange }) => {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-            Data do sinistro (opcional)
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <CalendarDays size={14} color="#34d399" /> Data do sinistro (opcional)
           </label>
           <input
             type="date"
@@ -61,7 +62,7 @@ export const WizardStepCaso: React.FC<Props> = ({ analysis, onChange }) => {
         border: '1px solid rgba(56,189,248,0.15)', borderRadius: 'var(--radius-sm)',
         fontSize: '12px', color: 'var(--text-dim)', lineHeight: 1.6,
       }}>
-        <strong style={{ color: 'var(--info-text)' }}>Privacidade:</strong>{' '}
+        <strong style={{ color: 'var(--info-text)', display: 'inline-flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> Privacidade:</strong>{' '}
         Todos os dados são armazenados exclusivamente neste dispositivo.
         Nenhuma informação é transmitida a servidores externos.
       </div>
