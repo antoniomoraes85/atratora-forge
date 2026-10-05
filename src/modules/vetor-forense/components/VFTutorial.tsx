@@ -102,8 +102,11 @@ O usuário pode aceitar o valor sugerido ou substituí-lo manualmente (exige fon
     title: 'Calcular velocidade',
     content: `Com os dados do caso demonstrativo, o cálculo produz:
 
-Fórmula: v = √(2 × g × µ × d)
+Fórmula do trecho único: v = √(2 · g · μ · d)
 g = 9,80665 m/s²
+
+Em múltiplos trechos, o motor usa: v = √(2 · Σᵢ(μ_eff,ᵢ · g · dᵢ))
+O símbolo Σᵢ indica a soma da energia dissipada em cada trecho; μ_eff,ᵢ é o atrito efetivo do trecho i.
 
 µ mínimo: ${fmt(demoMu.muMin)} → ${fmt(demoMethod.minKmh!)} km/h
 µ central: ${fmt(demoMu.muCentral)} → ${fmt(demoMethod.centralKmh!)} km/h

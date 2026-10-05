@@ -297,7 +297,8 @@ export const WizardStepResultado: React.FC<Props> = ({ analysis, onSave }) => {
                             <div>
                               <div style={{ fontSize: '11px', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '8px' }}>Fórmula</div>
                               <code style={{ fontSize: '13px', color: '#38bdf8', fontFamily: 'var(--font-mono)', display: 'block', whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-                                {m.formula}
+                                <span style={{ whiteSpace: 'pre-line', fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-primary)' }}>{m.formula}</span>
+                                {m.explanation && <p style={{ margin: '8px 0 0', color: 'var(--text-muted)', lineHeight: 1.55 }}>{m.explanation}</p>}
                               </code>
                             </div>
                             {m.variables && Object.keys(m.variables).length > 0 && (

@@ -248,6 +248,7 @@ export interface MethodResult {
   parameterRef?: string;
   /** Fórmula usada */
   formula?: string;
+  explanation?: string;
   /** Variáveis com valores */
   variables?: Record<string, string | number>;
   /** Fonte do parâmetro */

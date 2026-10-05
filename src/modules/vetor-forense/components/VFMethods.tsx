@@ -9,7 +9,8 @@ export const VFMethods: React.FC = () => {
       category: 'quantitativo',
       independent: true,
       description: 'Estimativa de velocidade inicial pela dissipação de energia cinética em vestígios de frenagem, derrapagem, arrastamento, trilha ou fricção.',
-      formula: 'v = √(2 × g × µ × d) — trecho único\nv = √(2 × Σ(µ_eff_i × g × d_i)) — múltiplos trechos',
+      formula: 'Trecho único: v = √(2 · g · μ · d)\nMúltiplos trechos: v = √(2 · Σᵢ(μ_eff,ᵢ · g · dᵢ))',
+      explanation: 'A velocidade é estimada pela energia dissipada pelo atrito. Em um trecho usa-se μ; em vários, somam-se as dissipações de cada segmento, corrigidas pela inclinação da via.',
       requires: ['Distância do vestígio (m)', 'Coeficiente de atrito (µ)', 'Inclinação (opcional)'],
       limitations: ['Assume desaceleração uniforme no trecho', 'Sensível à qualidade do parâmetro µ', 'Velocidade calculada é a do início do vestígio analisado'],
       source: 'M_015 — Manual de Atendimento e Perícia de Acidentes de Trânsito',
@@ -20,7 +21,8 @@ export const VFMethods: React.FC = () => {
       category: 'quantitativo',
       independent: true,
       description: 'Estimativa de velocidade pelo deslizamento da motocicleta tombada com contato chassi/motor na superfície.',
-      formula: 'v = √(2 × µ_tombada × g × d)',
+      formula: 'v = √(2 · μ_tombada · g · d)',
+      explanation: 'Aplica-se ao deslizamento de uma motocicleta tombada. μ_tombada representa o atrito do conjunto estrutural em contato com a superfície.',
       requires: ['Distância de deslizamento (m)', 'Superfície e condição'],
       limitations: ['Parâmetro µ com variação maior que frenagem convencional', 'Influência de obstáculos e danos na trajetória'],
       source: 'M_015 — Manual de Atendimento e Perícia de Acidentes de Trânsito',
@@ -31,7 +33,8 @@ export const VFMethods: React.FC = () => {
       category: 'quantitativo',
       independent: true,
       description: 'Estimativa de velocidade pelo deslizamento do veículo invertido sobre o teto.',
-      formula: 'v = √(2 × µ_teto × g × d)',
+      formula: 'v = √(2 · μ_teto · g · d)',
+      explanation: 'Aplica-se ao deslizamento sobre o teto, usando um parâmetro compatível com esse modo de contato.',
       requires: ['Distância de deslizamento (m)', 'Superfície e condição'],
       limitations: ['Parâmetro µ varia com danos ao teto', 'Pode ocorrer rotação'],
       source: 'M_015 — Manual de Atendimento e Perícia de Acidentes de Trânsito',
@@ -42,7 +45,8 @@ export const VFMethods: React.FC = () => {
       category: 'auxiliar',
       independent: false,
       description: 'Analisa se a velocidade estimada é compatível com a distância disponível para parada antes do ponto crítico.',
-      formula: 'd = v × t_r + v² / (2 × g × µ)',
+      formula: 'd = v · tᵣ + v² / (2 · g · μ)',
+      explanation: 'Indicador auxiliar que soma a distância de reação à distância de frenagem; não é método independente neste fluxo.',
       requires: ['Velocidade estimada (km/h)', 'Distância disponível (m)', 'Tempo de reação (s)', 'µ'],
       limitations: ['Indicador auxiliar — não estima velocidade diretamente'],
       source: 'M_015 — Manual de Atendimento e Perícia de Acidentes de Trânsito',
@@ -155,7 +159,8 @@ export const VFMethods: React.FC = () => {
               <div>
                 <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>Fórmula</div>
                 <code style={{ fontSize: '12px', color: '#38bdf8', fontFamily: 'var(--font-mono)', whiteSpace: 'pre-line', display: 'block', lineHeight: 1.6 }}>
-                  {m.formula}
+                  <span style={{ whiteSpace: 'pre-line', fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-primary)' }}>{m.formula}</span>
+                  {m.explanation && <p style={{ margin: '8px 0 0', color: 'var(--text-muted)', lineHeight: 1.55 }}>{m.explanation}</p>}
                 </code>
               </div>
               <div>

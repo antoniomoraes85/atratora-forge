@@ -105,7 +105,8 @@ export function computeMethods(analysis: ForensicAnalysis): MethodResult[] {
     const result = multiSegmentFrictionSpeed(segments);
     results.push({ ...base, status: 'suficiente', ...result, availabilityReason: 'Dados suficientes para cálculo.',
       qualityScore: getMeasurementQuality(tracks), parameterRef: segments.map(s => s.source).join('; '),
-      parameterSource: tracks.some(t => t.frictionOverride) ? 'externo' : 'técnico', formula: 'v = √(2 × Σ(µ_eff_i × g × d_i))',
+      parameterSource: tracks.some(t => t.frictionOverride) ? 'externo' : 'técnico', formula: tracks.length === 1 ? 'v = √(2 · g · μ · d)' : 'v = √(2 · Σᵢ(μ_eff,ᵢ · g · dᵢ))',
+      explanation: tracks.length === 1 ? 'Trecho único: velocidade obtida pela energia dissipada pelo atrito no vestígio.' : 'Múltiplos trechos: dissipações somadas segmento a segmento, considerando μ efetivo e inclinação da via.',
       variables: Object.fromEntries(segments.flatMap((s, i) => [[`Trecho ${i + 1}: distância (m)`, s.distanceM], [`Trecho ${i + 1}: µ min / central / max`, `${s.muMin} / ${s.muCentral} / ${s.muMax}`], [`Trecho ${i + 1}: inclinação (%)`, s.gradePercent]])),
     });
   }
