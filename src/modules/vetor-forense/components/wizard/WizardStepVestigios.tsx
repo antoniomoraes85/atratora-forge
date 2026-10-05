@@ -82,6 +82,7 @@ export const WizardStepVestigios: React.FC<Props> = ({ analysis, onChange, corre
 
       <div style={{ padding: '14px 16px', borderRadius: 10, border: '1px solid rgba(56,189,248,.2)', background: 'linear-gradient(110deg, rgba(56,189,248,.1), rgba(56,189,248,.02))' }}>
         <strong style={{ display: 'block', marginBottom: 10 }}>O que torna um vestígio calculável?</strong>
+        <span style={{ display: 'block', marginBottom: 10, fontSize: 12, color: 'var(--text-dim)' }}>Obrigatórios para calcular</span>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', color: 'var(--text-muted)', fontSize: 12 }}>
           <span><CarFront size={14} /> veículo</span><span><Ruler size={14} /> distância medida</span><span><Droplets size={14} /> superfície e condição</span><span><CheckCircle2 size={14} /> coeficiente compatível</span>
         </div>
