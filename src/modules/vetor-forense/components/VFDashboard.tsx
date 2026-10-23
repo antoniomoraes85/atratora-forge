@@ -26,7 +26,7 @@ export const VFDashboard: React.FC<VFDashboardProps> = ({ onNavigate }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <BookOpen size={18} color="#c084fc" />
             <span style={{ fontSize: '13px', fontWeight: 700, color: '#c084fc', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Primeira vez no Vetor Forense?
+              Primeira vez neste módulo?
             </span>
           </div>
           <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '10px', letterSpacing: '-0.02em' }}>

@@ -1,7 +1,7 @@
 @import './variables.css';
 
 /* ═══════════════════════════════════════════════
-   ATRATORA FORGE — Global Styles v0.3.0
+   VETOR FORENSE | ATRATOR — Global Styles
    Premium Technical Dark Theme
 ═══════════════════════════════════════════════ */
 
@@ -33,10 +33,10 @@ html, body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.25);
+  background: rgba(216, 162, 58, 0.25);
   border-radius: var(--radius-full);
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.55); }
+::-webkit-scrollbar-thumb:hover { background: rgba(216, 162, 58, 0.55); }
 
 /* ── Focus Visible ───────────────────────────── */
 :focus-visible {
@@ -98,14 +98,14 @@ input::placeholder { color: var(--text-dim); }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  background: linear-gradient(135deg, #a4742a, #d8a23a);
   color: #ffffff;
-  border-color: rgba(99,102,241,0.5);
-  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.30), inset 0 1px 0 rgba(255,255,255,0.10);
+  border-color: rgba(216,162,58,0.5);
+  box-shadow: 0 2px 12px rgba(216, 162, 58, 0.30), inset 0 1px 0 rgba(255,255,255,0.10);
 }
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a51f5, #7c7ff9);
-  box-shadow: 0 4px 22px rgba(99, 102, 241, 0.50);
+  background: linear-gradient(135deg, #c08a32, #e2ba72);
+  box-shadow: 0 4px 22px rgba(216, 162, 58, 0.50);
   transform: translateY(-1px);
 }
 .btn-primary:active:not(:disabled) { transform: translateY(0); }
@@ -165,12 +165,12 @@ input::placeholder { color: var(--text-dim); }
   border: 1px solid transparent;
   white-space: nowrap;
 }
-.badge-primary  { background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.30); color: var(--primary-300); }
+.badge-primary  { background: rgba(216,162,58,0.12); border-color: rgba(216,162,58,0.30); color: var(--primary-300); }
 .badge-success  { background: var(--success-bg); border-color: rgba(5,150,105,0.40); color: var(--success-text); }
 .badge-neutral  { background: rgba(100,116,139,0.12); border-color: rgba(100,116,139,0.25); color: var(--text-muted); }
-.badge-accent   { background: rgba(34,211,238,0.10); border-color: rgba(34,211,238,0.28); color: var(--accent-cyan); }
+.badge-accent   { background: rgba(198,203,209,0.10); border-color: rgba(198,203,209,0.28); color: var(--accent-cyan); }
 .badge-warning  { background: var(--warning-bg); border-color: rgba(217,119,6,0.30); color: var(--warning-text); }
-.badge-concept  { background: rgba(168,85,247,0.10); border-color: rgba(168,85,247,0.28); color: #c084fc; }
+.badge-concept  { background: rgba(168,85,247,0.10); border-color: rgba(168,85,247,0.28); color: #c4c1bd; }
 
 /* ── Card System ─────────────────────────────── */
 .card {
@@ -186,8 +186,8 @@ input::placeholder { color: var(--text-dim); }
   cursor: default;
 }
 .card-hover:hover {
-  border-color: rgba(99,102,241,0.22);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(99,102,241,0.08);
+  border-color: rgba(216,162,58,0.22);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(216,162,58,0.08);
   transform: translateY(-2px);
 }
 
@@ -208,7 +208,7 @@ input[type="text"], input[type="search"], input[type="number"], textarea, select
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  box-shadow: 0 0 0 3px rgba(216,162,58,0.15);
 }
 
 /* ── Animations ──────────────────────────────── */
@@ -223,8 +223,8 @@ input:focus, textarea:focus, select:focus {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(99,102,241,0.3); }
-  50%       { box-shadow: 0 0 16px rgba(99,102,241,0.6); }
+  0%, 100% { box-shadow: 0 0 8px rgba(216,162,58,0.3); }
+  50%       { box-shadow: 0 0 16px rgba(216,162,58,0.6); }
 }
 
 @keyframes shimmer {
@@ -279,11 +279,11 @@ input:focus, textarea:focus, select:focus {
 code {
   font-family: var(--font-mono);
   font-size: 0.88em;
-  background: rgba(99,102,241,0.10);
+  background: rgba(216,162,58,0.10);
   color: var(--primary-300);
   padding: 2px 6px;
   border-radius: var(--radius-xs);
-  border: 1px solid rgba(99,102,241,0.18);
+  border: 1px solid rgba(216,162,58,0.18);
 }
 
 /* ── Responsive Grid Helpers ─────────────────── */

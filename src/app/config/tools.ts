@@ -1,5 +1,5 @@
 /**
- * Catálogo Central de Ferramentas — Atratora Forge v0.3.0
+ * Catálogo Central de Ferramentas — Vetor Forense v0.3.0
  *
  * Única fonte de verdade para o catálogo de ferramentas.
  * Home, Diretório, Guias e buscas consomem este objeto.
@@ -41,7 +41,7 @@ export interface ToolDefinition {
 export const TOOLS_CATALOG: ToolDefinition[] = [
   {
     id: 'vetor-forense',
-    title: 'Vetor Forense',
+    title: 'Análise de Dinâmica Veicular',
     description:
       'Análise técnica de velocidade e dinâmica em sinistros de trânsito. Reconstrução baseada em vestígios, cinemática e dinâmica.',
     category: 'Análise',

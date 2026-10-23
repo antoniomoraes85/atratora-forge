@@ -9,8 +9,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onToggleSidebar,
-  title = 'Atratora Forge',
-  subtitle = 'Soluções avançadas para fluxos técnicos.',
+  title = 'Vetor Forense',
+  subtitle = 'Análise científica, reconstrução e inteligência pericial.',
 }) => {
   return (
     <header

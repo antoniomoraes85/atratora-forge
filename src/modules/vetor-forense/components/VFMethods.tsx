@@ -97,7 +97,7 @@ export const VFMethods: React.FC = () => {
       <div>
         <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>Métodos disponíveis</h2>
         <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '640px' }}>
-          Documentação dos métodos implementados no Vetor Forense. Cada método indica os dados necessários, a fórmula utilizada e as limitações técnicas.
+          Documentação dos métodos implementados no módulo Análise de Dinâmica Veicular. Cada método indica os dados necessários, a fórmula utilizada e as limitações técnicas.
         </p>
       </div>
 

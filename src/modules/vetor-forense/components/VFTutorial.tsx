@@ -191,7 +191,7 @@ export const VFTutorial: React.FC<VFTutorialProps> = ({ onNavigate }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
           <BookOpen size={18} color="#c084fc" />
           <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff' }}>
-            Vetor Forense — Primeiros Passos
+            Análise de Dinâmica Veicular — Primeiros Passos
           </h2>
         </div>
         <p style={{ fontSize: '13px', color: 'var(--text-dim)' }}>

@@ -48,7 +48,7 @@ export const Guides: React.FC = () => {
           </h1>
         </div>
         <p style={{ fontSize: '15px', color: 'var(--text-muted)' }}>
-          Guias passo a passo e fluxos operacionais (disponíveis e planejados) para a plataforma Atratora Forge.
+          Guias passo a passo e fluxos operacionais (disponíveis e planejados) para a plataforma Vetor Forense.
         </p>
       </div>
 

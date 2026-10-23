@@ -76,7 +76,7 @@ export const Tools: React.FC = () => {
           Diretório de Ferramentas
         </h1>
         <p style={{ fontSize: '15px', color: 'var(--text-muted)', maxWidth: '600px', lineHeight: 1.6 }}>
-          Explore o catálogo de ferramentas desenvolvidas pela Atratora Labs para automatizar, converter e validar fluxos técnicos complexos.
+          Explore os módulos do Vetor Forense: análises físicas, croquis, geoprocessamento e ferramentas de documentação e validação em evolução.
         </p>
       </div>
 
