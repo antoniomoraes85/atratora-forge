@@ -53,14 +53,14 @@ export const VetorForense: React.FC = () => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', fontSize: '13px', color: 'var(--text-dim)' }}>
         <Link to="/tools" style={{ color: 'var(--text-dim)', textDecoration: 'none' }}>Ferramentas</Link>
         <ChevronRight size={14} />
-        <span style={{ color: 'var(--text-muted)' }}>Vetor Forense</span>
+        <span style={{ color: 'var(--text-muted)' }}>Análise de Dinâmica Veicular</span>
       </div>
 
       {/* ── HEADER DO MÓDULO ── */}
       <div className="vf-module-header" style={{
         padding: '28px 32px',
-        background: 'linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(99,102,241,0.06) 100%)',
-        border: '1px solid rgba(56,189,248,0.15)',
+        background: 'linear-gradient(135deg, rgba(216,162,58,0.08) 0%, rgba(216,162,58,0.06) 100%)',
+        border: '1px solid rgba(216,162,58,0.15)',
         borderRadius: 'var(--radius-lg)',
         marginBottom: '24px',
         position: 'relative',
@@ -69,27 +69,27 @@ export const VetorForense: React.FC = () => {
         {/* Glow de fundo */}
         <div style={{
           position: 'absolute', top: '-20px', right: '-20px', width: '200px', height: '200px',
-          background: 'radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(216,162,58,0.12) 0%, transparent 70%)',
           pointerEvents: 'none',
           transform: `translate3d(0, ${parallax}px, 0)`, transition: 'transform 120ms linear',
         }} />
         <div aria-hidden="true" style={{ position: 'absolute', right: 30, bottom: 18, display: 'flex', alignItems: 'center', gap: 8, opacity: .8, transform: `translate3d(0, ${parallax * -0.5}px, 0)` }}>
-          {[CarFront, Waves, Ruler].map((Icon, i) => <span key={i} style={{ width: 32, height: 32, borderRadius: 9, display: 'grid', placeItems: 'center', background: 'rgba(15,23,42,.55)', border: '1px solid rgba(125,211,252,.25)', color: i === 1 ? '#a78bfa' : '#7dd3fc' }}><Icon size={16} /></span>)}
+          {[CarFront, Waves, Ruler].map((Icon, i) => <span key={i} style={{ width: 32, height: 32, borderRadius: 9, display: 'grid', placeItems: 'center', background: 'rgba(15,23,42,.55)', border: '1px solid rgba(216,162,58,.25)', color: i === 1 ? '#c0c4c9' : '#e0b562' }}><Icon size={16} /></span>)}
         </div>
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
             <div style={{
               width: '40px', height: '40px', borderRadius: '10px',
-              background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)',
+              background: 'rgba(216,162,58,0.15)', border: '1px solid rgba(216,162,58,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#38bdf8',
+              color: 'var(--primary-400)',
             }}>
               <BarChart2 size={22} />
             </div>
             <div>
               <h1 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                Vetor Forense
+                Análise de Dinâmica Veicular
               </h1>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
                 <span style={{
@@ -100,8 +100,8 @@ export const VetorForense: React.FC = () => {
                 }}>ATIVO</span>
                 <span style={{
                   fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
-                  padding: '2px 8px', background: 'rgba(99,102,241,0.15)',
-                  border: '1px solid rgba(99,102,241,0.3)', borderRadius: 'var(--radius-full)',
+                  padding: '2px 8px', background: 'rgba(216,162,58,0.15)',
+                  border: '1px solid rgba(216,162,58,0.3)', borderRadius: 'var(--radius-full)',
                   color: 'var(--primary-400)',
                 }}>NOVO</span>
               </div>
@@ -109,13 +109,13 @@ export const VetorForense: React.FC = () => {
           </div>
 
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '600px' }}>
-            Análise Técnica de Velocidade e Dinâmica em Sinistros de Trânsito
+            Estimativa de velocidade e reconstrução cinemática em sinistros de trânsito
           </p>
           <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginTop: '6px', fontStyle: 'italic' }}>
             Reconstrução baseada em vestígios, cinemática e dinâmica.
           </p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 16 }}>
-            {['Dados locais', 'Cálculo rastreável', 'Intervalos explicados'].map(label => <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 9px', borderRadius: 8, background: 'rgba(15,23,42,.38)', color: 'var(--text-muted)', fontSize: 11 }}><Sparkles size={12} color="#a78bfa" />{label}</span>)}
+            {['Dados locais', 'Cálculo rastreável', 'Intervalos explicados'].map(label => <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 9px', borderRadius: 8, background: 'rgba(15,23,42,.38)', color: 'var(--text-muted)', fontSize: 11 }}><Sparkles size={12} color="#c0c4c9" />{label}</span>)}
           </div>
         </div>
       </div>
@@ -139,16 +139,16 @@ export const VetorForense: React.FC = () => {
                 padding: '8px 14px', borderRadius: 'var(--radius-sm)',
                 fontSize: '13px', fontWeight: isActive ? 600 : 500,
                 border: '1px solid',
-                borderColor: isActive ? 'rgba(56,189,248,0.35)' : 'transparent',
-                background: isActive ? 'rgba(56,189,248,0.12)' : 'transparent',
-                color: isActive ? '#38bdf8' : 'var(--text-muted)',
+                borderColor: isActive ? 'rgba(216,162,58,0.35)' : 'transparent',
+                background: isActive ? 'rgba(216,162,58,0.12)' : 'transparent',
+                color: isActive ? 'var(--primary-400)' : 'var(--text-muted)',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
                 // Destaque extra para Tutorial
                 ...(tab.id === 'tutorial' && !isActive ? {
-                  borderColor: 'rgba(168,85,247,0.2)',
-                  background: 'rgba(168,85,247,0.06)',
-                  color: '#c084fc',
+                  borderColor: 'rgba(216,162,58,0.2)',
+                  background: 'rgba(216,162,58,0.06)',
+                  color: '#e0b562',
                 } : {}),
               }}
             >
