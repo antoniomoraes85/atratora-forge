@@ -24,7 +24,7 @@ export const About: React.FC = () => {
             Sobre a Plataforma
           </h1>
           <p style={{ fontSize: '16px', color: 'var(--text-main)', marginTop: '12px', lineHeight: 1.6 }}>
-            “Atratora Forge é uma plataforma independente desenvolvida pela Atratora Labs para criação de ferramentas voltadas à automação de fluxos técnicos.”
+            “Vetor Forense é uma plataforma independente do ecossistema ATRATOR para análise técnica, reconstrução de eventos, conversão de croquis e organização de evidências. Suas funcionalidades não substituem avaliação pericial profissional.”
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export const About: React.FC = () => {
               </span>
             </div>
             <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)', marginTop: '6px' }}>
-              Atratora Labs
+              ATRATOR — ecossistema de tecnologia
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '2px' }}>
               Soluções independentes de alta performance
