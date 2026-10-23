@@ -1,11 +1,11 @@
-# Atratora Forge
+# Vetor Forense
 
 **Versão:** 0.3.0  
-**Empresa:** Atratora Labs  
+**Ecossistema:** ATRATOR  
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
 
 > Plataforma modular e privada de ferramentas inteligentes para automação, conversão e análise de fluxos técnicos e operacionais.**  
-> Desenvolvida pela **Atratora Labs** sob autoria de **José Antônio Coutinho de Moraes Filho**.
+> Desenvolvida pela **ATRATOR** sob autoria de **José Antônio Coutinho de Moraes Filho**.
 
 [![Status](https://img.shields.io/badge/Versão-0.3.0-6366f1.svg)](CHANGELOG.md)
 [![Licença](https://img.shields.io/badge/Licença-Proprietária%20Atratora%20Labs-10b981.svg)](#)
@@ -16,7 +16,7 @@
 
 ## 1. Visão Geral
 
-O **Atratora Forge** é uma plataforma independente criada para centralizar, acelerar e modernizar fluxos operacionais técnicos, incluindo geoprocessamento, croquis, mapas, diagramas, análises periciais e validações documentais.
+O **Vetor Forense** é uma plataforma independente criada para centralizar, acelerar e modernizar fluxos operacionais técnicos, incluindo geoprocessamento, croquis, mapas, diagramas, análises periciais e validações documentais.
 
 Projetada com arquitetura modular e estética profissional de alto padrão (SaaS), a plataforma opera sob o paradigma **Local-First**: todo o processamento de imagens, cálculos e arquivos é executado diretamente na sandbox do navegador, sem envio de dados a servidores remotos, sem banco de dados intermediário e com zero telemetria.
 
@@ -50,7 +50,7 @@ Desde a versão **v0.1**, o **Conversor de Imagem para `.CROQUI`** facilita flux
 - **Ferramenta de Build & Bundler**: Vite 5.
 - **Roteamento Estático**: React Router DOM (HashRouter, compatível com GitHub Pages sem erros 404).
 - **Iconografia**: Lucide React.
-- **Estilização**: CSS moderno estruturado com Design Tokens (Dark Graphite, Deep Indigo, Electric Cyan, Emerald).
+- **Estilização**: CSS moderno estruturado com Design Tokens (Dark Graphite, Aço, Ouro e Grafite).
 - **Testes Automatizados**: Vitest.
 - **CI / CD**: GitHub Actions para deploy estático automatizado.
 
@@ -59,7 +59,7 @@ Desde a versão **v0.1**, o **Conversor de Imagem para `.CROQUI`** facilita flux
 ## 4. Estrutura do Projeto
 
 ```
-Atratora Forge/
+Vetor Forense/
 ├── public/                 # Favicon vetorial e manifesto
 ├── src/
 │   ├── app/                # Rotas e configurações de navegação
@@ -94,7 +94,7 @@ Atratora Forge/
 
 ### Instalação e Execução
 ```bash
-git clone https://github.com/atratora-labs/atratora-forge.git
+git clone https://github.com/antoniomoraes85/atratora-forge.git
 cd atratora-forge
 npm install
 npm run dev
@@ -126,9 +126,9 @@ O projeto utiliza **GitHub Actions** (`.github/workflows/deploy.yml`) para impla
 
 ## 8. Declaração de Independência e Disclaimer Institucional
 
-A compatibilidade de determinados módulos do **Atratora Forge** com formatos de arquivo (como `.croqui`) ou fluxos técnicos utilizados por órgãos públicos tem finalidade estritamente técnica de interoperabilidade.
+A compatibilidade de determinados módulos do **Vetor Forense** com formatos de arquivo (como `.croqui`) ou fluxos técnicos utilizados por órgãos públicos tem finalidade estritamente técnica de interoperabilidade.
 
-**O Atratora Forge é uma plataforma independente da iniciativa privada, sem qualquer vínculo, convênio, homologação, parceria ou chancela oficial por parte da Polícia Rodoviária Federal (PRF), do Ministério da Justiça e Segurança Pública ou de qualquer outro órgão governamental.**
+**O Vetor Forense é uma plataforma independente da iniciativa privada, sem qualquer vínculo, convênio, homologação, parceria ou chancela oficial por parte da Polícia Rodoviária Federal (PRF), do Ministério da Justiça e Segurança Pública ou de qualquer outro órgão governamental.**
 
 ---
 
@@ -136,4 +136,4 @@ A compatibilidade de determinados módulos do **Atratora Forge** com formatos de
 
 **Desenvolvido por:**  
 **José Antônio Coutinho de Moraes Filho**  
-*Atratora Labs*
+*ATRATOR*
