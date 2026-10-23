@@ -1,4 +1,4 @@
-# Atratora Forge — Master Project Documentation (PROJECT_MASTER)
+# Vetor Forense — Master Project Documentation (PROJECT_MASTER)
 
 > **DOCUMENTO CANÔNICO DO PROJETO**  
 > Este documento centraliza todo o contexto técnico, de negócios, arquitetura e governança da plataforma. Qualquer agente de inteligência artificial ou desenvolvedor humano pode utilizar este arquivo para retomar o projeto com total precisão de onde ele parou.
@@ -7,9 +7,9 @@
 
 ## 1. Identificação Geral
 
-# PROMPT MASTER DE EXECUÇÃO — ATRATORA FORGE
+# PROMPT MASTER DE EXECUÇÃO — VETOR FORENSE
 # V0.3.0 — FUNDAÇÃO PREMIUM + SISTEMA DE GUIAS
-# Empresa: Atratora Labs
+# Ecossistema: ATRATOR
 # Desenvolvedor: José Antônio Coutinho de Moraes Filho
 - **Posicionamento**: *“Plataforma de ferramentas inteligentes para automação de fluxos técnicos.”*
 - **Versão Atual**: `0.3.0` (V0.2 — Integração de Sistema de Guias e Melhoria de UX)
@@ -26,7 +26,7 @@ Desenvolver uma plataforma web modular, expansível, moderna e de alto desempenh
 ## 3. Escopo da Versão Atual (V0.1)
 
 ### Entregue na V0.1:
-1. **Fundação e UI Shell Premium**: Interface SaaS moderna com tema escuro (Dark Graphite, Deep Indigo, Electric Cyan), sem qualquer alusão visual a órgãos governamentais ou policiais.
+1. **Fundação e UI Shell Premium**: Interface SaaS moderna com tema escuro (Grafite profundo, aço e ouro ATRATOR), sem qualquer alusão visual a órgãos governamentais ou policiais.
 2. **Dashboard Funcional e Responsiva**:
    - Sidebar com navegação completa e drawer mobile.
    - Header com status de operação local.
@@ -60,7 +60,7 @@ Desenvolver uma plataforma web modular, expansível, moderna e de alto desempenh
 
 ## 4. Arquitetura do Sistema
 
-A Atratora Forge opera sob o modelo **Domain / Adapter / Exporter**:
+A Vetor Forense opera sob o modelo **Domain / Adapter / Exporter**:
 - **Interface e Módulos**: Cada ferramenta reside isolada sob `src/modules/<nome-modulo>/`.
 - **Adaptador `.croqui`**: O formato de saída `.croqui` reside exclusivamente em `src/modules/croqui-converter/serializer/`, gerando a estrutura estrita de `Fabric.js 2.x/3.x` sem vincular a base de dados interna da plataforma a esse formato externo.
 - **Local-First**: Zero chamadas para APIs externas. Zero rastreamento ou telemetria. Todo o processamento de imagens ocorre via HTML5 Canvas em memória no navegador.
@@ -96,7 +96,7 @@ O detalhamento completo de cada arquivo está registrado em `docs/KNOWLEDGE_INDE
 
 Todas as decisões fundamentais encontram-se detalhadas em `docs/DECISIONS.md`:
 - **D-001**: Plataforma técnica genérica.
-- **D-002**: Propriedade de Atratora Labs (José Antônio Coutinho de Moraes Filho).
+- **D-002**: Propriedade de ATRATOR (José Antônio Coutinho de Moraes Filho).
 - **D-003**: Conversor `.croqui` como primeira utilidade prática.
 - **D-004 e D-005**: Manuais institucionais como referência local excluídos do repositório público.
 - **D-006 a D-008**: Local-first, sem backend e sem credenciais na v0.1.
@@ -148,8 +148,8 @@ Todas as decisões fundamentais encontram-se detalhadas em `docs/DECISIONS.md`:
   - Refinamentos na UI (TourOverlay sem bloqueio de pointer-events, permissão de scroll, gating simples).
 
 - **v0.1.0** (05/09/2026):
-  - Concepção e lançamento da plataforma Atratora Forge.
-  - Implementação da identidade visual e dashboard premium da Atratora Labs.
+  - Concepção e lançamento da plataforma Vetor Forense.
+  - Implementação da identidade visual e dashboard premium da ATRATOR.
   - Preservação do baseline legacy em `legacy/converter-v0.1.html`.
   - Módulo funcional do Conversor de Imagem para `.CROQUI`.
   - Suite completa de documentação (`PROJECT_MASTER`, `ARCHITECTURE`, `ROADMAP`, `DECISIONS`, `KNOWLEDGE_INDEX`, `CROQUI_FORMAT`).
