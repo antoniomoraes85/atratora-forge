@@ -206,7 +206,7 @@ export const Home: React.FC = () => {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '48px' }}>
 
-          {/* ── Card Vetor Forense ── */}
+          {/* ── Card Análise de Dinâmica Veicular ── */}
           <div className="card" style={{
             padding: '32px',
             background: 'linear-gradient(145deg, rgba(216,162,58,0.08), rgba(99,102,241,0.06))',
