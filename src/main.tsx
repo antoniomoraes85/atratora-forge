@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { AppRoutes } from './app/routes/AppRoutes';
 import './styles/global.css';
+import './styles/vetor-forense.css';
 
 const rootElement = document.getElementById('root');
 
