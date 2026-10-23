@@ -1,12 +1,12 @@
-# Roadmap Evolutivo — Atratora Forge
+# Roadmap Evolutivo — Vetor Forense
 
-Plano de lançamento e evolução contínua da plataforma **Atratora Forge**, desenvolvida pela **Atratora Labs**.
+Plano de lançamento e evolução contínua da plataforma **Vetor Forense**, desenvolvida pela **ATRATOR**.
 
 ---
 
 ## V0.1 — Fundação Premium + Conversor `.croqui`
 - [x] Fundação profissional da plataforma web (React 18, TypeScript, Vite).
-- [x] Dashboard premium e responsiva (Dark Graphite, Indigo/Cyan, Microinterações).
+- [x] Dashboard premium e responsiva (Grafite, aço e ouro ATRATOR, microinterações).
 - [x] Arquitetura modular extensível.
 - [x] Primeira ferramenta funcional: **Conversor de Imagem para `.CROQUI`** (local-first).
 - [x] Preservação do baseline legacy validado em `legacy/converter-v0.1.html`.
@@ -46,7 +46,7 @@ Plano de lançamento e evolução contínua da plataforma **Atratora Forge**, de
 ---
 
 ## V0.5 — Exportação Multiobjeto e Adaptadores Neutros
-- [ ] Modelo canônico de objetos internos da Atratora Forge.
+- [ ] Modelo canônico de objetos internos da Vetor Forense.
 - [ ] Adaptador multiobjeto para exportação `.croqui` (gerando grupos, caminhos e textos nativos do LPST).
 - [ ] Exportadores alternativos: SVG vetorial, PDF pericial com alta resolução e imagem PNG.
 - [ ] Importador reverso de arquivos `.croqui` para edição dentro do Croqui Studio.
@@ -84,6 +84,6 @@ Plano de lançamento e evolução contínua da plataforma **Atratora Forge**, de
 
 ## V1.0 — Plataforma Estável e Extensível
 - [ ] Arquitetura de plugins para terceiros e empresas parceiras.
-- [ ] Sincronização opcional segura em nuvem privada (Self-Hosted / Cloud da Atratora Labs).
+- [ ] Sincronização opcional segura em nuvem privada (Self-Hosted / Cloud da ATRATOR).
 - [ ] Suporte multi-idioma (Português, Espanhol, Inglês).
 - [ ] Suíte completa de auditoria, conformidade e certificação técnica.
