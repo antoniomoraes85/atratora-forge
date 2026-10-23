@@ -6,7 +6,7 @@
 
 - Marca-mãe: **ATRATOR** — tecnologia, conhecimento, inovação e impacto.
 - Plataforma: **VETOR FORENSE** — análise científica, reconstrução, evidência e tecnologia.
-- Módulo funcional de domínio, anteriormente também chamado Vetor Forense: **Análise de Dinâmica Veicular**.
+- Módulo funcional de domínio, anteriormente também chamado Vetor Forense: **Análise de Dinâmica Veicular**. O nome público foi atualizado no catálogo, nos títulos internos, nas mensagens de primeira utilização, no tutorial e na documentação de métodos. O caminho técnico `/tools/vetor-forense` e os identificadores internos permanecem estáveis, para evitar quebra de links, persistência local e integrações.
 - Ferramenta funcional preservada: **Conversor .CROQUI**.
 - Catálogo e módulos futuros preservados: Map Studio, Croqui Studio, Dynamics, Validator, Documents, Field Toolkit e demais itens explicitamente rotulados como planejados.
 
