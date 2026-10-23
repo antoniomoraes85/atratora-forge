@@ -1,11 +1,11 @@
 {
-  "name": "Atratora Forge",
-  "short_name": "AF Forge",
-  "description": "Plataforma de ferramentas inteligentes para automação de fluxos técnicos.",
+  "name": "Vetor Forense | ATRATOR",
+  "short_name": "Vetor Forense",
+  "description": "Plataforma de análise científica, reconstrução e ferramentas forenses do ecossistema ATRATOR.",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0a0c10",
-  "theme_color": "#6366f1",
+  "background_color": "#050506",
+  "theme_color": "#D8A23A",
   "icons": [
     {
       "src": "icon-192.png",
