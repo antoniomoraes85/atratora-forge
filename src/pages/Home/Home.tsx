@@ -6,6 +6,7 @@ import { GUIDES_CATALOG } from '../../app/config/guides';
 
 export const Home: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [scrollOffset, setScrollOffset] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -27,6 +28,22 @@ export const Home: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let queued = false;
+    const onScroll = () => {
+      if (!queued) {
+        queued = true;
+        window.requestAnimationFrame(() => {
+          setScrollOffset(Math.min(window.scrollY, 1400));
+          queued = false;
+        });
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const availableTools = TOOLS_CATALOG.filter(t => t.status === 'available');
   const devToolsCount = TOOLS_CATALOG.filter(t => t.status !== 'available').length;
   const totalGuides = GUIDES_CATALOG.length;
@@ -35,7 +52,7 @@ export const Home: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }} className="animate-fade-in">
 
       {/* ── HERO SECTION COM CIRCUITO PARALLAX ── */}
-      <section
+      <section className="vf-home-hero"
         style={{
           position: 'relative',
           padding: '100px 40px 120px',
@@ -49,6 +66,13 @@ export const Home: React.FC = () => {
           textAlign: 'center'
         }}
       >
+        <div className="vf-gravity-field" aria-hidden="true" style={{
+          transform: `translate3d(${mousePos.x * 0.5}px, ${scrollOffset * 0.14 + mousePos.y * 0.4}px, 0)`
+        }}>
+          <div className="vf-gravity-lines" />
+          <div className="vf-gravity-orbit" />
+          <div className="vf-gravity-core" />
+        </div>
         <div style={{
           position: 'absolute', inset: 0,
           backgroundImage: `
@@ -94,24 +118,24 @@ export const Home: React.FC = () => {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', background: 'var(--bg-glass-card)', border: '1px solid var(--border-highlight)', borderRadius: 'var(--radius-full)', marginBottom: '32px', boxShadow: 'var(--shadow-md)' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary-400)', boxShadow: '0 0 10px var(--primary-400)' }} />
             <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Atratora Forge v0.3.0
+              VETOR FORENSE | ATRATOR
             </span>
           </div>
 
           <h1 style={{ fontSize: 'clamp(42px, 5vw, 64px)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '24px', textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-            Tecnologia aplicada a <br />
-            <span style={{ background: 'linear-gradient(135deg, var(--accent-cyan), var(--primary-400))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
-              fluxos técnicos
+            Ciência aplicada à <br />
+            <span className="vf-hero-title" style={{ display: 'inline-block' }}>
+              análise e reconstrução
             </span>
-            , operacionais e analíticos.
+            {' '}de eventos.
           </h1>
 
           <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px', maxWidth: '720px', margin: '0 auto 16px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-            A Atratora Forge reúne soluções desenvolvidas pela Atratora Labs para converter, estruturar, analisar e automatizar tarefas técnicas em uma plataforma modular, privada e orientada à produtividade.
+            Vetor Forense é a plataforma do ecossistema ATRATOR para análise de dinâmica veicular, croquis, evidências e documentação técnica — com módulos independentes e processamento local.
           </p>
 
           <p style={{ fontSize: '15px', color: 'var(--text-dim)', marginBottom: '40px', fontWeight: 500 }}>
-            Da informação bruta ao resultado técnico, com mais precisão e menos trabalho manual.
+            Da medição ao resultado reproduzível: transparência dos métodos, rastreabilidade das premissas e suporte ao trabalho técnico especializado.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
@@ -122,6 +146,9 @@ export const Home: React.FC = () => {
               Conhecer a plataforma
             </Link>
           </div>
+          <p style={{ marginTop: '22px', fontSize: '11px', color: 'var(--text-dim)', letterSpacing: '.03em' }}>
+            Plataforma privada independente. Resultados dependem da qualidade dos dados e da avaliação técnica.
+          </p>
         </div>
       </section>
 
@@ -182,8 +209,8 @@ export const Home: React.FC = () => {
           {/* ── Card Vetor Forense ── */}
           <div className="card" style={{
             padding: '32px',
-            background: 'linear-gradient(145deg, rgba(56,189,248,0.08), rgba(99,102,241,0.06))',
-            border: '1px solid rgba(56,189,248,0.2)',
+            background: 'linear-gradient(145deg, rgba(216,162,58,0.08), rgba(99,102,241,0.06))',
+            border: '1px solid rgba(216,162,58,0.2)',
             position: 'relative', overflow: 'hidden',
           }}>
             <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.04 }}>
@@ -195,11 +222,11 @@ export const Home: React.FC = () => {
                 <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: 'var(--radius-full)', color: 'var(--primary-400)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>NOVO</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38bdf8' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(216,162,58,0.15)', border: '1px solid rgba(216,162,58,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-400)' }}>
                   <Zap size={20} />
                 </div>
                 <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-                  Vetor Forense
+                  Análise de Dinâmica Veicular
                 </h2>
               </div>
               <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
