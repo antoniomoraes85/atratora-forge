@@ -1,10 +1,10 @@
 {
-  "name": "atratora-forge",
+  "name": "vetor-forense",
   "private": true,
   "version": "0.3.0",
   "type": "module",
-  "description": "Plataforma de ferramentas inteligentes para automação de fluxos técnicos - Atratora Labs",
-  "author": "José Antônio Coutinho de Moraes Filho <Atratora Labs>",
+  "description": "Plataforma modular de análise científica e ferramentas forenses do ecossistema ATRATOR",
+  "author": "José Antônio Coutinho de Moraes Filho",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
