@@ -29,7 +29,7 @@ export const VFDashboard: React.FC<VFDashboardProps> = ({ onNavigate }) => {
               Primeira vez neste módulo?
             </span>
           </div>
-          <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '10px', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '10px', letterSpacing: '-0.02em' }}>
             Tutorial guiado disponível
           </h2>
           <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '480px' }}>
