@@ -1,34 +1,88 @@
+/*
+ * ATRATOR / Gravitational field.
+ * O foco visual é o centro escuro com streams entrando no horizonte.
+ * O parallax usa transform (GPU-friendly) em profundidades distintas.
+ */
 .atrator-event-horizon {
-  position:absolute;
-  pointer-events:auto;
-  overflow:hidden;
-  inset:0;
-  z-index:0;
-  opacity:1;
-  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.18) 24%,#000 50%,#000 100%);
+  --pointer-x: 0px;
+  --pointer-y: 0px;
+  --scroll-shift: 0px;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 68% 63% at 55% 51%, rgba(57, 75, 83, .32), transparent 75%),
+    radial-gradient(ellipse 92% 75% at 56% 50%, #1b3039 3%, #0c1a24 65%, #07131c 100%);
 }
-.atrator-event-horizon-layer {
-  position:absolute;
-  inset:-15% -6% -10% 30%;
-  transition:transform 380ms ease-out;
-  will-change:transform;
+.atrator-event-horizon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .13;
+  background-image:
+    linear-gradient(to right, rgba(204, 220, 223, .18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204, 220, 223, .18) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at center, black 10%, transparent 100%);
+}
+.atrator-event-horizon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 72% 75% at 53% 48%, transparent 35%, rgba(5, 16, 23, .25) 76%, rgba(5, 16, 23, .52) 100%);
+  pointer-events: none;
+}
+.atrator-event-horizon > div {
+  position: absolute;
+  inset: -14% -19%;
+  transform-origin: center center;
+  transition: transform 380ms cubic-bezier(.2,.75,.2,1);
+  will-change: transform;
 }
 .atrator-event-horizon svg {
-  display:block;width:100%;height:100%;
-  overflow:visible;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
-.atrator-flow-field { transform-origin:445px 270px; animation:atrator-orbit-turn 48s linear infinite; }
-.atrator-orbits { transform-origin:445px 270px; animation:atrator-orbit-turn 60s linear reverse infinite; }
-@keyframes atrator-orbit-turn { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-@media(max-width:1050px) {
-  .atrator-event-horizon-layer {inset:0 -26% 0 14%;}
-  .atrator-event-horizon {opacity:.57;}
+.atrator-depth-back {
+  opacity: .93;
+  transform: translate3d(
+    calc(var(--pointer-x) * .54),
+    calc(var(--pointer-y) * .54 + var(--scroll-shift) * .78), 0
+  );
 }
-@media(max-width:680px) {
-  .atrator-event-horizon-layer {inset:-4% -55% 16% 0;}
-  .atrator-event-horizon {opacity:.32;}
+.atrator-depth-streams {
+  transform: translate3d(
+    calc(var(--pointer-x) * -1.0),
+    calc(var(--pointer-y) * -.8 + var(--scroll-shift) * -1.12), 0
+  );
 }
-@media(prefers-reduced-motion:reduce) {
-  .atrator-event-horizon-layer {transition:none!important;transform:none!important;will-change:auto;}
-  .atrator-flow-field,.atrator-orbits {animation:none!important;}
+.atrator-depth-core {
+  transform: translate3d(
+    calc(var(--pointer-x) * .35),
+    calc(var(--pointer-y) * .38 + var(--scroll-shift) * .25), 0
+  );
+}
+.atrator-infall-particles {
+  animation: atrator-infall 5.8s linear infinite;
+}
+@keyframes atrator-infall {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -132; }
+}
+@media (max-width: 900px) {
+  .atrator-event-horizon > div { inset: -13% -23%; }
+  .atrator-event-horizon::before { opacity:.09; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atrator-event-horizon > div {
+    transition: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+  .atrator-infall-particles { animation: none !important; }
 }

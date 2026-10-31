@@ -16,6 +16,8 @@
 
 > **Redesign visual (31/10/2026):** interface predominantemente **clara**, sistema de cores **grafite + bronze ATRATOR**, logo vetorial Vetor Forense, parallax discreto de um buraco negro no hero e nomes funcionais em português. Novas áreas digitais continuam **planejadas**; as duas ferramentas atuais e suas rotas foram preservadas. [Guia da identidade visual](docs/VISUAL_IDENTITY_LIGHT_ATRATOR_20261031.md).
 
+> **Revisão de UX/parallax v2 (31/10/2026):** o campo gravitacional foi reconstruído com núcleo escuro, linhas convergentes, pontos luminosos animados e parallax de três profundidades. O hero claro apresenta a arte em painel próprio; as ferramentas disponíveis aparecem antes do roadmap. [Diagnóstico e critérios da revisão](docs/UX_GRAVITATIONAL_V2_20261031.md).
+
 ## 1. Visão Geral
 
 > **Reposicionamento da dashboard — 31/10/2026:** Vetor Forense passa a apresentar uma **visão de produto** para evidências digitais, relatórios técnicos e análise de dispositivos móveis. **Esses módulos ainda são planejados**, não oferecem exame de celulares nem emissão de laudo oficial. Permanecem funcionais os módulos atuais de dinâmica veicular e conversão `.CROQUI`. Consulte [Direção do Produto](docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md).
