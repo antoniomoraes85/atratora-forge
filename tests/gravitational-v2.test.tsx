@@ -20,11 +20,13 @@ describe('Experiência gravitacional ATRATOR v2', () => {
     expect((art.match(/atrator-infall-particles/g) ?? []).length).toBe(24);
   });
 
-  it('mantém o artefato decorativo livre de uploads e de dependências externas', () => {
-    expect(art).not.toContain('<img');
+  it('carrega a imagem AVIF local sem requisições externas', () => {
+    expect(art).toContain('hero/atrator-black-hole.avif');
+    expect(art).toContain('class="atrator-photo"');
     expect(art).not.toContain('http:');
     expect(art).not.toContain('https:');
     expect(art).not.toContain('<canvas');
+    expect(art).not.toContain('fetch(');
   });
 
   it('usa CSS de parallax e preserva preferência por movimento reduzido', () => {
