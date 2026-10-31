@@ -1,6 +1,6 @@
 # Vetor Forense
 
-**Versão:** 0.3.0  
+**Versão:** 0.3.0 — Dashboard de expansão digital (31/10/2026)  
 **Ecossistema:** ATRATOR  
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
 
@@ -15,6 +15,9 @@
 ---
 
 ## 1. Visão Geral
+
+> **Reposicionamento da dashboard — 31/10/2026:** Vetor Forense passa a apresentar uma **visão de produto** para evidências digitais, relatórios técnicos e análise de dispositivos móveis. **Esses módulos ainda são planejados**, não oferecem exame de celulares nem emissão de laudo oficial. Permanecem funcionais os módulos atuais de dinâmica veicular e conversão `.CROQUI`. Consulte [Direção do Produto](docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md).
+
 
 O **Vetor Forense** é uma plataforma independente criada para centralizar, acelerar e modernizar fluxos operacionais técnicos, incluindo geoprocessamento, croquis, mapas, diagramas, análises periciais e validações documentais.
 
@@ -43,6 +46,18 @@ Desde a versão **v0.1**, o **Conversor de Imagem para `.CROQUI`** facilita flux
 - **Recursos**: Drag & Drop inteligente, redimensionamento proporcional otimizado (1300 px) e sanitização de metadados.
 
 ---
+
+### Expansão de produto — roadmap não operacional
+
+- **Vetor Evidence:** organização de casos, hash e histórico de operações — planejado.
+- **Vetor Reports:** relatórios técnicos estruturados — planejado.
+- **Vetor Mobile:** importação/análise de artefatos de dispositivos autorizados — planejado.
+- **Vetor Media e Documents:** análise de arquivos, mídia e documentos eletrônicos — planejados.
+- **Vetor Fraud:** investigação técnica documental de incidentes — estudo futuro.
+
+Nenhum desses módulos possui função operacional de perícia digital na v0.3.0. As implementações atuais não substituem perito habilitado, nomeação judicial nem requisitos de cadeia de custódia. O projeto é independente de órgãos públicos e não anuncia serviços periciais remunerados nesta etapa.
+
+**Plano de implementação:** [docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md](docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md).
 
 ## 3. Tecnologias Utilizadas
 
