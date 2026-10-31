@@ -1,88 +1,65 @@
-/*
- * ATRATOR / Gravitational field.
- * O foco visual é o centro escuro com streams entrando no horizonte.
- * O parallax usa transform (GPU-friendly) em profundidades distintas.
+/* ATRATOR cinematic parallax — photograph-based, lightweight, no WebGL.
+ * All layers are noninteractive, respect reduced motion and use transforms.
  */
 .atrator-event-horizon {
-  --pointer-x: 0px;
-  --pointer-y: 0px;
-  --scroll-shift: 0px;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 68% 63% at 55% 51%, rgba(57, 75, 83, .32), transparent 75%),
-    radial-gradient(ellipse 92% 75% at 56% 50%, #1b3039 3%, #0c1a24 65%, #07131c 100%);
+  --pointer-x:0px;--pointer-y:0px;--scroll-shift:0px;
+  position:absolute;inset:0;z-index:0;overflow:hidden;
+  pointer-events:none;background:#071520;
 }
-.atrator-event-horizon::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: .13;
-  background-image:
-    linear-gradient(to right, rgba(204, 220, 223, .18) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(204, 220, 223, .18) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 70% at center, black 10%, transparent 100%);
-}
-.atrator-event-horizon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 72% 75% at 53% 48%, transparent 35%, rgba(5, 16, 23, .25) 76%, rgba(5, 16, 23, .52) 100%);
-  pointer-events: none;
-}
-.atrator-event-horizon > div {
-  position: absolute;
-  inset: -14% -19%;
-  transform-origin: center center;
-  transition: transform 380ms cubic-bezier(.2,.75,.2,1);
-  will-change: transform;
-}
-.atrator-event-horizon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+.atrator-event-horizon>div {
+  position:absolute;inset:0;pointer-events:none;
+  will-change:transform;
+  transition:transform 440ms cubic-bezier(.22,.74,.21,1);
 }
 .atrator-depth-back {
-  opacity: .93;
-  transform: translate3d(
-    calc(var(--pointer-x) * .54),
-    calc(var(--pointer-y) * .54 + var(--scroll-shift) * .78), 0
-  );
+  transform:translate3d(calc(var(--pointer-x) * -.7),calc(var(--pointer-y) * -.65 + var(--scroll-shift) * -.9),0);
+}
+.atrator-photo {
+  position:absolute;left:5%;top:-7%;width:110%;height:114%;
+  object-fit:cover;object-position:50% 50%;
+  filter:saturate(.91) contrast(1.06) brightness(.87);
+  pointer-events:none;user-select:none;
+}
+.atrator-event-horizon::after {
+  content:"";position:absolute;inset:0;z-index:3;
+  background:
+    linear-gradient(90deg,#071721 0%,rgba(7,23,33,.98) 13%,rgba(7,23,33,.86) 31%,rgba(7,23,33,.35) 49%,rgba(6,17,27,.05) 65%,rgba(6,17,27,.05) 100%),
+    linear-gradient(0deg,rgba(5,15,23,.52),transparent 19%,transparent 80%,rgba(5,15,23,.23));
 }
 .atrator-depth-streams {
-  transform: translate3d(
-    calc(var(--pointer-x) * -1.0),
-    calc(var(--pointer-y) * -.8 + var(--scroll-shift) * -1.12), 0
-  );
+  opacity:.76;
+  transform:translate3d(calc(var(--pointer-x) * 1.1),calc(var(--pointer-y) * .8 + var(--scroll-shift) * .75),0);
+}
+.atrator-depth-streams svg {width:100%;height:100%;display:block;overflow:hidden;}
+.atrator-flow-field {filter:drop-shadow(0 0 2px rgba(239,203,155,.28));}
+.atrator-infall-particles {animation:atrator-light-infall 12s linear infinite;}
+@keyframes atrator-light-infall {
+  from {stroke-dashoffset:0;}
+  to {stroke-dashoffset:-224;}
 }
 .atrator-depth-core {
-  transform: translate3d(
-    calc(var(--pointer-x) * .35),
-    calc(var(--pointer-y) * .38 + var(--scroll-shift) * .25), 0
-  );
+  opacity:.34;
+  transform:translate3d(calc(var(--pointer-x) * -.18),calc(var(--pointer-y) * -.2 + var(--scroll-shift) * -.14),0);
 }
-.atrator-infall-particles {
-  animation: atrator-infall 5.8s linear infinite;
+.atrator-light-haze {
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 26% 43% at 64% 49%,rgba(250,214,156,.08),transparent 73%);
+  mix-blend-mode:screen;
 }
-@keyframes atrator-infall {
-  from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -132; }
-}
-@media (max-width: 900px) {
-  .atrator-event-horizon > div { inset: -13% -23%; }
-  .atrator-event-horizon::before { opacity:.09; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .atrator-event-horizon > div {
-    transition: none !important;
-    transform: none !important;
-    will-change: auto;
+@media(max-width:960px){
+  .atrator-photo {left:-14%;top:-6%;width:128%;height:112%;object-position:56% 50%;}
+  .atrator-event-horizon::after {
+    background:linear-gradient(90deg,rgba(7,23,33,.95),rgba(7,23,33,.72) 36%,rgba(7,23,33,.25) 75%);
   }
-  .atrator-infall-particles { animation: none !important; }
+}
+@media(max-width:620px){
+  .atrator-photo {left:-35%;top:-4%;width:170%;height:108%;object-position:58% 50%;}
+  .atrator-depth-streams {opacity:.38;}
+  .atrator-event-horizon::after {
+    background:linear-gradient(90deg,rgba(7,23,33,.95) 0%,rgba(7,23,33,.77) 54%,rgba(7,23,33,.36));
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .atrator-event-horizon>div {transform:none!important;transition:none!important;will-change:auto;}
+  .atrator-infall-particles {animation:none!important;}
 }

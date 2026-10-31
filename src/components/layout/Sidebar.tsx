@@ -15,7 +15,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => (
     {isOpen && <button type="button" className="vf-shell-backdrop" aria-label="Fechar navegação" onClick={onClose} />}
     <aside className={`vf-shell-sidebar ${isOpen ? 'is-open' : ''}`} aria-label="Navegação principal">
       <div className="vf-shell-logo-row">
-        <NavLink to="/" onClick={onClose} aria-label="Vetor Forense — início"><Logo size={40} /></NavLink>
+        <NavLink to="/" onClick={onClose} aria-label="Vetor Forense — início"><Logo size={46} /></NavLink>
         <button type="button" onClick={onClose} aria-label="Fechar menu" className="vf-shell-close"><X size={19} /></button>
       </div>
 
