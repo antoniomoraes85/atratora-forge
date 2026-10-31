@@ -1,5 +1,6 @@
 import { BadgeCheck, Database, Layers3, ShieldCheck } from 'lucide-react';
 import { Logo } from '../../components/ui/Logo';
+import './about-clean.css';
 
 const PRINCIPLES = [
   { icon: Database, title: 'Processamento local', description: 'Os módulos atuais processam informações no dispositivo. A plataforma ainda não possui repositório forense certificado.' },
