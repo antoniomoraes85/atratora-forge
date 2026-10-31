@@ -24,7 +24,7 @@ export const About: React.FC = () => {
             Sobre a Plataforma
           </h1>
           <p style={{ fontSize: '16px', color: 'var(--text-main)', marginTop: '12px', lineHeight: 1.6 }}>
-            “Vetor Forense é uma plataforma independente do ecossistema ATRATOR para análise técnica, reconstrução de eventos, conversão de croquis e organização de evidências. Suas funcionalidades não substituem avaliação pericial profissional.”
+            Vetor Forense é uma plataforma independente do ecossistema ATRATOR. Atualmente dispõe de análise exploratória de dinâmica veicular e conversão de croquis. Seu roadmap prioriza organização de evidências digitais, relatórios técnicos, análise de artefatos mobile e de mídias. Esses novos módulos ainda não realizam exames.
           </p>
         </div>
 
@@ -55,7 +55,7 @@ export const About: React.FC = () => {
               José Antônio Coutinho de Moraes Filho
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '2px' }}>
-              Engenharia & Automação Técnica
+              Desenvolvimento de Software e Ferramentas Técnicas
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export const About: React.FC = () => {
               </h3>
             </div>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Todas as manipulações de arquivos, renderização em canvas e serialização operam estritamente no seu computador. Não há telemetria, não há cookies rastreadores e nenhum byte é transmitido para nuvens externas.
+              Nas ferramentas locais atualmente implementadas, o processamento principal ocorre no dispositivo do usuário. Essa arquitetura, isoladamente, não constitui cadeia de custódia, armazenamento forense seguro ou garantia de autenticidade.
             </p>
           </div>
 
@@ -114,6 +114,26 @@ export const About: React.FC = () => {
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="card" aria-labelledby="scope-digital-title" style={{ padding: '24px', border: '1px solid var(--border-highlight)' }}>
+        <h2 id="scope-digital-title" style={{ fontSize: '20px', marginBottom: '12px' }}>Escopo digital e limites profissionais</h2>
+        <p style={{ fontSize: '13px', lineHeight: 1.7 }}>
+          Vetor Evidence, Reports, Mobile, Media, Documents e Fraud são módulos planejados,
+          sem coleta de celulares, validação forense de evidências, geração de laudos oficiais
+          ou análise de comprometimento disponíveis nesta versão.
+        </p>
+        <p style={{ fontSize: '13px', lineHeight: 1.7, marginTop: '10px' }}>
+          Relatórios técnicos particulares, pareceres de assistentes técnicos, laudos de
+          peritos judiciais e laudos de perícia oficial possuem enquadramentos distintos.
+          Software, hash e assinatura digital não substituem habilitação profissional,
+          preservação adequada e avaliação metodológica do caso concreto.
+        </p>
+        <p style={{ fontSize: '13px', lineHeight: 1.7, marginTop: '10px' }}>
+          Qualquer futura análise de dispositivos deverá ocorrer somente com autorização
+          legítima e controles de privacidade e confidencialidade apropriados.
+          O sistema não representa atividade, endosso ou parceria com a PRF.
+        </p>
       </section>
 
       {/* Declaração Formal de Independência (Disclaimer) */}
