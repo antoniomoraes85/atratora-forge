@@ -1,5 +1,4 @@
-import React from 'react';
-import { ShieldCheck, Menu, Database } from 'lucide-react';
+import { Menu, ShieldCheck } from 'lucide-react';
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -7,115 +6,27 @@ interface HeaderProps {
   subtitle?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
   onToggleSidebar,
   title = 'Vetor Forense',
-  subtitle = 'Análise técnica, ferramentas locais e expansão em evidências digitais.',
-}) => {
-  return (
-    <header
-      style={{
-        height: '70px',
-        borderBottom: '1px solid var(--border-subtle)',
-        backgroundColor: 'var(--bg-glass)',
-        backdropFilter: 'blur(20px)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 40,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 28px',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <button
-          onClick={onToggleSidebar}
-          aria-label="Alternar Menu"
-          className="mobile-menu-btn"
-          style={{
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--text-main)',
-            cursor: 'pointer',
-            padding: '6px',
-            display: 'none',
-          }}
-        >
-          <Menu size={24} />
-        </button>
-
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <h2 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-              {title}
-            </h2>
-            <span className="badge badge-primary" style={{ fontSize: '10px' }}>
-              v0.3.0
-            </span>
-          </div>
-          <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
-            {subtitle}
-          </p>
-        </div>
+  subtitle = 'Ferramentas técnicas e evolução em evidências digitais',
+}: HeaderProps) => (
+  <header className="vf-shell-header">
+    <div className="vf-shell-header-left">
+      <button type="button" className="vf-shell-menu" onClick={onToggleSidebar} aria-label="Abrir menu de navegação">
+        <Menu size={23} />
+      </button>
+      <div>
+        <div className="vf-shell-header-title">{title}<span className="vf-shell-version">v0.3.0</span></div>
+        <p>{subtitle}</p>
       </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        {/* Local Processing Privacy Indicator */}
-        <div
-          title="As ferramentas atualmente disponíveis realizam seu processamento localmente; módulos digitais futuros ainda não estão ativos."
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '6px 14px',
-            background: 'var(--success-bg)',
-            border: '1px solid var(--success-border)',
-            borderRadius: 'var(--radius-full)',
-            fontSize: '11.5px',
-            fontWeight: 600,
-            color: 'var(--success-text)',
-            cursor: 'default',
-            boxShadow: 'var(--shadow-xs)'
-          }}
-        >
-          <ShieldCheck size={15} />
-          <span className="hide-mobile">Ferramentas locais</span>
-        </div>
-        
-        {/* Storage Indicator */}
-        <div
-           title="Recursos atuais usam armazenamento local; ainda não há custódia digital certificada."
-           style={{
-             display: 'flex',
-             alignItems: 'center',
-             gap: '6px',
-             padding: '6px 14px',
-             background: 'var(--info-bg)',
-             border: '1px solid var(--info-border)',
-             borderRadius: 'var(--radius-full)',
-             fontSize: '11.5px',
-             fontWeight: 600,
-             color: 'var(--info-text)',
-             cursor: 'default',
-             boxShadow: 'var(--shadow-xs)'
-           }}
-        >
-           <Database size={14} />
-           <span className="hide-mobile">Dados locais</span>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 900px) {
-          .mobile-menu-btn {
-            display: block !important;
-          }
-          .hide-mobile {
-            display: none !important;
-          }
-        }
-      `}</style>
-    </header>
-  );
-};
+    </div>
+    <div className="vf-shell-header-right">
+      <span className="vf-shell-local-badge" title="Ferramentas operacionais atuais utilizam processamento local. Módulos de evidências digitais ainda estão planejados.">
+        <ShieldCheck size={15} />
+        <span>Ferramentas locais</span>
+      </span>
+      <span className="vf-shell-product-tag">ATRATOR</span>
+    </div>
+  </header>
+);
