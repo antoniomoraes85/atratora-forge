@@ -13,6 +13,11 @@ import {
   Search,
   Filter,
   Zap,
+  ShieldCheck,
+  Smartphone,
+  ScanSearch,
+  Fingerprint,
+  FileSearch,
 } from 'lucide-react';
 import {
   TOOL_CATEGORIES,
@@ -32,10 +37,18 @@ const ICON_MAP: Record<ToolDefinition['iconName'], React.ElementType> = {
   Briefcase,
   Settings2,
   Zap,
+  ShieldCheck,
+  Smartphone,
+  ScanSearch,
+  Fingerprint,
+  FileSearch,
 };
 
 // Cores accent por categoria (Premium Palette)
 const CATEGORY_ACCENT: Record<ToolCategory, { bg: string; color: string; border: string }> = {
+  'Evidências Digitais': { bg: 'rgba(216,162,58,0.10)', color: '#e0b562', border: 'rgba(216,162,58,0.25)' },
+  'Dispositivos Móveis': { bg: 'rgba(167,139,250,0.10)', color: '#c4b5fd', border: 'rgba(167,139,250,0.25)' },
+  'Mídia Digital': { bg: 'rgba(52,211,153,0.10)', color: '#6ee7b7', border: 'rgba(52,211,153,0.25)' },
   Conversores:         { bg: 'rgba(99, 102, 241, 0.12)', color: 'var(--primary-400)', border: 'rgba(99, 102, 241, 0.25)' },
   Geoprocessamento:    { bg: 'rgba(34, 211, 238, 0.12)', color: 'var(--accent-cyan)', border: 'rgba(34, 211, 238, 0.25)' },
   Croquis:             { bg: 'rgba(168, 85, 247, 0.12)', color: '#c084fc', border: 'rgba(168, 85, 247, 0.25)' },
@@ -46,7 +59,7 @@ const CATEGORY_ACCENT: Record<ToolCategory, { bg: string; color: string; border:
   Automação:           { bg: 'rgba(249, 115, 22, 0.12)', color: '#fb923c', border: 'rgba(249, 115, 22, 0.25)' },
 };
 
-type StatusFilter = 'all' | 'available' | 'development';
+type StatusFilter = 'all' | 'available' | 'development' | 'planned';
 
 export const Tools: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,7 +89,7 @@ export const Tools: React.FC = () => {
           Diretório de Ferramentas
         </h1>
         <p style={{ fontSize: '15px', color: 'var(--text-muted)', maxWidth: '600px', lineHeight: 1.6 }}>
-          Explore os módulos do Vetor Forense: análises físicas, croquis, geoprocessamento e ferramentas de documentação e validação em evolução.
+          Explore a suíte em evolução: evidências digitais, relatórios, dispositivos móveis e mídia. Os módulos planejados estão identificados; dinâmica veicular e conversor .CROQUI continuam disponíveis.
         </p>
       </div>
 
@@ -103,7 +116,7 @@ export const Tools: React.FC = () => {
             />
             <input
               type="search"
-              placeholder="Buscar ferramentas, palavras-chave, categorias..."
+              placeholder="Buscar evidências, celular, relatórios, croquis..." aria-label="Buscar ferramentas"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
@@ -127,8 +140,9 @@ export const Tools: React.FC = () => {
                 }}
              >
                 <option value="all">Todos os Status</option>
-                <option value="available">Disponíveis (v0.1)</option>
-                <option value="development">Em Desenvolvimento</option>
+                <option value="available">Disponíveis agora</option>
+                <option value="development">Em desenvolvimento</option>
+                <option value="planned">Planejados</option>
              </select>
           </div>
         </div>
@@ -209,7 +223,7 @@ export const Tools: React.FC = () => {
                   {isAvailable ? (
                     <span className="badge badge-success">Disponível</span>
                   ) : (
-                    <span className="badge badge-neutral">Planejado {tool.deliveryVersion}</span>
+                    <span className="badge badge-neutral">{tool.status === 'planned' ? 'Planejado' : 'Em desenvolvimento'}{tool.deliveryVersion ? ` · ${tool.deliveryVersion}` : ''}</span>
                   )}
                 </div>
 
@@ -247,7 +261,7 @@ export const Tools: React.FC = () => {
                display: 'flex',
                flexDirection: 'column' as const,
                height: '100%',
-               opacity: isAvailable ? 1 : 0.65,
+               opacity: isAvailable ? 1 : 0.86,
                animationDelay: `${idx * 40}ms`
             };
 
