@@ -1,41 +1,19 @@
-/* VETOR FORENSE | ATRATOR Ecosystem — brand layer.
-   Decorative motion is isolated from every technical/calculation module. */
-.vf-brand-lockup { display:inline-flex; align-items:center; gap:12px; user-select:none; min-width:0; }
-.vf-brand-names { display:flex; flex-direction:column; min-width:0; gap:3px; }
-.vf-brand-title { color:#e6e8ea; letter-spacing:.10em; font-size:clamp(12px,1.15vw,17px); font-weight:800; line-height:1.15; white-space:nowrap; }
-.vf-brand-title > span { color:#D8A23A; }
-.vf-brand-parent { font-size:9px; letter-spacing:.18em; color:#a7aab0; white-space:nowrap; }
-.vf-brand-parent strong { color:#e0b562; font-weight:800; }
-.vf-gravity-field { position:absolute; inset:-20% -10%; z-index:0; pointer-events:none; overflow:hidden; opacity:.66; }
-.vf-gravity-orbit { position:absolute; height:min(62vw,620px); width:min(62vw,620px); top:11%; left:52%; border-radius:50%;
- background:
-  radial-gradient(circle at center, #010101 0 10%, transparent 10.5% 15%, rgba(12,11,10,.55) 15.1% 22%, transparent 22.1%),
-  repeating-conic-gradient(from 10deg, rgba(220,165,76,.06) 0deg 24deg, rgba(236,218,190,.3) 28deg, rgba(247,187,87,.12) 35deg, transparent 45deg 70deg);
- mask-image:radial-gradient(circle at center, transparent 0 10%, #000 12% 49%, transparent 71%);
- filter:drop-shadow(0 0 35px rgba(216,162,58,.30));
- animation:vf-orbit-drift 28s linear infinite;
+/* Vetor Forense — camada de marca ATRATOR.
+   Identidade própria sem simular órgão oficial nem ocultar status de módulos. */
+.vf-brand-lockup {
+  display:inline-flex; align-items:center; gap:11px;
+  min-width:0; user-select:none; color:var(--text-primary);
 }
-.vf-gravity-core { position:absolute; width:90px;height:90px;border-radius:50%;top:calc(11% + min(31vw,310px) - 45px);left:calc(52% + min(31vw,310px) - 45px);
- background:#020203;box-shadow:0 0 0 2px rgba(255,210,128,.28),0 0 36px rgba(236,160,54,.45),0 0 95px rgba(216,162,58,.17);}
-.vf-gravity-lines { position:absolute;inset:0;opacity:.21;background:
- linear-gradient(90deg,transparent 98%,rgba(225,195,135,.35) 100%) 0 0 / 64px 64px,
- linear-gradient(0deg,transparent 98%,rgba(225,195,135,.35) 100%) 0 0 / 64px 64px;
- mask-image:linear-gradient(90deg,transparent,black 55%,black 90%,transparent);
-}
-.vf-home-hero { position:relative;isolation:isolate; }
-.vf-home-hero h1 { text-wrap:balance; }
-.vf-home-hero .vf-hero-title {background:linear-gradient(115deg,#f5f5f3,#d8a23a 63%,#aeb2b9);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
-.vf-by-atrator { display:inline-block;font-size:11px;letter-spacing:.20em;color:#c5a672;text-transform:uppercase;font-weight:700; }
-.vf-by-atrator strong {color:#ece8e1;}
-@keyframes vf-orbit-drift {to{transform:rotate(360deg)}}
-@media (max-width:760px) {
- .vf-gravity-orbit {width:410px;height:410px;left:47%;top:7%;opacity:.64}
- .vf-gravity-core {width:54px;height:54px;left:calc(47% + 178px);top:calc(7% + 178px)}
- .vf-gravity-field {opacity:.43}
- .vf-brand-title {font-size:12px;letter-spacing:.05em}
- .vf-brand-parent {font-size:8px;letter-spacing:.09em}
-}
-@media (prefers-reduced-motion:reduce) {
- .vf-gravity-orbit { animation:none !important }
- .vf-gravity-field { transform:none !important }
+.vf-brand-lockup svg { flex:0 0 auto; overflow:visible; }
+.vf-brand-names {display:flex; flex-direction:column; justify-content:center; min-width:0; gap:3px;}
+.vf-brand-title {font-size:14px; font-weight:800; letter-spacing:.045em; line-height:1.1; color:#1e333a; white-space:nowrap;}
+.vf-brand-title span {color:#87602c;}
+.vf-brand-parent {font-size:9px; letter-spacing:.135em; color:#6c7c7f; white-space:nowrap;}
+.vf-brand-parent strong {font-weight:800; color:#3c5a63;}
+.vf-by-atrator {font-size:11px; letter-spacing:.12em; font-weight:750; color:var(--primary-400);}
+
+@media(max-width:480px) {
+  .vf-brand-lockup {gap:9px;}
+  .vf-brand-title {font-size:12px;}
+  .vf-brand-parent {font-size:8px; letter-spacing:.08em;}
 }
