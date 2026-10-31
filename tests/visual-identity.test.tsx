@@ -44,7 +44,8 @@ describe('ATRATOR / Vetor Forense — identidade e continuidade visual', () => {
 
   it('apresenta nova home com prioridades e as duas rotas reais', () => {
     const html = renderToStaticMarkup(<MemoryRouter><Home /></MemoryRouter>);
-    expect(html).toContain('Método e precisão');
+    expect(html).toContain('Análise técnica com');
+    expect(html).toContain('método e precisão.');
     expect(html).toContain('Vetor Evidence');
     expect(html).toContain('Vetor Reports');
     expect(html).toContain('Vetor Mobile');
