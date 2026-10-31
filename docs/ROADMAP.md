@@ -4,6 +4,8 @@ Plano de lançamento e evolução contínua da plataforma **Vetor Forense**, des
 
 ---
 
+> **Nota de alinhamento — 31/10/2026:** os marcos V0.1–V1.0 abaixo documentam o roadmap histórico de croquis, cartografia e dinâmica veicular; **não representam a ordem comercial atual**. O foco prioritário novo é **Evidence → Reports → Mobile → Media/Documents**, sem descontinuar as funções existentes. O plano e os limites de maturidade ficam em [PRODUCT_STRATEGY_EVIDENCE_20261031.md](PRODUCT_STRATEGY_EVIDENCE_20261031.md). O desenho da dashboard foi atualizado, mas as funcionalidades digitais **não foram implementadas**.
+
 ## V0.1 — Fundação Premium + Conversor `.croqui`
 - [x] Fundação profissional da plataforma web (React 18, TypeScript, Vite).
 - [x] Dashboard premium e responsiva (Grafite, aço e ouro ATRATOR, microinterações).
