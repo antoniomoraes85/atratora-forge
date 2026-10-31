@@ -160,7 +160,7 @@
 /* === Hero ATRATOR v3: arte cinematográfica em largura integral ===
    Sobrescreve somente o hero. As ferramentas e o roadmap abaixo mantêm o tema claro.
 */
-.vf-light-home {max-width:1280px;margin:0 auto;}
+.vf-light-home {max-width:none;margin:0;}
 .vf-light-hero {
   position:relative;isolation:isolate;
   display:flex;align-items:center;
