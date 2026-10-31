@@ -52,7 +52,7 @@ describe('Vetor Forense — hero panorâmico e identidade ATRATOR v3', () => {
 
   it('mantém acessibilidade e movimento reduzido', () => {
     const css = readFileSync('src/components/ui/black-hole-field.css', 'utf8');
-    expect(css).toContain('prefers-reduced-motion:reduce');
+    expect(css).toMatch(/prefers-reduced-motion:\\s*reduce/);
     expect(css).toContain('pointer-events:none');
     expect(css).toContain('atrator-infall-particles');
   });
