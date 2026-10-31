@@ -33,7 +33,7 @@ Monograma vetorial original criado em `src/components/ui/Logo.tsx` e repetido no
 - **Alvo circular com ponto central:** observação de uma evidência.
 - **Grafite + bronze** em vez de escudos, brasões, insígnias ou simbolismo policial.
 
-O símbolo é escalável como SVG e acompanha o texto “VETOR FORENSE / ECOSSISTEMA ATRATOR”. O favicon SVG é a opção principal; ícones raster legados podem exigir futura regeneração em operação gráfica específica.
+O símbolo é escalável como SVG e acompanha o texto “VETOR FORENSE / ECOSSISTEMA ATRATOR”. Assets versionados: `public/brand/vetor-forense-symbol.svg`, `public/brand/vetor-forense-symbol-mono.svg`, `public/brand/vetor-forense-lockup.svg` e `public/favicon.svg`. O favicon SVG é a opção principal; ícones raster legados podem exigir futura regeneração em operação gráfica específica.
 
 ## 4. Buraco negro em parallax
 
