@@ -7,7 +7,7 @@ export const Projects: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }} className="animate-fade-in">
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             Gerenciador de Projetos Locais
           </h1>
           <span className="badge badge-neutral">Em Desenvolvimento (v0.2)</span>
@@ -35,7 +35,7 @@ export const Projects: React.FC = () => {
             width: '64px',
             height: '64px',
             borderRadius: '50%',
-            backgroundColor: 'rgba(99, 102, 241, 0.12)',
+            backgroundColor: 'var(--bg-tertiary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
