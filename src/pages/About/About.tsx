@@ -13,7 +13,7 @@ export const About = () => (
   <div className="vf-about-page animate-fade-in">
     <section className="vf-about-hero">
       <span className="vf-about-overline">SOBRE A PLATAFORMA</span>
-      <Logo size={56} />
+      <Logo size={64} />
       <h1>Precisão técnica, com clareza.</h1>
       <p>
         Vetor Forense é um produto de tecnologia do ecossistema ATRATOR.
