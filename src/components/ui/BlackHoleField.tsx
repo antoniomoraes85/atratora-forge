@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import './black-hole-field.css';
 
 /** Smooth, deterministic vector streamlines. Decorative only: no WebGL/canvas or network. */
@@ -47,7 +47,7 @@ export const BlackHoleField = () => {
     };
   }, []);
 
-  const pointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+  const pointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (reduced.current || event.pointerType === 'touch') return;
     const bounds = event.currentTarget.getBoundingClientRect();
     setOffset(previous => ({
