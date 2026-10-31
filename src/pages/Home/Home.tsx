@@ -1,310 +1,225 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileImage, Zap, BookOpen } from 'lucide-react';
-import { TOOLS_CATALOG } from '../../app/config/tools';
-import { GUIDES_CATALOG } from '../../app/config/guides';
+import {
+  ArrowRight, BookOpen, CheckCircle2, ChevronRight, FileImage, FileSearch,
+  FileText, Fingerprint, LockKeyhole, ScanSearch, ShieldCheck, Smartphone,
+  Zap, type LucideIcon,
+} from 'lucide-react';
+import { TOOLS_CATALOG, type ToolDefinition } from '../../app/config/tools';
+import './home-forensics.css';
+
+type FocusModule = {
+  id: string;
+  icon: LucideIcon;
+  number: string;
+  value: string;
+  tone: 'gold' | 'cyan' | 'violet' | 'green';
+};
+
+const FOCUS_MODULES: FocusModule[] = [
+  { id: 'vetor-evidence', icon: ShieldCheck, number: '01', value: 'Preservação e rastreabilidade', tone: 'gold' },
+  { id: 'vetor-reports', icon: FileText, number: '02', value: 'Documentação técnica', tone: 'cyan' },
+  { id: 'vetor-mobile', icon: Smartphone, number: '03', value: 'Segurança de dispositivos', tone: 'violet' },
+  { id: 'vetor-media', icon: ScanSearch, number: '04', value: 'Análise de arquivos de mídia', tone: 'green' },
+  { id: 'vetor-documents', icon: FileSearch, number: '05', value: 'Documentos eletrônicos', tone: 'gold' },
+  { id: 'vetor-fraud', icon: Fingerprint, number: '06', value: 'Análise de incidentes', tone: 'cyan' },
+];
+
+const EXISTING_TOOLS: Array<{ id: string; icon: LucideIcon; detail: string }> = [
+  {
+    id: 'vetor-forense',
+    icon: Zap,
+    detail: 'Motor exploratório de cálculos físicos para dinâmica veicular, com parâmetros e premissas documentáveis.',
+  },
+  {
+    id: 'croqui-converter',
+    icon: FileImage,
+    detail: 'Conversão de imagens para formato .croqui, diretamente no dispositivo, sem envio de arquivos a servidores.',
+  },
+];
+
+const WORKFLOW = [
+  {
+    number: '01',
+    title: 'Recebimento',
+    description: 'Identificar material, responsável, origem e autorização de análise.',
+  },
+  {
+    number: '02',
+    title: 'Preservação',
+    description: 'Planejar hashes, manifestos, cópias de trabalho e trilha de operações.',
+  },
+  {
+    number: '03',
+    title: 'Exame técnico',
+    description: 'Documentar ferramentas, procedimentos, observações e limites dos resultados.',
+  },
+  {
+    number: '04',
+    title: 'Relatório',
+    description: 'Organizar a conclusão para revisão e assinatura pelo profissional responsável.',
+  },
+];
+
+const byId = (id: string): ToolDefinition | undefined =>
+  TOOLS_CATALOG.find(tool => tool.id === id);
 
 export const Home: React.FC = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 20;
-          const y = (e.clientY / window.innerHeight - 0.5) * 20;
-          setMousePos({ x, y });
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!mediaQuery.matches) {
-      window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    }
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let queued = false;
-    const onScroll = () => {
-      if (!queued) {
-        queued = true;
-        window.requestAnimationFrame(() => {
-          setScrollOffset(Math.min(window.scrollY, 1400));
-          queued = false;
-        });
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const availableTools = TOOLS_CATALOG.filter(t => t.status === 'available');
-  const devToolsCount = TOOLS_CATALOG.filter(t => t.status !== 'available').length;
-  const totalGuides = GUIDES_CATALOG.length;
+  const availableCount = TOOLS_CATALOG.filter(tool => tool.status === 'available').length;
+  const futureCount = TOOLS_CATALOG.filter(tool => tool.status !== 'available').length;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }} className="animate-fade-in">
-
-      {/* ── HERO SECTION COM CIRCUITO PARALLAX ── */}
-      <section className="vf-home-hero"
-        style={{
-          position: 'relative',
-          padding: '100px 40px 120px',
-          margin: '-40px -40px 0',
-          borderBottom: '1px solid var(--border-subtle)',
-          backgroundColor: 'var(--bg-primary)',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center'
-        }}
-      >
-        <div className="vf-gravity-field" aria-hidden="true" style={{
-          transform: `translate3d(${mousePos.x * 0.5}px, ${scrollOffset * 0.14 + mousePos.y * 0.4}px, 0)`
-        }}>
-          <div className="vf-gravity-lines" />
-          <div className="vf-gravity-orbit" />
-          <div className="vf-gravity-core" />
-        </div>
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px', opacity: 0.5, zIndex: 0
-        }} />
-
-        <div
-          className="circuit-bg"
-          style={{
-            position: 'absolute', inset: '-50px', zIndex: 1,
-            opacity: 0.8, pointerEvents: 'none',
-            transform: `translate(${mousePos.x}px, ${mousePos.y}px)`,
-            transition: 'transform 0.1s ease-out'
-          }}
-        >
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="var(--primary-600)" stopOpacity="0.05" />
-                <stop offset="50%" stopColor="var(--accent-cyan)" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="var(--primary-600)" stopOpacity="0.05" />
-              </linearGradient>
-              <pattern id="circuitPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                <path d="M 20 100 L 80 100 L 100 80 L 100 20" fill="none" stroke="url(#circuitGrad)" strokeWidth="1" />
-                <circle cx="20" cy="100" r="2" fill="var(--accent-cyan)" opacity="0.3" />
-                <circle cx="100" cy="20" r="3" fill="var(--primary-500)" opacity="0.4" />
-                <path d="M 120 150 L 150 150 L 170 170 L 200 170" fill="none" stroke="url(#circuitGrad)" strokeWidth="1" />
-                <rect x="118" y="148" width="4" height="4" fill="var(--primary-400)" opacity="0.2" />
-                <path d="M 50 180 L 50 140 L 80 110" fill="none" stroke="url(#circuitGrad)" strokeWidth="1" strokeDasharray="4,4" />
-                <circle cx="50" cy="180" r="2" fill="var(--accent-cyan)" opacity="0.2" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#circuitPattern)" />
-          </svg>
-        </div>
-
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60vw', height: '60vw', background: 'radial-gradient(circle, var(--primary-glow) 0%, transparent 60%)', opacity: 0.5, zIndex: 1, pointerEvents: 'none' }} />
-
-        <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px' }} className="animate-fade-in">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', background: 'var(--bg-glass-card)', border: '1px solid var(--border-highlight)', borderRadius: 'var(--radius-full)', marginBottom: '32px', boxShadow: 'var(--shadow-md)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary-400)', boxShadow: '0 0 10px var(--primary-400)' }} />
-            <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              VETOR FORENSE | ATRATOR
-            </span>
-          </div>
-
-          <h1 style={{ fontSize: 'clamp(42px, 5vw, 64px)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '24px', textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-            Ciência aplicada à <br />
-            <span className="vf-hero-title" style={{ display: 'inline-block' }}>
-              análise e reconstrução
-            </span>
-            {' '}de eventos.
+    <div className="vf-new-home animate-fade-in">
+      <section className="vf-new-hero" aria-labelledby="vf-home-title">
+        <div className="vf-new-hero-grid" aria-hidden="true" />
+        <div className="vf-new-hero-glow" aria-hidden="true" />
+        <div className="vf-new-hero-content">
+          <span className="vf-new-kicker"><span className="vf-new-dot" /> ATRATOR / VETOR FORENSE</span>
+          <h1 id="vf-home-title">
+            Ciência e tecnologia para
+            <span> analisar evidências com método.</span>
           </h1>
-
-          <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px', maxWidth: '720px', margin: '0 auto 16px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-            Vetor Forense é a plataforma do ecossistema ATRATOR para análise de dinâmica veicular, croquis, evidências e documentação técnica — com módulos independentes e processamento local.
+          <p className="vf-new-hero-lead">
+            Plataforma modular para análises técnicas, documentação e, em seu roadmap,
+            organização de evidências digitais e investigação de dispositivos móveis.
           </p>
-
-          <p style={{ fontSize: '15px', color: 'var(--text-dim)', marginBottom: '40px', fontWeight: 500 }}>
-            Da medição ao resultado reproduzível: transparência dos métodos, rastreabilidade das premissas e suporte ao trabalho técnico especializado.
+          <p className="vf-new-hero-note">
+            A evolução começa pela rastreabilidade e pelos relatórios. Novos módulos digitais
+            estão planejados; não realizam exames ou certificações nesta versão.
           </p>
-
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link to="/tools" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '15px', borderRadius: 'var(--radius-full)' }}>
-              Explorar ferramentas
-            </Link>
-            <Link to="/guides" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '15px', borderRadius: 'var(--radius-full)', background: 'var(--bg-glass-card)' }}>
-              Conhecer a plataforma
-            </Link>
+          <div className="vf-new-hero-actions">
+            <Link className="btn btn-primary" to="/tools">Explorar módulos <ArrowRight size={17} /></Link>
+            <a className="btn btn-secondary" href="#vf-roadmap">Conhecer o roadmap <ChevronRight size={17} /></a>
           </div>
-          <p style={{ marginTop: '22px', fontSize: '11px', color: 'var(--text-dim)', letterSpacing: '.03em' }}>
-            Plataforma privada independente. Resultados dependem da qualidade dos dados e da avaliação técnica.
-          </p>
+          <div className="vf-new-hero-tags" aria-label="Características da plataforma">
+            <span><LockKeyhole size={14} /> Ferramentas atuais local-first</span>
+            <span><ShieldCheck size={14} /> Metodologia rastreável como objetivo</span>
+            <span><CheckCircle2 size={14} /> Independência institucional</span>
+          </div>
         </div>
+        <aside className="vf-new-hero-aside" aria-label="Situação dos módulos">
+          <div className="vf-new-aside-label">PANORAMA DO PRODUTO <span>v0.3.0</span></div>
+          <div className="vf-new-aside-metric">
+            <strong>{availableCount.toString().padStart(2, '0')}</strong>
+            <div><b>Ferramentas existentes</b><small>Disponíveis para uso no catálogo</small></div>
+          </div>
+          <div className="vf-new-aside-metric">
+            <strong>{futureCount.toString().padStart(2, '0')}</strong>
+            <div><b>Módulos em evolução</b><small>Em desenvolvimento ou planejados</small></div>
+          </div>
+          <div className="vf-new-aside-rule" />
+          <span className="vf-new-aside-subtitle">PRÓXIMA LINHA DE PRODUTO</span>
+          <div className="vf-new-aside-roadmap">
+            <span>Vetor Evidence</span><span className="vf-new-status vf-new-status-plan">Planejado</span>
+          </div>
+          <p>Registro de casos e integridade de arquivos: desenvolvimento previsto, ainda sem cadeia de custódia implementada.</p>
+        </aside>
       </section>
 
-
-      {/* ── ESTATÍSTICAS ── */}
-      <section style={{ padding: '60px 0' }}>
-        <div className="grid-3">
-          <div className="card card-glass" style={{ textAlign: 'center', padding: '32px 20px' }}>
-            <div style={{ fontSize: '48px', fontWeight: 800, color: 'var(--primary-400)', marginBottom: '8px', lineHeight: 1 }}>
-              {availableTools.length}
-            </div>
-            <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-main)', marginBottom: '4px' }}>
-              Disponíveis
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-dim)' }}>Motor central funcional e rodando 100% localmente.</p>
-          </div>
-
-          <div className="card card-glass" style={{ textAlign: 'center', padding: '32px 20px' }}>
-            <div style={{ fontSize: '48px', fontWeight: 800, color: 'var(--accent-cyan)', marginBottom: '8px', lineHeight: 1 }}>
-              {devToolsCount}
-            </div>
-            <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-main)', marginBottom: '4px' }}>
-              Planejadas
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-dim)' }}>Ferramentas geográficas, documentais e operacionais.</p>
-          </div>
-
-          <div className="card card-glass" style={{ textAlign: 'center', padding: '32px 20px' }}>
-            <div style={{ fontSize: '48px', fontWeight: 800, color: '#c084fc', marginBottom: '8px', lineHeight: 1 }}>
-              {totalGuides}
-            </div>
-            <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-main)', marginBottom: '4px' }}>
-              Guias Visuais
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-dim)' }}>Interfaces conceituais e documentação de fluxos operacionais.</p>
-          </div>
-        </div>
-      </section>
-
-
-      {/* ── DISPONÍVEL AGORA ── */}
-      <section style={{ padding: '0 0 80px' }}>
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 12px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 'var(--radius-full)', marginBottom: '12px' }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--success-border)', boxShadow: '0 0 8px var(--success-border)' }} />
-            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--success-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Disponível agora</span>
-          </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-            Ferramentas ativas
-          </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-dim)', marginTop: '6px' }}>
-            Prontas para uso — processamento 100% local, sem telemetria.
+      <section className="vf-new-intro" id="vf-roadmap" aria-labelledby="vf-product-title">
+        <div>
+          <span className="vf-new-overline">EVOLUÇÃO DO VETOR FORENSE</span>
+          <h2 id="vf-product-title">Uma base técnica. Múltiplas especialidades.</h2>
+          <p>
+            O núcleo existente de análise veicular e conversão de croquis será preservado.
+            A expansão prioriza evidências eletrônicas, relatórios e investigação mobile,
+            sempre separando funcionalidades entregues de capacidades futuras.
           </p>
         </div>
+        <Link className="vf-new-text-link" to="/tools">Ver catálogo completo <ArrowRight size={16} /></Link>
+      </section>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '48px' }}>
-
-          {/* ── Card Análise de Dinâmica Veicular ── */}
-          <div className="card" style={{
-            padding: '32px',
-            background: 'linear-gradient(145deg, rgba(216,162,58,0.08), rgba(99,102,241,0.06))',
-            border: '1px solid rgba(216,162,58,0.2)',
-            position: 'relative', overflow: 'hidden',
-          }}>
-            <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.04 }}>
-              <Zap size={160} />
-            </div>
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: 'var(--radius-full)', color: 'var(--success-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ATIVO</span>
-                <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: 'var(--radius-full)', color: 'var(--primary-400)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>NOVO</span>
+      <section className="vf-new-focus-grid" aria-label="Módulos digitais planejados">
+        {FOCUS_MODULES.map(module => {
+          const tool = byId(module.id);
+          if (!tool) return null;
+          const Icon = module.icon;
+          return (
+            <article key={module.id} className={`vf-new-module vf-tone-${module.tone}`}>
+              <div className="vf-new-module-top">
+                <span className="vf-new-module-number">{module.number} / DIGITAL</span>
+                <span className="vf-new-status vf-new-status-plan">Planejado</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(216,162,58,0.15)', border: '1px solid rgba(216,162,58,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-400)' }}>
-                  <Zap size={20} />
+              <div className="vf-new-module-icon" aria-hidden="true"><Icon size={24} /></div>
+              <h3>{tool.title}</h3>
+              <span className="vf-new-module-value">{module.value}</span>
+              <p>{tool.description}</p>
+              <div className="vf-new-module-bottom">
+                <span>{tool.deliveryVersion}</span>
+                <span>Sem acesso operacional nesta versão</span>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+
+      <section className="vf-new-operational" aria-labelledby="vf-active-title">
+        <div className="vf-new-section-header">
+          <div>
+            <span className="vf-new-overline">DISPONÍVEIS HOJE</span>
+            <h2 id="vf-active-title">Ferramentas que você já pode utilizar</h2>
+            <p>O reposicionamento estratégico não remove recursos existentes.</p>
+          </div>
+          <span className="vf-new-status vf-new-status-active"><CheckCircle2 size={14} /> {availableCount} ativas</span>
+        </div>
+        <div className="vf-new-active-grid">
+          {EXISTING_TOOLS.map(item => {
+            const tool = byId(item.id);
+            if (!tool || !tool.path || tool.status !== 'available') return null;
+            const Icon = item.icon;
+            return (
+              <Link key={item.id} className="vf-new-active-card" to={tool.path}>
+                <div className="vf-new-active-icon" aria-hidden="true"><Icon size={25} /></div>
+                <div>
+                  <span className="vf-new-status vf-new-status-active">Ferramenta ativa</span>
+                  <h3>{tool.title}</h3>
+                  <p>{item.detail}</p>
+                  <strong>Acessar ferramenta <ArrowRight size={15} /></strong>
                 </div>
-                <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-                  Análise de Dinâmica Veicular
-                </h2>
-              </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
-                Análise técnica de velocidade e dinâmica em sinistros de trânsito.
-                Reconstrução baseada em vestígios, cinemática e dinâmica.
-              </p>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <Link to="/tools/vetor-forense" className="btn btn-primary" style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  Nova análise <ArrowRight size={14} />
-                </Link>
-                <Link to="/tools/vetor-forense" className="btn btn-secondary" style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <BookOpen size={14} /> Tutorial
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Card Conversor .CROQUI ── */}
-          <div className="card" style={{
-            padding: '32px',
-            background: 'linear-gradient(145deg, var(--bg-surface), var(--bg-primary))',
-            position: 'relative', overflow: 'hidden',
-          }}>
-            <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.04 }}>
-              <FileImage size={160} />
-            </div>
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: 'var(--radius-full)', color: 'var(--success-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ATIVO</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-400)' }}>
-                  <FileImage size={20} />
-                </div>
-                <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-                  Conversor .CROQUI
-                </h2>
-              </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
-                Converta imagens rasterizadas para a especificação formal <code>.croqui</code> em JSON usando nosso adaptador nativo, sem dependência de servidores remotos.
-              </p>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <Link to="/tools/croqui-converter" className="btn btn-primary" style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  Abrir conversor <ArrowRight size={14} />
-                </Link>
-                <Link to="/guides" className="btn btn-secondary" style={{ fontSize: '13px' }}>
-                  Ver guia de uso
-                </Link>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Em desenvolvimento */}
-        <div style={{ padding: '20px 24px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-          <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
-            Em desenvolvimento
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {TOOLS_CATALOG.filter(t => t.status !== 'available').map(t => (
-              <span key={t.id} style={{ padding: '4px 12px', fontSize: '12px', color: 'var(--text-dim)', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-full)' }}>
-                {t.title} <span style={{ color: 'var(--border-default)', fontSize: '11px' }}>{t.deliveryVersion}</span>
-              </span>
-            ))}
-          </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .circuit-bg {
-            transform: translate(0, 0) !important;
-            transition: none !important;
-          }
-        }
-      `}</style>
+      <section className="vf-new-method" aria-labelledby="vf-method-title">
+        <div className="vf-new-section-header">
+          <div>
+            <span className="vf-new-overline">PROCESSO PROPOSTO</span>
+            <h2 id="vf-method-title">Da evidência ao documento técnico</h2>
+            <p>Fluxo-alvo para o futuro núcleo digital; não representa cadeia de custódia já certificada.</p>
+          </div>
+        </div>
+        <div className="vf-new-method-grid">
+          {WORKFLOW.map(step => (
+            <div key={step.number} className="vf-new-method-step">
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
+      <section className="vf-new-boundaries" aria-labelledby="vf-scope-title">
+        <div className="vf-new-boundaries-icon" aria-hidden="true"><ShieldCheck size={23} /></div>
+        <div>
+          <h2 id="vf-scope-title">Ferramenta técnica não é nomeação pericial</h2>
+          <p>
+            O Vetor Forense é independente de órgãos públicos. Relatórios particulares,
+            pareceres técnicos, laudos judiciais e perícias oficiais possuem requisitos
+            diferentes. O software não atribui habilitação profissional, não comprova sozinho
+            autenticidade nem substitui a avaliação de um profissional competente.
+            Exames em dispositivos exigem autorização e metodologia apropriada.
+          </p>
+        </div>
+        <Link to="/about" className="vf-new-text-link">Sobre a plataforma <ArrowRight size={16} /></Link>
+      </section>
+
+      <div className="vf-new-footer-links">
+        <Link to="/guides"><BookOpen size={16} /> Guias das ferramentas existentes</Link>
+        <Link to="/tools">Diretório completo <ArrowRight size={16} /></Link>
+      </div>
     </div>
   );
 };
