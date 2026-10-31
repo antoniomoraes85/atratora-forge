@@ -121,6 +121,17 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   // Roadmap anterior mantido; nenhum desses módulos foi promovido a disponível.
   {
+    id: 'documents',
+    title: 'Documents — fluxo conceitual legado',
+    description: 'Guia histórico de estruturação de relatórios. Evolução futura incorporada à proposta do Vetor Reports.',
+    category: 'Documentos',
+    status: 'development',
+    iconName: 'FileText',
+    deliveryVersion: 'Roadmap legado',
+    tags: ['documents', 'guia', 'legado', 'relatório técnico', 'template'],
+  },
+
+  {
     id: 'map-studio',
     title: 'Map Studio',
     description: 'Em desenvolvimento: mapas-base, coordenadas e referências geográficas.',
