@@ -8,12 +8,12 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Início',
+    label: 'Visão geral',
     path: '/',
     iconName: 'Home',
   },
   {
-    label: 'Ferramentas',
+    label: 'Catálogo',
     path: '/tools',
     iconName: 'Wrench',
   },
@@ -23,10 +23,10 @@ export const NAV_ITEMS: NavItem[] = [
     iconName: 'BookOpen',
   },
   {
-    label: 'Projetos',
+    label: 'Projetos locais',
     path: '/projects',
     iconName: 'FolderGit2',
-    badge: 'Em breve',
+    badge: 'Futuro',
     badgeType: 'neutral',
   },
   {

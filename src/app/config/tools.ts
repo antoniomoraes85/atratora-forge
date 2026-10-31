@@ -38,8 +38,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   // Novas frentes estratégicas — planejamento, sem execução forense implementada.
   {
     id: 'vetor-evidence',
-    title: 'Vetor Evidence',
-    description: 'Planejado: organização de casos, registro de origem, hashes, manifestos e histórico de operações sobre evidências digitais.',
+    title: 'Gestão de Evidências Digitais',
+    description: 'Cadastro de casos, hashes, histórico de operações e documentação de integridade.',
     category: 'Evidências Digitais',
     status: 'planned',
     iconName: 'ShieldCheck',
@@ -48,8 +48,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'vetor-reports',
-    title: 'Vetor Reports',
-    description: 'Planejado: relatórios técnicos estruturados, procedimentos, achados, limitações e exportação em PDF para revisão profissional.',
+    title: 'Relatórios Técnicos',
+    description: 'Documentação técnica estruturada, achados, limitações e revisão profissional.',
     category: 'Documentos',
     status: 'planned',
     iconName: 'FileText',
@@ -58,8 +58,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'vetor-mobile',
-    title: 'Vetor Mobile',
-    description: 'Planejado: triagem documentada de dispositivos autorizados e importação de artefatos obtidos por ferramentas externas.',
+    title: 'Análise de Dispositivos Móveis',
+    description: 'Triagem de celulares autorizados e análise documentada de artefatos digitais.',
     category: 'Dispositivos Móveis',
     status: 'planned',
     iconName: 'Smartphone',
@@ -68,8 +68,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'vetor-media',
-    title: 'Vetor Media',
-    description: 'Planejado: análise de metadados, integridade e consistência de imagens, vídeos e arquivos multimídia.',
+    title: 'Análise de Mídia Digital',
+    description: 'Exame técnico de metadados e consistência de imagens, áudio e vídeos.',
     category: 'Mídia Digital',
     status: 'planned',
     iconName: 'ScanSearch',
@@ -78,8 +78,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'vetor-documents',
-    title: 'Vetor Documents',
-    description: 'Planejado: exame técnico de metadados, estrutura e assinaturas de documentos eletrônicos.',
+    title: 'Verificação de Documentos Digitais',
+    description: 'Verificação técnica de metadados, estrutura e assinaturas eletrônicas.',
     category: 'Documentos',
     status: 'planned',
     iconName: 'FileSearch',
@@ -88,8 +88,8 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'vetor-fraud',
-    title: 'Vetor Fraud',
-    description: 'Em estudo: correlação de registros e indicadores técnicos em incidentes de fraude digital, com escopo e autorização definidos.',
+    title: 'Análise de Incidentes e Fraudes Digitais',
+    description: 'Correlação de registros digitais e indicadores de incidentes autorizados.',
     category: 'Evidências Digitais',
     status: 'planned',
     iconName: 'Fingerprint',
@@ -99,7 +99,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   // Ferramentas existentes, com rotas e funcionamento preservados.
   {
     id: 'vetor-forense',
-    title: 'Análise de Dinâmica Veicular',
+    title: 'Reconstrução de Dinâmica Veicular',
     description: 'Análise técnica exploratória de velocidade e dinâmica em sinistros, com modelos físicos e vestígios informados.',
     category: 'Análise',
     status: 'available',
@@ -110,7 +110,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'croqui-converter',
-    title: 'Conversor .CROQUI',
+    title: 'Conversor de Croquis',
     description: 'Conversão local de imagens rasterizadas para arquivos .croqui em JSON.',
     category: 'Conversores',
     status: 'available',
@@ -122,7 +122,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   // Roadmap anterior mantido; nenhum desses módulos foi promovido a disponível.
   {
     id: 'documents',
-    title: 'Documents — fluxo conceitual legado',
+    title: 'Modelos de Documentos (legado)',
     description: 'Guia histórico de estruturação de relatórios. Evolução futura incorporada à proposta do Vetor Reports.',
     category: 'Documentos',
     status: 'development',
@@ -133,7 +133,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
 
   {
     id: 'map-studio',
-    title: 'Map Studio',
+    title: 'Mapas e Georreferenciamento',
     description: 'Em desenvolvimento: mapas-base, coordenadas e referências geográficas.',
     category: 'Geoprocessamento',
     status: 'development',
@@ -143,7 +143,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'croqui-studio',
-    title: 'Croqui Studio',
+    title: 'Editor de Croquis Técnicos',
     description: 'Em desenvolvimento: croquis técnicos com camadas e elementos vetoriais.',
     category: 'Croquis',
     status: 'development',
@@ -153,7 +153,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'dynamics',
-    title: 'Dynamics',
+    title: 'Linha do Tempo de Eventos',
     description: 'Em desenvolvimento: representação temporal de trajetórias e eventos.',
     category: 'Análise',
     status: 'development',
@@ -163,7 +163,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'validator',
-    title: 'Validator',
+    title: 'Validação Técnica',
     description: 'Em desenvolvimento: verificações de consistência estrutural de arquivos e projetos.',
     category: 'Validação',
     status: 'development',
@@ -173,7 +173,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'field-toolkit',
-    title: 'Field Toolkit',
+    title: 'Coleta Técnica em Campo',
     description: 'Em desenvolvimento: organização de medições, fotos e observações de campo.',
     category: 'Operações de Campo',
     status: 'development',
@@ -183,7 +183,7 @@ export const TOOLS_CATALOG: ToolDefinition[] = [
   },
   {
     id: 'business-automation',
-    title: 'Business Automation',
+    title: 'Automação de Fluxos Técnicos',
     description: 'Em desenvolvimento: automação de fluxos técnicos, conversão e organização de dados.',
     category: 'Automação',
     status: 'development',

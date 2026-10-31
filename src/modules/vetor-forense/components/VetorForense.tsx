@@ -53,7 +53,7 @@ export const VetorForense: React.FC = () => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', fontSize: '13px', color: 'var(--text-dim)' }}>
         <Link to="/tools" style={{ color: 'var(--text-dim)', textDecoration: 'none' }}>Ferramentas</Link>
         <ChevronRight size={14} />
-        <span style={{ color: 'var(--text-muted)' }}>Análise de Dinâmica Veicular</span>
+        <span style={{ color: 'var(--text-muted)' }}>Reconstrução de Dinâmica Veicular</span>
       </div>
 
       {/* ── HEADER DO MÓDULO ── */}
@@ -88,7 +88,7 @@ export const VetorForense: React.FC = () => {
               <BarChart2 size={22} />
             </div>
             <div>
-              <h1 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
+              <h1 style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1 }}>
                 Análise de Dinâmica Veicular
               </h1>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>

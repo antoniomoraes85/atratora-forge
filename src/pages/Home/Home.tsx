@@ -1,225 +1,171 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight, BookOpen, CheckCircle2, ChevronRight, FileImage, FileSearch,
-  FileText, Fingerprint, LockKeyhole, ScanSearch, ShieldCheck, Smartphone,
-  Zap, type LucideIcon,
-} from 'lucide-react';
+import { ArrowRight, BadgeCheck, BookOpen, FileCheck2, FileText, ScanSearch, ShieldCheck, Smartphone, Workflow, Zap } from 'lucide-react';
 import { TOOLS_CATALOG, type ToolDefinition } from '../../app/config/tools';
+import { BlackHoleField } from '../../components/ui/BlackHoleField';
 import './home-forensics.css';
 
-type FocusModule = {
-  id: string;
-  icon: LucideIcon;
-  number: string;
-  value: string;
-  tone: 'gold' | 'cyan' | 'violet' | 'green';
+const tool = (id: string): ToolDefinition => {
+  const found = TOOLS_CATALOG.find(t => t.id === id);
+  if (!found) throw new Error(`Ferramenta não encontrada: ${id}`);
+  return found;
 };
 
-const FOCUS_MODULES: FocusModule[] = [
-  { id: 'vetor-evidence', icon: ShieldCheck, number: '01', value: 'Preservação e rastreabilidade', tone: 'gold' },
-  { id: 'vetor-reports', icon: FileText, number: '02', value: 'Documentação técnica', tone: 'cyan' },
-  { id: 'vetor-mobile', icon: Smartphone, number: '03', value: 'Segurança de dispositivos', tone: 'violet' },
-  { id: 'vetor-media', icon: ScanSearch, number: '04', value: 'Análise de arquivos de mídia', tone: 'green' },
-  { id: 'vetor-documents', icon: FileSearch, number: '05', value: 'Documentos eletrônicos', tone: 'gold' },
-  { id: 'vetor-fraud', icon: Fingerprint, number: '06', value: 'Análise de incidentes', tone: 'cyan' },
+const PRIORITIES = [
+  { id: 'vetor-evidence', name: 'Vetor Evidence', icon: ShieldCheck, step: '01', label: 'BASE DE EVIDÊNCIAS' },
+  { id: 'vetor-reports', name: 'Vetor Reports', icon: FileText, step: '02', label: 'DOCUMENTAÇÃO TÉCNICA' },
+  { id: 'vetor-mobile', name: 'Vetor Mobile', icon: Smartphone, step: '03', label: 'ANÁLISE DE DISPOSITIVOS' },
 ];
 
-const EXISTING_TOOLS: Array<{ id: string; icon: LucideIcon; detail: string }> = [
-  {
-    id: 'vetor-forense',
-    icon: Zap,
-    detail: 'Motor exploratório de cálculos físicos para dinâmica veicular, com parâmetros e premissas documentáveis.',
-  },
-  {
-    id: 'croqui-converter',
-    icon: FileImage,
-    detail: 'Conversão de imagens para formato .croqui, diretamente no dispositivo, sem envio de arquivos a servidores.',
-  },
+const EXTRAS = [
+  { id: 'vetor-media', icon: ScanSearch },
+  { id: 'vetor-documents', icon: FileCheck2 },
+  { id: 'vetor-fraud', icon: Workflow },
 ];
 
-const WORKFLOW = [
-  {
-    number: '01',
-    title: 'Recebimento',
-    description: 'Identificar material, responsável, origem e autorização de análise.',
-  },
-  {
-    number: '02',
-    title: 'Preservação',
-    description: 'Planejar hashes, manifestos, cópias de trabalho e trilha de operações.',
-  },
-  {
-    number: '03',
-    title: 'Exame técnico',
-    description: 'Documentar ferramentas, procedimentos, observações e limites dos resultados.',
-  },
-  {
-    number: '04',
-    title: 'Relatório',
-    description: 'Organizar a conclusão para revisão e assinatura pelo profissional responsável.',
-  },
-];
-
-const byId = (id: string): ToolDefinition | undefined =>
-  TOOLS_CATALOG.find(tool => tool.id === id);
-
-export const Home: React.FC = () => {
-  const availableCount = TOOLS_CATALOG.filter(tool => tool.status === 'available').length;
-  const futureCount = TOOLS_CATALOG.filter(tool => tool.status !== 'available').length;
-
+export const Home = () => {
   return (
-    <div className="vf-new-home animate-fade-in">
-      <section className="vf-new-hero" aria-labelledby="vf-home-title">
-        <div className="vf-new-hero-grid" aria-hidden="true" />
-        <div className="vf-new-hero-glow" aria-hidden="true" />
-        <div className="vf-new-hero-content">
-          <span className="vf-new-kicker"><span className="vf-new-dot" /> ATRATOR / VETOR FORENSE</span>
-          <h1 id="vf-home-title">
-            Ciência e tecnologia para
-            <span> analisar evidências com método.</span>
-          </h1>
-          <p className="vf-new-hero-lead">
-            Plataforma modular para análises técnicas, documentação e, em seu roadmap,
-            organização de evidências digitais e investigação de dispositivos móveis.
+    <div className="vf-light-home animate-fade-in">
+      <section className="vf-light-hero" aria-labelledby="vf-title">
+        <BlackHoleField />
+        <div className="vf-light-hero-content">
+          <span className="vf-light-eyebrow"><span className="vf-light-signal" /> VETOR FORENSE · ECOSSISTEMA ATRATOR</span>
+          <h1 id="vf-title">Método e precisão <span>para a análise técnica.</span></h1>
+          <p className="vf-light-hero-lead">
+            Ferramentas para organizar, analisar e documentar informações técnicas.
+            Uma plataforma independente que evolui para evidências digitais,
+            relatórios e análise de dispositivos.
           </p>
-          <p className="vf-new-hero-note">
-            A evolução começa pela rastreabilidade e pelos relatórios. Novos módulos digitais
-            estão planejados; não realizam exames ou certificações nesta versão.
-          </p>
-          <div className="vf-new-hero-actions">
-            <Link className="btn btn-primary" to="/tools">Explorar módulos <ArrowRight size={17} /></Link>
-            <a className="btn btn-secondary" href="#vf-roadmap">Conhecer o roadmap <ChevronRight size={17} /></a>
+          <div className="vf-light-hero-actions">
+            <Link to="/tools" className="btn btn-primary">Explorar ferramentas <ArrowRight size={16} /></Link>
+            <a href="#vf-modules" className="vf-light-inline-link">Conhecer o roadmap <ArrowRight size={15} /></a>
           </div>
-          <div className="vf-new-hero-tags" aria-label="Características da plataforma">
-            <span><LockKeyhole size={14} /> Ferramentas atuais local-first</span>
-            <span><ShieldCheck size={14} /> Metodologia rastreável como objetivo</span>
-            <span><CheckCircle2 size={14} /> Independência institucional</span>
+          <div className="vf-light-hero-footnote">
+            <ShieldCheck size={15} />
+            <span>Plataforma em evolução. Funcionalidades futuras identificadas claramente.</span>
           </div>
         </div>
-        <aside className="vf-new-hero-aside" aria-label="Situação dos módulos">
-          <div className="vf-new-aside-label">PANORAMA DO PRODUTO <span>v0.3.0</span></div>
-          <div className="vf-new-aside-metric">
-            <strong>{availableCount.toString().padStart(2, '0')}</strong>
-            <div><b>Ferramentas existentes</b><small>Disponíveis para uso no catálogo</small></div>
-          </div>
-          <div className="vf-new-aside-metric">
-            <strong>{futureCount.toString().padStart(2, '0')}</strong>
-            <div><b>Módulos em evolução</b><small>Em desenvolvimento ou planejados</small></div>
-          </div>
-          <div className="vf-new-aside-rule" />
-          <span className="vf-new-aside-subtitle">PRÓXIMA LINHA DE PRODUTO</span>
-          <div className="vf-new-aside-roadmap">
-            <span>Vetor Evidence</span><span className="vf-new-status vf-new-status-plan">Planejado</span>
-          </div>
-          <p>Registro de casos e integridade de arquivos: desenvolvimento previsto, ainda sem cadeia de custódia implementada.</p>
-        </aside>
-      </section>
-
-      <section className="vf-new-intro" id="vf-roadmap" aria-labelledby="vf-product-title">
-        <div>
-          <span className="vf-new-overline">EVOLUÇÃO DO VETOR FORENSE</span>
-          <h2 id="vf-product-title">Uma base técnica. Múltiplas especialidades.</h2>
-          <p>
-            O núcleo existente de análise veicular e conversão de croquis será preservado.
-            A expansão prioriza evidências eletrônicas, relatórios e investigação mobile,
-            sempre separando funcionalidades entregues de capacidades futuras.
-          </p>
+        <div className="vf-light-hero-caption" aria-hidden="true">
+          <span>ATRATOR / CAMPO GRAVITACIONAL</span>
+          <span>VISUALIZAÇÃO CONCEITUAL</span>
         </div>
-        <Link className="vf-new-text-link" to="/tools">Ver catálogo completo <ArrowRight size={16} /></Link>
       </section>
 
-      <section className="vf-new-focus-grid" aria-label="Módulos digitais planejados">
-        {FOCUS_MODULES.map(module => {
-          const tool = byId(module.id);
-          if (!tool) return null;
-          const Icon = module.icon;
-          return (
-            <article key={module.id} className={`vf-new-module vf-tone-${module.tone}`}>
-              <div className="vf-new-module-top">
-                <span className="vf-new-module-number">{module.number} / DIGITAL</span>
-                <span className="vf-new-status vf-new-status-plan">Planejado</span>
-              </div>
-              <div className="vf-new-module-icon" aria-hidden="true"><Icon size={24} /></div>
-              <h3>{tool.title}</h3>
-              <span className="vf-new-module-value">{module.value}</span>
-              <p>{tool.description}</p>
-              <div className="vf-new-module-bottom">
-                <span>{tool.deliveryVersion}</span>
-                <span>Sem acesso operacional nesta versão</span>
-              </div>
-            </article>
-          );
-        })}
-      </section>
-
-      <section className="vf-new-operational" aria-labelledby="vf-active-title">
-        <div className="vf-new-section-header">
+      <section className="vf-light-intro" id="vf-modules">
+        <div className="vf-light-heading">
           <div>
-            <span className="vf-new-overline">DISPONÍVEIS HOJE</span>
-            <h2 id="vf-active-title">Ferramentas que você já pode utilizar</h2>
-            <p>O reposicionamento estratégico não remove recursos existentes.</p>
+            <span className="vf-light-section-kicker">DIREÇÃO DO PRODUTO</span>
+            <h2>Uma plataforma. Um método consistente.</h2>
+            <p>
+              A expansão digital será construída por etapas: primeiro integridade e rastreabilidade,
+              depois relatórios e investigação técnica especializada.
+            </p>
           </div>
-          <span className="vf-new-status vf-new-status-active"><CheckCircle2 size={14} /> {availableCount} ativas</span>
+          <span className="vf-light-summary">3 frentes prioritárias · em planejamento</span>
         </div>
-        <div className="vf-new-active-grid">
-          {EXISTING_TOOLS.map(item => {
-            const tool = byId(item.id);
-            if (!tool || !tool.path || tool.status !== 'available') return null;
-            const Icon = item.icon;
+
+        <div className="vf-light-priority-grid">
+          {PRIORITIES.map(({ id, name, icon: Icon, step, label }) => {
+            const item = tool(id);
             return (
-              <Link key={item.id} className="vf-new-active-card" to={tool.path}>
-                <div className="vf-new-active-icon" aria-hidden="true"><Icon size={25} /></div>
-                <div>
-                  <span className="vf-new-status vf-new-status-active">Ferramenta ativa</span>
-                  <h3>{tool.title}</h3>
-                  <p>{item.detail}</p>
-                  <strong>Acessar ferramenta <ArrowRight size={15} /></strong>
+              <article className="vf-light-priority-card" key={id}>
+                <div className="vf-light-card-head">
+                  <span className="vf-light-card-step">{step} <span>/ {label}</span></span>
+                  <span className="vf-light-status is-planned">Planejado</span>
                 </div>
-              </Link>
+                <div className="vf-light-card-icon"><Icon size={22} strokeWidth={1.7} /></div>
+                <h3>{item.title}</h3>
+                <small className="vf-light-product-code">{name}</small>
+                <p>{item.description}</p>
+                <div className="vf-light-card-bottom">Em definição funcional <span>↗</span></div>
+              </article>
             );
           })}
         </div>
-      </section>
 
-      <section className="vf-new-method" aria-labelledby="vf-method-title">
-        <div className="vf-new-section-header">
-          <div>
-            <span className="vf-new-overline">PROCESSO PROPOSTO</span>
-            <h2 id="vf-method-title">Da evidência ao documento técnico</h2>
-            <p>Fluxo-alvo para o futuro núcleo digital; não representa cadeia de custódia já certificada.</p>
+        <div className="vf-light-extras">
+          <div className="vf-light-extras-text">
+            <span className="vf-light-section-kicker">EXPANSÃO FUTURA</span>
+            <h3>Outras especialidades digitais</h3>
+          </div>
+          <div className="vf-light-extras-list">
+            {EXTRAS.map(({ id, icon: Icon }) => {
+              const item = tool(id);
+              return (
+                <div key={id} className="vf-light-extra-item">
+                  <Icon size={17} strokeWidth={1.8} />
+                  <span>{item.title}</span>
+                  <span className="vf-light-status is-planned">Previsto</span>
+                </div>
+              );
+            })}
           </div>
         </div>
-        <div className="vf-new-method-grid">
-          {WORKFLOW.map(step => (
-            <div key={step.number} className="vf-new-method-step">
-              <span>{step.number}</span>
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
+      </section>
+
+      <section className="vf-light-active" aria-labelledby="vf-available">
+        <div className="vf-light-heading">
+          <div>
+            <span className="vf-light-section-kicker">EM OPERAÇÃO</span>
+            <h2 id="vf-available">Ferramentas já disponíveis</h2>
+            <p>Recursos existentes preservados durante a evolução da plataforma.</p>
+          </div>
+          <span className="vf-light-status is-active"><BadgeCheck size={14} /> 2 disponíveis</span>
+        </div>
+        <div className="vf-light-active-grid">
+          <Link className="vf-light-active-card" to="/tools/vetor-forense">
+            <div className="vf-light-active-icon"><Zap size={23} /></div>
+            <div>
+              <span className="vf-light-status is-active">Disponível</span>
+              <h3>{tool('vetor-forense').title}</h3>
+              <small>Análise de Dinâmica Veicular</small>
+              <p>Estimativas físicas baseadas em vestígios, medições e premissas documentadas.</p>
+              <strong>Abrir ferramenta <ArrowRight size={15} /></strong>
             </div>
-          ))}
+          </Link>
+          <Link className="vf-light-active-card" to="/tools/croqui-converter">
+            <div className="vf-light-active-icon"><ScanSearch size={23} /></div>
+            <div>
+              <span className="vf-light-status is-active">Disponível</span>
+              <h3>{tool('croqui-converter').title}</h3>
+              <small>Conversor .CROQUI</small>
+              <p>Transformação local de imagens em arquivos técnicos no formato .croqui.</p>
+              <strong>Abrir ferramenta <ArrowRight size={15} /></strong>
+            </div>
+          </Link>
         </div>
       </section>
 
-      <section className="vf-new-boundaries" aria-labelledby="vf-scope-title">
-        <div className="vf-new-boundaries-icon" aria-hidden="true"><ShieldCheck size={23} /></div>
+      <section className="vf-light-process" aria-labelledby="vf-process-title">
         <div>
-          <h2 id="vf-scope-title">Ferramenta técnica não é nomeação pericial</h2>
+          <span className="vf-light-section-kicker">PRINCÍPIOS DE DESENVOLVIMENTO</span>
+          <h2 id="vf-process-title">Rastreabilidade antes de automação.</h2>
+          <p>Fluxo-alvo para os próximos módulos, ainda não implementado como cadeia de custódia certificada.</p>
+        </div>
+        <ol className="vf-light-process-steps">
+          <li><span>01</span><strong>Identificar</strong><small>Origem e autorização</small></li>
+          <li><span>02</span><strong>Preservar</strong><small>Integridade e histórico</small></li>
+          <li><span>03</span><strong>Examinar</strong><small>Método e limitações</small></li>
+          <li><span>04</span><strong>Documentar</strong><small>Conclusão revisável</small></li>
+        </ol>
+      </section>
+
+      <section className="vf-light-legal">
+        <ShieldCheck size={21} aria-hidden="true" />
+        <div>
+          <h2>Ferramenta técnica não é nomeação pericial</h2>
           <p>
-            O Vetor Forense é independente de órgãos públicos. Relatórios particulares,
-            pareceres técnicos, laudos judiciais e perícias oficiais possuem requisitos
-            diferentes. O software não atribui habilitação profissional, não comprova sozinho
-            autenticidade nem substitui a avaliação de um profissional competente.
-            Exames em dispositivos exigem autorização e metodologia apropriada.
+            Os novos módulos digitais não realizam exames ou certificações nesta versão.
+            Relatórios particulares, perícias judiciais e perícias oficiais seguem requisitos próprios.
+            O software não confere habilitação nem atesta, sozinho, autenticidade ou cadeia de custódia.
           </p>
         </div>
-        <Link to="/about" className="vf-new-text-link">Sobre a plataforma <ArrowRight size={16} /></Link>
+        <Link to="/about" className="vf-light-inline-link">Entenda o escopo <ArrowRight size={16} /></Link>
       </section>
 
-      <div className="vf-new-footer-links">
-        <Link to="/guides"><BookOpen size={16} /> Guias das ferramentas existentes</Link>
-        <Link to="/tools">Diretório completo <ArrowRight size={16} /></Link>
-      </div>
+      <nav className="vf-light-bottom-nav" aria-label="Links complementares">
+        <Link to="/guides"><BookOpen size={15} /> Guias de utilização</Link>
+        <Link to="/tools">Catálogo completo <ArrowRight size={15} /></Link>
+      </nav>
     </div>
   );
 };

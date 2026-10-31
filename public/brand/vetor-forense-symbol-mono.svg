@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Símbolo monocromático Vetor Forense">
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#1E333A"/>
+  <path d="M14 16 31 48 49 16" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.3"/>
+  <path d="M20 38 43 18m-7 0h7v7" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
+  <circle cx="31.5" cy="31" r="5" fill="#1E333A" stroke="#FFF" stroke-width="2"/>
+  <circle cx="31.5" cy="31" r="1.5" fill="#FFF"/>
+</svg>

@@ -32,7 +32,7 @@ export const VFAnalysesList: React.FC<VFAnalysesListProps> = ({ onNavigate }) =>
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff' }}>Análises salvas</h2>
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)' }}>Análises salvas</h2>
         <button
           onClick={() => onNavigate('nova-analise')}
           style={{

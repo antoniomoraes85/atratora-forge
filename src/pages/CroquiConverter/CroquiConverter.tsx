@@ -120,8 +120,8 @@ export const CroquiConverter: React.FC = () => {
             >
               <FileImage size={20} />
             </div>
-            <h1 style={{ fontSize: '24px', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff' }}>
-              Conversor .CROQUI
+            <h1 style={{ fontSize: '24px', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+              Conversor de Croquis
             </h1>
             <span className="badge badge-success" style={{ fontSize: '11px' }}>
               Disponível

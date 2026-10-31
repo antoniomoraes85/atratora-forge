@@ -1,300 +1,135 @@
-import React, { useState, useMemo } from 'react';
+import { useMemo, useState, type ElementType } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FileImage,
-  ArrowRight,
-  Map,
-  Layers,
-  FileCheck2,
-  FileText,
-  Activity,
-  Briefcase,
-  Settings2,
-  Search,
-  Filter,
-  Zap,
-  ShieldCheck,
-  Smartphone,
-  ScanSearch,
-  Fingerprint,
-  FileSearch,
+  ArrowRight, Activity, BriefcaseBusiness, FileCheck2, FileImage, FileSearch,
+  FileText, Filter, Fingerprint, Layers3, MapPinned, Search, Settings2,
+  ShieldCheck, Smartphone, ScanSearch, Zap,
 } from 'lucide-react';
-import {
-  TOOL_CATEGORIES,
-  searchTools,
-  type ToolDefinition,
-  type ToolCategory,
-} from '../../app/config/tools';
+import { PRODUCT_GROUPS, type ProductGroupId } from '../../app/config/productGroups';
+import { searchTools, TOOLS_CATALOG, type ToolDefinition, type ToolStatus } from '../../app/config/tools';
+import './tools-clean.css';
 
-// Mapeamento de iconName → Componente Lucide
-const ICON_MAP: Record<ToolDefinition['iconName'], React.ElementType> = {
-  FileImage,
-  Layers,
-  Map,
-  Activity,
-  FileCheck2,
-  FileText,
-  Briefcase,
-  Settings2,
-  Zap,
-  ShieldCheck,
-  Smartphone,
-  ScanSearch,
-  Fingerprint,
-  FileSearch,
+const ICONS: Record<ToolDefinition['iconName'], ElementType> = {
+  FileImage, Layers: Layers3, Map: MapPinned, Activity,
+  FileCheck2, FileText, Briefcase: BriefcaseBusiness,
+  Settings2, Zap, ShieldCheck, Smartphone, ScanSearch,
+  Fingerprint, FileSearch,
 };
 
-// Cores accent por categoria (Premium Palette)
-const CATEGORY_ACCENT: Record<ToolCategory, { bg: string; color: string; border: string }> = {
-  'Evidências Digitais': { bg: 'rgba(216,162,58,0.10)', color: '#e0b562', border: 'rgba(216,162,58,0.25)' },
-  'Dispositivos Móveis': { bg: 'rgba(167,139,250,0.10)', color: '#c4b5fd', border: 'rgba(167,139,250,0.25)' },
-  'Mídia Digital': { bg: 'rgba(52,211,153,0.10)', color: '#6ee7b7', border: 'rgba(52,211,153,0.25)' },
-  Conversores:         { bg: 'rgba(99, 102, 241, 0.12)', color: 'var(--primary-400)', border: 'rgba(99, 102, 241, 0.25)' },
-  Geoprocessamento:    { bg: 'rgba(34, 211, 238, 0.12)', color: 'var(--accent-cyan)', border: 'rgba(34, 211, 238, 0.25)' },
-  Croquis:             { bg: 'rgba(168, 85, 247, 0.12)', color: '#c084fc', border: 'rgba(168, 85, 247, 0.25)' },
-  Análise:             { bg: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', border: 'rgba(56, 189, 248, 0.25)' },
-  Validação:           { bg: 'rgba(234, 179, 8, 0.12)',  color: '#facc15', border: 'rgba(234, 179, 8, 0.25)' },
-  Documentos:          { bg: 'rgba(244, 63, 94, 0.12)',  color: '#fb7185', border: 'rgba(244, 63, 94, 0.25)' },
-  'Operações de Campo':{ bg: 'rgba(16, 185, 129, 0.12)', color: '#34d399', border: 'rgba(16, 185, 129, 0.25)' },
-  Automação:           { bg: 'rgba(249, 115, 22, 0.12)', color: '#fb923c', border: 'rgba(249, 115, 22, 0.25)' },
-};
+type ToolFilter = 'all' | ToolStatus;
+type GroupFilter = 'all' | ProductGroupId;
 
-type StatusFilter = 'all' | 'available' | 'development' | 'planned';
+export const Tools = () => {
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState<ToolFilter>('all');
+  const [group, setGroup] = useState<GroupFilter>('all');
 
-export const Tools: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<ToolCategory | 'Todas'>('Todas');
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const filtered = useMemo(() => {
+    const groupDef = PRODUCT_GROUPS.find(item => item.id === group);
+    return searchTools(query)
+      .filter(item => status === 'all' || item.status === status)
+      .filter(item => !groupDef || groupDef.toolIds.includes(item.id));
+  }, [query, status, group]);
 
-  const filteredTools = useMemo(() => {
-    let results = searchTools(searchQuery);
-
-    if (selectedCategory !== 'Todas') {
-      results = results.filter((t) => t.category === selectedCategory);
-    }
-
-    if (statusFilter !== 'all') {
-      results = results.filter((t) => t.status === statusFilter);
-    }
-
-    return results;
-  }, [searchQuery, selectedCategory, statusFilter]);
+  const availableCount = TOOLS_CATALOG.filter(item => item.status === 'available').length;
+  const plannedCount = TOOLS_CATALOG.filter(item => item.status === 'planned').length;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }} className="animate-fade-in">
-      
-      {/* Header Diretorio */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
-          Diretório de Ferramentas
-        </h1>
-        <p style={{ fontSize: '15px', color: 'var(--text-muted)', maxWidth: '600px', lineHeight: 1.6 }}>
-          Explore a suíte em evolução: evidências digitais, relatórios, dispositivos móveis e mídia. Os módulos planejados estão identificados; dinâmica veicular e conversor .CROQUI continuam disponíveis.
-        </p>
-      </div>
-
-      <div className="divider" style={{ margin: '8px 0' }} />
-
-      {/* Toolbar - Busca e Filtros */}
-      <div 
-        className="card" 
-        style={{ 
-          padding: '20px',
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '20px',
-          backgroundColor: 'var(--bg-surface)'
-        }}
-      >
-        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          
-          {/* Search Box */}
-          <div style={{ flex: '1 1 300px', position: 'relative' }}>
-            <Search 
-              size={18} 
-              style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} 
-            />
-            <input
-              type="search"
-              placeholder="Buscar evidências, celular, relatórios, croquis..." aria-label="Buscar ferramentas"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '12px 16px 12px 42px',
-                fontSize: '14px',
-              }}
-            />
+    <div className="vf-tools-page animate-fade-in">
+      <header className="vf-tools-heading">
+        <span className="vf-tools-kicker">DIRETÓRIO DE FERRAMENTAS</span>
+        <div className="vf-tools-title-row">
+          <div>
+            <h1>Todas as ferramentas, sem complicação.</h1>
+            <p>Encontre o recurso adequado e veja imediatamente o que está disponível ou ainda está no roadmap.</p>
           </div>
-
-          {/* Status Filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-             <Filter size={16} color="var(--text-dim)" />
-             <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-                style={{
-                  padding: '12px 16px',
-                  fontSize: '13px',
-                  minWidth: '160px',
-                }}
-             >
-                <option value="all">Todos os Status</option>
-                <option value="available">Disponíveis agora</option>
-                <option value="development">Em desenvolvimento</option>
-                <option value="planned">Planejados</option>
-             </select>
+          <div className="vf-tools-summary" aria-label="Maturidade da plataforma">
+            <span><strong>{availableCount}</strong> ativas</span>
+            <span><strong>{plannedCount}</strong> planejadas</span>
           </div>
         </div>
+      </header>
 
-        {/* Categories Pill Filters */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-          <button
-             onClick={() => setSelectedCategory('Todas')}
-             style={{
-               padding: '6px 14px',
-               borderRadius: 'var(--radius-full)',
-               fontSize: '12px',
-               fontWeight: 600,
-               border: '1px solid',
-               backgroundColor: selectedCategory === 'Todas' ? 'rgba(255,255,255,0.1)' : 'transparent',
-               borderColor: selectedCategory === 'Todas' ? 'var(--border-active)' : 'var(--border-default)',
-               color: selectedCategory === 'Todas' ? '#fff' : 'var(--text-muted)',
-               cursor: 'pointer',
-               transition: 'all 0.2s',
-             }}
-          >
-            Todas
-          </button>
-
-          {TOOL_CATEGORIES.map((cat) => {
-             const isSelected = selectedCategory === cat;
-             const colors = CATEGORY_ACCENT[cat];
-             return (
-               <button
-                 key={cat}
-                 onClick={() => setSelectedCategory(cat)}
-                 style={{
-                   padding: '6px 14px',
-                   borderRadius: 'var(--radius-full)',
-                   fontSize: '12px',
-                   fontWeight: 600,
-                   border: '1px solid',
-                   backgroundColor: isSelected ? colors.bg : 'transparent',
-                   borderColor: isSelected ? colors.border : 'var(--border-default)',
-                   color: isSelected ? colors.color : 'var(--text-muted)',
-                   cursor: 'pointer',
-                   transition: 'all 0.2s',
-                 }}
-               >
-                 {cat}
-               </button>
-             );
-          })}
+      <section className="vf-tools-filter-panel" aria-label="Filtros de ferramentas">
+        <div className="vf-tools-filter-row">
+          <label className="vf-tools-search">
+            <Search size={18} />
+            <span className="sr-only">Pesquisar ferramenta</span>
+            <input type="search" value={query} onChange={event => setQuery(event.target.value)}
+              placeholder="Buscar por função: celular, laudo, croqui…" />
+          </label>
+          <label className="vf-tools-select">
+            <Filter size={16} aria-hidden="true" />
+            <span className="sr-only">Filtrar pelo status</span>
+            <select value={status} onChange={event => setStatus(event.target.value as ToolFilter)}>
+              <option value="all">Todos os estágios</option>
+              <option value="available">Disponíveis</option>
+              <option value="development">Em desenvolvimento</option>
+              <option value="planned">Planejados</option>
+            </select>
+          </label>
         </div>
-      </div>
+        <div className="vf-tools-groups" role="group" aria-label="Grupos de ferramentas">
+          <button className={group === 'all' ? 'is-selected' : ''} onClick={() => setGroup('all')} type="button">Todas</button>
+          {PRODUCT_GROUPS.map(item => (
+            <button key={item.id} className={group === item.id ? 'is-selected' : ''}
+              onClick={() => setGroup(item.id)} type="button">{item.label}</button>
+          ))}
+        </div>
+      </section>
 
-      {/* Grid de Ferramentas */}
-      {filteredTools.length > 0 ? (
-        <div className="grid-2">
-          {filteredTools.map((tool, idx) => {
-            const Icon = ICON_MAP[tool.iconName];
-            const isAvailable = tool.status === 'available';
-            const colors = CATEGORY_ACCENT[tool.category];
-            
-            const cardContent = (
-              <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <div
-                    style={{
-                      width: '46px',
-                      height: '46px',
-                      borderRadius: '12px',
-                      backgroundColor: colors.bg,
-                      color: colors.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: `1px solid ${colors.border}`,
-                    }}
-                  >
-                    <Icon size={24} />
+      <div className="vf-tools-results">
+        <div className="vf-tools-result-title">
+          <span>{filtered.length} {filtered.length === 1 ? 'ferramenta encontrada' : 'ferramentas encontradas'}</span>
+          <span>O status indica a disponibilidade real na versão atual.</span>
+        </div>
+        {filtered.length ? (
+          <div className="vf-tools-grid">
+            {filtered.map(tool => {
+              const Icon = ICONS[tool.iconName];
+              const available = tool.status === 'available' && Boolean(tool.path);
+              const body = (
+                <>
+                  <div className="vf-tools-card-top">
+                    <span className="vf-tools-icon"><Icon size={22} strokeWidth={1.7} /></span>
+                    <span className={`vf-tools-badge ${available ? 'is-available' : 'is-future'}`}>
+                      {available ? 'Disponível' : tool.status === 'development' ? 'Em desenvolvimento' : 'Planejado'}
+                    </span>
                   </div>
-                  {isAvailable ? (
-                    <span className="badge badge-success">Disponível</span>
-                  ) : (
-                    <span className="badge badge-neutral">{tool.status === 'planned' ? 'Planejado' : 'Em desenvolvimento'}{tool.deliveryVersion ? ` · ${tool.deliveryVersion}` : ''}</span>
-                  )}
-                </div>
-
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
-                  {tool.title}
-                </h3>
-                
-                <p style={{ fontSize: '13.5px', color: 'var(--text-dim)', lineHeight: 1.5, flex: 1 }}>
-                  {tool.description}
-                </p>
-
-                <div style={{ marginTop: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                   <span 
-                     style={{ 
-                       fontSize: '11px', 
-                       fontWeight: 600, 
-                       textTransform: 'uppercase', 
-                       letterSpacing: '0.04em',
-                       color: colors.color 
-                     }}
-                   >
-                     {tool.category}
-                   </span>
-
-                   {isAvailable && (
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary-400)', fontSize: '13px', fontWeight: 600 }}>
-                        Acessar <ArrowRight size={16} />
-                     </div>
-                   )}
-                </div>
-              </>
-            );
-
-            const cardStyle = {
-               display: 'flex',
-               flexDirection: 'column' as const,
-               height: '100%',
-               opacity: isAvailable ? 1 : 0.86,
-               animationDelay: `${idx * 40}ms`
-            };
-
-            if (isAvailable && tool.path) {
-               return (
-                  <Link 
-                    key={tool.id} 
-                    to={tool.path} 
-                    className="card card-hover animate-fade-in"
-                    style={{ ...cardStyle, textDecoration: 'none' }}
-                  >
-                     {cardContent}
-                  </Link>
-               );
-            }
-
-            return (
-               <div key={tool.id} className="card animate-fade-in" style={cardStyle}>
-                 {cardContent}
-               </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div style={{ padding: '60px 20px', textAlign: 'center', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-lg)', border: '1px dashed var(--border-default)' }}>
-           <Search size={40} style={{ color: 'var(--border-default)', margin: '0 auto 16px' }} />
-           <h3 style={{ fontSize: '18px', color: 'var(--text-main)', marginBottom: '8px' }}>Nenhuma ferramenta encontrada</h3>
-           <p style={{ fontSize: '14px', color: 'var(--text-dim)' }}>
-             Tente ajustar os filtros ou os termos da busca.
-           </p>
-        </div>
-      )}
-
+                  <h2>{tool.title}</h2>
+                  <p>{tool.description}</p>
+                  <div className="vf-tools-card-bottom">
+                    <span>{PRODUCT_GROUPS.find(x => x.toolIds.includes(tool.id))?.label ?? tool.category}</span>
+                    {available && <strong>Acessar <ArrowRight size={15} /></strong>}
+                  </div>
+                </>
+              );
+              return available && tool.path ? (
+                <Link key={tool.id} to={tool.path} className="vf-tools-card is-clickable">
+                  {body}
+                </Link>
+              ) : (
+                <article key={tool.id} className="vf-tools-card is-future">
+                  {body}
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="vf-tools-empty">
+            <Search size={27} />
+            <h2>Nenhum resultado encontrado</h2>
+            <p>Experimente outra palavra-chave ou selecione todas as categorias.</p>
+            <button type="button" className="btn btn-secondary" onClick={() => { setQuery(''); setStatus('all'); setGroup('all'); }}>
+              Limpar filtros
+            </button>
+          </div>
+        )}
+      </div>
+      <aside className="vf-tools-boundary">
+        <ShieldCheck size={18} aria-hidden="true" />
+        <p>Ferramentas planejadas não executam exames nem emitem laudos nesta versão. Resultados técnicos exigem análise e responsabilidade profissional.</p>
+      </aside>
     </div>
   );
 };
