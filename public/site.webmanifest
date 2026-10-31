@@ -1,17 +1,17 @@
 {
   "name": "Vetor Forense | ATRATOR",
   "short_name": "Vetor Forense",
-  "description": "Plataforma de análise científica, reconstrução e ferramentas forenses do ecossistema ATRATOR.",
+  "description": "Plataforma de análise técnica e módulos planejados de evidências digitais do ecossistema ATRATOR.",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#050506",
-  "theme_color": "#D8A23A",
+  "background_color": "#f5f7f7",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
