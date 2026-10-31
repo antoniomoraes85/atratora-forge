@@ -10,7 +10,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   onToggleSidebar,
   title = 'Vetor Forense',
-  subtitle = 'Análise científica, reconstrução e inteligência pericial.',
+  subtitle = 'Análise técnica, ferramentas locais e expansão em evidências digitais.',
 }) => {
   return (
     <header
@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
         {/* Local Processing Privacy Indicator */}
         <div
-          title="Os dados são processados inteiramente no seu dispositivo. Nenhum dado é enviado a servidores remotos."
+          title="As ferramentas atualmente disponíveis realizam seu processamento localmente; módulos digitais futuros ainda não estão ativos."
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -80,12 +80,12 @@ export const Header: React.FC<HeaderProps> = ({
           }}
         >
           <ShieldCheck size={15} />
-          <span className="hide-mobile">Processamento 100% Local</span>
+          <span className="hide-mobile">Ferramentas locais</span>
         </div>
         
         {/* Storage Indicator */}
         <div
-           title="Armazenamento Local Ativo"
+           title="Recursos atuais usam armazenamento local; ainda não há custódia digital certificada."
            style={{
              display: 'flex',
              alignItems: 'center',
@@ -102,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
            }}
         >
            <Database size={14} />
-           <span className="hide-mobile">Privado</span>
+           <span className="hide-mobile">Dados locais</span>
         </div>
       </div>
 
