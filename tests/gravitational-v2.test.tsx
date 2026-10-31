@@ -32,7 +32,7 @@ describe('Experiência gravitacional ATRATOR v2', () => {
   it('usa CSS de parallax e preserva preferência por movimento reduzido', () => {
     const css = readFileSync('src/components/ui/black-hole-field.css', 'utf8');
     const source = readFileSync('src/components/ui/BlackHoleField.tsx', 'utf8');
-    expect(css).toContain('prefers-reduced-motion: reduce');
+    expect(css).toMatch(/prefers-reduced-motion:\\s*reduce/);
     expect(css).toContain('atrator-infall');
     expect(css).toContain('--pointer-x');
     expect(source).toContain("window.addEventListener('pointermove'");
