@@ -1,171 +1,68 @@
-import React from 'react';
+import { BadgeCheck, Database, Layers3, ShieldCheck } from 'lucide-react';
 import { Logo } from '../../components/ui/Logo';
-import { ShieldCheck, UserCheck, Globe, Cpu } from 'lucide-react';
 
-export const About: React.FC = () => {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '36px', maxWidth: '880px', margin: '0 auto' }} className="animate-fade-in">
-      {/* Brand presentation */}
-      <div
-        className="card"
-        style={{
-          padding: '36px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-highlight)',
-        }}
-      >
-        <Logo size={48} />
+const PRINCIPLES = [
+  { icon: Database, title: 'Processamento local', description: 'Os módulos atuais processam informações no dispositivo. A plataforma ainda não possui repositório forense certificado.' },
+  { icon: Layers3, title: 'Arquitetura modular', description: 'Funções distintas, evolução incremental e separação entre ferramentas entregues e recursos planejados.' },
+  { icon: BadgeCheck, title: 'Transparência metodológica', description: 'O objetivo é documentar métodos, premissas e limitações antes de qualquer conclusão técnica.' },
+  { icon: ShieldCheck, title: 'Independência', description: 'Produto independente, sem vínculo institucional, homologação ou chancela de órgãos públicos.' },
+];
 
-        <div>
-          <h1 style={{ fontSize: '26px', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
-            Sobre a Plataforma
-          </h1>
-          <p style={{ fontSize: '16px', color: 'var(--text-main)', marginTop: '12px', lineHeight: 1.6 }}>
-            Vetor Forense é uma plataforma independente do ecossistema ATRATOR. Atualmente dispõe de análise exploratória de dinâmica veicular e conversão de croquis. Seu roadmap prioriza organização de evidências digitais, relatórios técnicos, análise de artefatos mobile e de mídias. Esses novos módulos ainda não realizam exames.
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '20px',
-            marginTop: '8px',
-          }}
-          className="about-meta-grid"
-        >
-          <div
-            style={{
-              padding: '16px',
-              backgroundColor: 'var(--bg-tertiary)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-subtle)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-400)' }}>
-              <UserCheck size={18} />
-              <span style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                Desenvolvedor Responsável
-              </span>
-            </div>
-            <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)', marginTop: '6px' }}>
-              José Antônio Coutinho de Moraes Filho
-            </p>
-            <p style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '2px' }}>
-              Desenvolvimento de Software e Ferramentas Técnicas
-            </p>
-          </div>
-
-          <div
-            style={{
-              padding: '16px',
-              backgroundColor: 'var(--bg-tertiary)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-subtle)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-cyan)' }}>
-              <Globe size={18} />
-              <span style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                Organização Mantenedora
-              </span>
-            </div>
-            <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)', marginTop: '6px' }}>
-              ATRATOR — ecossistema de tecnologia
-            </p>
-            <p style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '2px' }}>
-              Soluções independentes de alta performance
-            </p>
-          </div>
-        </div>
+export const About = () => (
+  <div className="vf-about-page animate-fade-in">
+    <section className="vf-about-hero">
+      <span className="vf-about-overline">SOBRE A PLATAFORMA</span>
+      <Logo size={56} />
+      <h1>Precisão técnica, com clareza.</h1>
+      <p>
+        Vetor Forense é um produto de tecnologia do ecossistema ATRATOR.
+        Reúne ferramentas de análise técnica e está evoluindo para fluxos de
+        organização de evidências digitais, documentação e investigação autorizada de dispositivos.
+      </p>
+      <div className="vf-about-meta">
+        <span>Desenvolvimento independente</span>
+        <span>Produto em evolução</span>
+        <span>ATRATOR</span>
       </div>
+    </section>
 
-      {/* Princípios de Engenharia e Privacidade */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-main)' }}>
-          Princípios de Engenharia
-        </h2>
+    <section className="vf-about-block">
+      <span className="vf-about-overline">COMPROMISSOS DE PROJETO</span>
+      <h2>Um sistema simples para tarefas complexas.</h2>
+      <div className="vf-about-grid">
+        {PRINCIPLES.map(item => {
+          const Icon = item.icon;
+          return (
+            <article key={item.title}>
+              <div className="vf-about-icon"><Icon size={21} /></div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          );
+        })}
+      </div>
+    </section>
 
-        <div className="grid-2">
-          <div className="card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--success-border)' }}>
-              <ShieldCheck size={20} />
-              <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Arquitetura Local-First
-              </h3>
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Nas ferramentas locais atualmente implementadas, o processamento principal ocorre no dispositivo do usuário. Essa arquitetura, isoladamente, não constitui cadeia de custódia, armazenamento forense seguro ou garantia de autenticidade.
-            </p>
-          </div>
-
-          <div className="card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--primary-400)' }}>
-              <Cpu size={20} />
-              <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Desacoplamento e Interoperabilidade
-              </h3>
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Os módulos são isolados através do padrão Domain / Adapter / Exporter. O formato .croqui é tratado como adaptador de exportação secundário, permitindo integração transparente com formatos neutros e universais.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="card" aria-labelledby="scope-digital-title" style={{ padding: '24px', border: '1px solid var(--border-highlight)' }}>
-        <h2 id="scope-digital-title" style={{ fontSize: '20px', marginBottom: '12px' }}>Escopo digital e limites profissionais</h2>
-        <p style={{ fontSize: '13px', lineHeight: 1.7 }}>
-          Vetor Evidence, Reports, Mobile, Media, Documents e Fraud são módulos planejados,
-          sem coleta de celulares, validação forense de evidências, geração de laudos oficiais
-          ou análise de comprometimento disponíveis nesta versão.
+    <section className="vf-about-boundary">
+      <ShieldCheck size={23} />
+      <div>
+        <h2>Limites de atuação e responsabilidade técnica</h2>
+        <p>
+          Atualmente estão disponíveis a ferramenta exploratória de dinâmica veicular e a
+          conversão de croquis. Os módulos digitais de Evidence, Reports, Mobile, Media,
+          Documents e Fraud são planejados e não fazem perícia digital nesta versão.
+          Software e assinatura digital não conferem habilitação profissional, não
+          produzem laudo oficial e não certificam cadeia de custódia. Exames dependem
+          de autorização legítima, metodologias adequadas e profissional competente.
         </p>
-        <p style={{ fontSize: '13px', lineHeight: 1.7, marginTop: '10px' }}>
-          Relatórios técnicos particulares, pareceres de assistentes técnicos, laudos de
-          peritos judiciais e laudos de perícia oficial possuem enquadramentos distintos.
-          Software, hash e assinatura digital não substituem habilitação profissional,
-          preservação adequada e avaliação metodológica do caso concreto.
-        </p>
-        <p style={{ fontSize: '13px', lineHeight: 1.7, marginTop: '10px' }}>
-          Qualquer futura análise de dispositivos deverá ocorrer somente com autorização
-          legítima e controles de privacidade e confidencialidade apropriados.
-          O sistema não representa atividade, endosso ou parceria com a PRF.
-        </p>
-      </section>
+        <p>Compatibilidade de formatos de terceiros não implica parceria nem homologação. O produto não representa a PRF.</p>
+      </div>
+    </section>
 
-      {/* Declaração Formal de Independência (Disclaimer) */}
-      <section
-        style={{
-          padding: '24px',
-          borderRadius: 'var(--radius-lg)',
-          backgroundColor: 'rgba(239, 68, 68, 0.04)',
-          border: '1px solid rgba(239, 68, 68, 0.2)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-        }}
-      >
-        <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#f87171' }}>
-          Declaração Formal de Independência e Interoperabilidade
-        </h3>
-        <p style={{ fontSize: '13px', color: 'var(--text-main)', lineHeight: 1.6 }}>
-          “A compatibilidade de determinados módulos com formatos ou sistemas de terceiros não implica vínculo, homologação, parceria ou chancela dessas instituições.”
-        </p>
-        <p style={{ fontSize: '12px', color: 'var(--text-dim)', lineHeight: 1.5 }}>
-          O suporte ao formato de arquivo .croqui (estruturado para bibliotecas de canvas vetorial como Fabric.js e sistemas correlatos) é implementado com finalidade estritamente técnica de interoperabilidade de dados e conversão gráfica.
-        </p>
-      </section>
-
-      <style>{`
-        @media (max-width: 680px) {
-          .about-meta-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-    </div>
-  );
-};
+    <footer className="vf-about-credit">
+      <strong>Desenvolvimento</strong>
+      <span>José Antônio Coutinho de Moraes Filho</span>
+      <span>Vetor Forense · Ecossistema ATRATOR</span>
+    </footer>
+  </div>
+);
