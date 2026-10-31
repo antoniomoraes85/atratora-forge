@@ -178,7 +178,7 @@ export const VFTutorial: React.FC<VFTutorialProps> = ({ onNavigate }) => {
         background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.3)',
         borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: '10px',
       }}>
-        <AlertTriangle size={16} color="#c084fc" />
+        <AlertTriangle size={16} color="var(--primary-400)" />
         <div>
           <span style={{ fontWeight: 700, color: '#c084fc', fontSize: '13px' }}>MODO TUTORIAL — DADOS FICTÍCIOS</span>
           <span style={{ fontSize: '12px', color: 'var(--text-muted)', marginLeft: '8px' }}>
@@ -190,7 +190,7 @@ export const VFTutorial: React.FC<VFTutorialProps> = ({ onNavigate }) => {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
           <BookOpen size={18} color="#c084fc" />
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff' }}>
+          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)' }}>
             Análise de Dinâmica Veicular — Primeiros Passos
           </h2>
         </div>
@@ -235,7 +235,7 @@ export const VFTutorial: React.FC<VFTutorialProps> = ({ onNavigate }) => {
           }}>
             {step.id}
           </div>
-          <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
             {step.title}
           </h3>
         </div>
