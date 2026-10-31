@@ -1,0 +1,55 @@
+/* Shared ATRATOR shell: light, restrained and keyboard-accessible. */
+.vf-shell-sidebar {
+  position:fixed;inset:0 auto 0 0;width:270px;z-index:100;
+  background:#fff;border-right:1px solid #e0e6e5;
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:transform .2s ease;
+}
+.vf-shell-logo-row {padding:24px 22px;border-bottom:1px solid #edf0ef;display:flex;align-items:center;justify-content:space-between;}
+.vf-shell-logo-row>a {text-decoration:none;}
+.vf-shell-close,.vf-shell-menu {display:none;background:transparent;border:0;cursor:pointer;color:#344d55;padding:7px;border-radius:8px;}
+.vf-shell-close:hover,.vf-shell-menu:hover {background:#edf1ef;}
+.vf-shell-nav {display:flex;flex-direction:column;gap:5px;padding:23px 15px;}
+.vf-shell-nav-label {padding:0 14px 13px;color:#8a979a;letter-spacing:.14em;font-size:10px;font-weight:800;}
+.vf-shell-nav-item {display:flex;gap:13px;align-items:center;padding:12px 14px;border:1px solid transparent;border-radius:10px;color:#57686d;font-size:13px;font-weight:650;min-height:46px;text-decoration:none;}
+.vf-shell-nav-item svg {color:#63797e;flex-shrink:0;}
+.vf-shell-nav-item:hover {background:#f4f6f6;color:#1e333a;}
+.vf-shell-nav-item.is-active {background:#eff3f2;border-color:#e0e7e5;color:#213b43;font-weight:800;}
+.vf-shell-nav-item.is-active svg {color:#916b37;}
+.vf-shell-nav-item small {margin-left:auto;font-size:9px;font-weight:700;color:#8b9696;background:#f0f2f1;border-radius:5px;padding:3px 5px;}
+.vf-shell-sidebar-note {margin:0 20px 22px;padding:19px 4px 2px;border-top:1px solid #e7ebea;}
+.vf-shell-note-rule {display:inline-block;width:23px;height:2px;background:#b38b52;margin-bottom:11px;}
+.vf-shell-sidebar-note strong {display:block;font-size:10px;letter-spacing:.14em;color:#48616a;}
+.vf-shell-sidebar-note p {margin-top:10px;color:#78878b;font-size:11px;line-height:1.65;}
+.vf-shell-sidebar-note>span:last-child {display:block;margin-top:14px;font-size:10px;color:#a4aeaf;}
+.vf-shell-header {height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 34px;position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid #e5eae9;}
+.vf-shell-header-left {display:flex;align-items:center;gap:15px;}
+.vf-shell-header-title {font-size:14px;font-weight:800;color:#263c43;display:flex;align-items:center;gap:10px;}
+.vf-shell-header-left p {font-size:11px;color:#819095;margin-top:4px;}
+.vf-shell-version {font-size:9px;font-weight:750;letter-spacing:.02em;padding:4px 7px;color:#7c653f;background:#f7f3ec;border:1px solid #eee4d6;border-radius:5px;}
+.vf-shell-header-right {display:flex;align-items:center;gap:17px;}
+.vf-shell-local-badge {display:inline-flex;align-items:center;gap:8px;color:#427062;font-size:11px;font-weight:700;}
+.vf-shell-product-tag {color:#8a9697;font-size:10px;font-weight:800;letter-spacing:.15em;border-left:1px solid #e1e7e5;padding-left:17px;}
+.vf-shell-backdrop {display:none;}
+.vf-shell-footer {margin-top:auto;border-top:1px solid #e2e8e6;background:#fff;padding:22px 34px;}
+.vf-shell-footer-inner {max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.vf-shell-footer-brand {font-size:11px;font-weight:800;letter-spacing:.06em;color:#4b6269;}
+.vf-shell-footer-copy {color:#8c989a;font-size:11px;line-height:1.7;}
+.vf-shell-footer-meta {color:#7b898b;font-size:10px;}
+@media(max-width:1100px) {
+  .vf-shell-header {padding:0 20px;}
+  .vf-shell-header-left p {max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+}
+@media(max-width:900px) {
+  .vf-shell-sidebar {transform:translateX(-105%);box-shadow:0 22px 50px rgba(25,43,49,.09);}
+  .vf-shell-sidebar.is-open {transform:translateX(0);}
+  .vf-shell-backdrop {display:block;position:fixed;inset:0;z-index:90;border:0;background:rgba(17,35,41,.27);cursor:pointer;}
+  .vf-shell-close,.vf-shell-menu {display:inline-flex;align-items:center;justify-content:center;}
+}
+@media(max-width:560px) {
+  .vf-shell-header {height:66px;padding:0 14px;}
+  .vf-shell-header-left p,.vf-shell-local-badge span,.vf-shell-product-tag {display:none;}
+  .vf-shell-header-right {gap:5px;}
+  .vf-shell-footer {padding:20px 17px;}
+}
+@media(prefers-reduced-motion:reduce) {.vf-shell-sidebar {transition:none;}}
