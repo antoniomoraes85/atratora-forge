@@ -43,7 +43,7 @@ export const Guides: React.FC = () => {
           >
             <BookOpen size={20} />
           </div>
-          <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             Tutoriais Visuais
           </h1>
         </div>
