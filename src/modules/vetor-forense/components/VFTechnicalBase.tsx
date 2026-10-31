@@ -27,7 +27,7 @@ export const VFTechnicalBase: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>Base técnica de parâmetros</h2>
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Base técnica de parâmetros</h2>
         <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '640px' }}>
           Coeficientes de atrito documentados em fontes técnicas identificadas no projeto.
           Todos os valores são rastreáveis ao documento de origem.
