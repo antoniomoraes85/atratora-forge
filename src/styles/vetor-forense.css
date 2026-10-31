@@ -1,19 +1,22 @@
-/* Vetor Forense — camada de marca ATRATOR.
-   Identidade própria sem simular órgão oficial nem ocultar status de módulos. */
+/* Vetor Forense: identidade do ecossistema ATRATOR — fundo claro, ícone orbital. */
 .vf-brand-lockup {
-  display:inline-flex; align-items:center; gap:11px;
-  min-width:0; user-select:none; color:var(--text-primary);
+  display:inline-flex;align-items:center;gap:12px;min-width:0;
+  user-select:none;color:#143d4a;
 }
-.vf-brand-lockup svg { flex:0 0 auto; overflow:visible; }
-.vf-brand-names {display:flex; flex-direction:column; justify-content:center; min-width:0; gap:3px;}
-.vf-brand-title {font-size:14px; font-weight:800; letter-spacing:.045em; line-height:1.1; color:#1e333a; white-space:nowrap;}
-.vf-brand-title span {color:#87602c;}
-.vf-brand-parent {font-size:9px; letter-spacing:.135em; color:#6c7c7f; white-space:nowrap;}
-.vf-brand-parent strong {font-weight:800; color:#3c5a63;}
-.vf-by-atrator {font-size:11px; letter-spacing:.12em; font-weight:750; color:var(--primary-400);}
-
-@media(max-width:480px) {
+.vf-brand-lockup svg {flex-shrink:0;overflow:visible;}
+.vf-brand-names {display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0;}
+.vf-brand-title {
+  display:block;font-family:var(--font-sans);font-size:15px;line-height:1.05;
+  font-weight:850;letter-spacing:.012em;color:#143d4a;white-space:nowrap;
+}
+.vf-brand-title span {color:#a87931;}
+.vf-brand-parent {
+  color:#6c7d83;font-size:9px;line-height:1.15;letter-spacing:.105em;white-space:nowrap;
+}
+.vf-brand-parent strong {color:#143d4a;font-weight:850;}
+.vf-by-atrator {font-size:11px;letter-spacing:.11em;color:#a87931;font-weight:750;}
+@media(max-width:480px){
   .vf-brand-lockup {gap:9px;}
-  .vf-brand-title {font-size:12px;}
-  .vf-brand-parent {font-size:8px; letter-spacing:.08em;}
+  .vf-brand-title {font-size:13px;letter-spacing:0;}
+  .vf-brand-parent {font-size:8.4px;letter-spacing:.075em;}
 }
