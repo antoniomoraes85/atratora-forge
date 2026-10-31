@@ -1,0 +1,34 @@
+.atrator-event-horizon {
+  position:absolute;
+  pointer-events:auto;
+  overflow:hidden;
+  inset:0;
+  z-index:0;
+  opacity:1;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.18) 24%,#000 50%,#000 100%);
+}
+.atrator-event-horizon-layer {
+  position:absolute;
+  inset:-15% -6% -10% 30%;
+  transition:transform 380ms ease-out;
+  will-change:transform;
+}
+.atrator-event-horizon svg {
+  display:block;width:100%;height:100%;
+  overflow:visible;
+}
+.atrator-flow-field { transform-origin:445px 270px; animation:atrator-orbit-turn 48s linear infinite; }
+.atrator-orbits { transform-origin:445px 270px; animation:atrator-orbit-turn 60s linear reverse infinite; }
+@keyframes atrator-orbit-turn { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+@media(max-width:1050px) {
+  .atrator-event-horizon-layer {inset:0 -26% 0 14%;}
+  .atrator-event-horizon {opacity:.57;}
+}
+@media(max-width:680px) {
+  .atrator-event-horizon-layer {inset:-4% -55% 16% 0;}
+  .atrator-event-horizon {opacity:.32;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .atrator-event-horizon-layer {transition:none!important;transform:none!important;will-change:auto;}
+  .atrator-flow-field,.atrator-orbits {animation:none!important;}
+}
