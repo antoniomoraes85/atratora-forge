@@ -34,7 +34,7 @@ export const VetorForense = () => {
     else if (tab !== 'nova-analise') setEditingAnalysisId(null);
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
+    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   };
 
   useEffect(() => {
