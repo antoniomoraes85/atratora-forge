@@ -28,11 +28,11 @@ describe('ATRATOR / Vetor Forense — identidade e continuidade visual', () => {
 
   it('renderiza logotipo Vetor Forense e símbolo vetorial próprio', () => {
     const html = renderToStaticMarkup(<Logo />);
-    expect(html).toContain('Monograma Vetor Forense');
+    expect(html).toContain('Monograma VT dourado com lupa');
     expect(html).toContain('VETOR');
     expect(html).toContain('FORENSE');
     expect(html).toContain('ATRATOR');
-    expect(html).toContain('viewBox="0 0 64 64"');
+    expect(html).toContain('brand/vt-emblem.webp');
   });
 
   it('renderiza campo gravitacional sem depender de window no primeiro render', () => {
