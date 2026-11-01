@@ -41,7 +41,7 @@ describe('Vetor Forense — hero panorâmico e identidade ATRATOR v3', () => {
 
   it('destaca o hero em largura inteira e oferece ferramentas reais', () => {
     const css = readFileSync('src/pages/Home/home-forensics.css', 'utf8');
-    expect(css).toContain('Hero ATRATOR v3');
+    expect(css).toContain('Dashboard com duas artes');
     expect(css).toContain('margin:-32px -36px 0');
     const html = renderToStaticMarkup(<MemoryRouter><Home /></MemoryRouter>);
     expect(html).toContain('hero/atrator-black-hole.avif');
