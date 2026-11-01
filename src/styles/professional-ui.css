@@ -1,0 +1,150 @@
+/*
+ * Vetor Forense / ATRATOR — refinamento premium de alto contraste.
+ * Hierarquia consistente: azul petróleo, branco, bronze pontual e verde de status.
+ * Seletores restritos a interações e vitrines; nenhum cálculo é modificado.
+ */
+
+/* Ações globais */
+.btn {
+  min-height:43px;
+  padding:10px 17px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:760;
+  letter-spacing:.005em;
+  border-width:1px;
+}
+.btn-primary {
+  background:#183f4d;
+  color:#fff;
+  border-color:#123642;
+  box-shadow:0 4px 13px rgba(13,43,54,.15);
+}
+.btn-primary:hover:not(:disabled) {
+  background:#28596a;
+  border-color:#204d5b;
+  box-shadow:0 8px 20px rgba(13,43,54,.20);
+}
+.btn-secondary {
+  color:#214452;
+  background:#fff;
+  border:1px solid #aabfbb;
+  box-shadow:0 1px 4px rgba(16,44,51,.045);
+}
+.btn-secondary:hover:not(:disabled) {
+  color:#142e38;
+  background:#eef4f2;
+  border-color:#698f86;
+}
+.btn:focus-visible, .vf-tools-groups button:focus-visible,
+.vf-tools-card.is-clickable:focus-visible, .vf-light-active-card:focus-visible,
+.vf-shell-nav-item:focus-visible {
+  outline:3px solid #ac762b;
+  outline-offset:3px;
+}
+
+/* Menu lateral: realce de seção ativa e alvos confortáveis */
+.vf-shell-sidebar {border-right-color:#cedbd7;}
+.vf-shell-nav-item {
+  min-height:47px;
+  color:#2c4a53;
+  font-weight:720;
+}
+.vf-shell-nav-item:hover {
+  color:#173b47;background:#eaf1ef;
+}
+.vf-shell-nav-item.is-active {
+  background:#1b4553;color:#fff;border-color:#1b4553;
+  box-shadow:0 4px 11px rgba(13,41,50,.13);
+}
+.vf-shell-nav-item.is-active svg {color:#edc891;}
+.vf-shell-nav-item.is-active small {
+  background:rgba(255,255,255,.14);color:#fff;
+}
+
+/* Home: ferramentas disponíveis tratadas como blocos operacionais */
+.vf-light-heading h2 {color:#172f38;}
+.vf-light-heading p {color:#435d65;}
+.vf-light-hero-actions .btn-primary {
+  background:#183f4d;border-color:#123642;color:#fff;
+  font-weight:780;min-height:44px;
+}
+.vf-light-hero-actions .btn-primary:hover {
+  background:#28596a;border-color:#204d5b;color:#fff;
+}
+.vf-light-active-card {
+  border:1px solid #bccfca;
+  border-top:3px solid #244d58;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(14,41,49,.065);
+}
+.vf-light-active-card:hover {
+  border-color:#789c93;
+  box-shadow:0 15px 28px rgba(14,41,49,.12);
+}
+.vf-light-active-icon {
+  background:#e5eeec;
+  border-color:#bfd3cd;
+  color:#244f5b;
+}
+.vf-light-active-content h3 {color:#172f38;font-size:20px;font-weight:810;}
+.vf-light-active-content p {color:#415962;font-size:13px;}
+.vf-light-active-content strong {
+  display:inline-flex;align-items:center;gap:8px;
+  color:#fff;background:#204c58;border:1px solid #19414c;
+  border-radius:8px;min-height:37px;padding:8px 12px;
+  font-size:12px;font-weight:780;
+}
+.vf-light-active-card:hover .vf-light-active-content strong {
+  background:#2e606b;
+}
+.vf-light-status.is-active {color:#15563b;background:#e4f2e9;border-color:#a4ccb2;}
+.vf-light-status.is-planned {color:#41575d;background:#e9eeec;border-color:#cfdad7;}
+.vf-light-roadmap-list {border-color:#cddbd7;}
+.vf-light-roadmap-item {border-bottom-color:#dce6e2;}
+.vf-light-roadmap-text h3 {color:#223f48;font-weight:780;}
+.vf-light-roadmap-text p {color:#4f646a;}
+
+/* Catálogo: filtros e cartões com hierarquia mais nítida */
+.vf-tools-heading h1 {color:#152d36;}
+.vf-tools-heading p {color:#425c63;}
+.vf-tools-filter-panel {border-color:#bdcfca;box-shadow:0 6px 21px rgba(17,42,50,.055);}
+.vf-tools-search {border-color:#aebfbc;background:#fff;color:#2c525c;}
+.vf-tools-search:focus-within {border-color:#2d6572;box-shadow:0 0 0 3px rgba(41,100,109,.14);}
+.vf-tools-select {border-color:#aebfbc;color:#244b56;}
+.vf-tools-groups button {
+  color:#284952;background:#fff;border-color:#b7cac5;
+  font-size:12px;font-weight:720;min-height:40px;padding:9px 15px;
+}
+.vf-tools-groups button:hover {border-color:#477e80;background:#edf4f1;color:#15343d;}
+.vf-tools-groups button.is-selected {
+  background:#1b4553;border-color:#1b4553;color:#fff;
+  box-shadow:0 3px 9px rgba(17,47,57,.16);
+}
+.vf-tools-card {
+  min-height:238px;border-color:#cbd9d5;border-radius:13px;
+  box-shadow:0 6px 17px rgba(20,43,50,.047);
+}
+.vf-tools-card.is-clickable {
+  border-top:3px solid #245462;
+}
+.vf-tools-card.is-clickable:hover {border-color:#588b85;box-shadow:0 12px 26px rgba(20,43,50,.10);}
+.vf-tools-card.is-future {background:#f7f9f8;border-top:3px solid #d6dfdc;}
+.vf-tools-icon {background:#e7efed;border-color:#cadbd7;color:#244d58;}
+.vf-tools-card h2 {font-size:17px;color:#213b44;font-weight:800;}
+.vf-tools-card p {color:#50656b;font-size:12.5px;}
+.vf-tools-card-bottom {color:#536b70;font-weight:650;}
+.vf-tools-card-bottom strong {color:#215b50;font-size:12px;font-weight:800;}
+.vf-tools-badge.is-available {color:#15593c;background:#e4f3e9;border-color:#a0cbb0;}
+.vf-tools-badge.is-future {color:#41575d;background:#e8eeeb;border-color:#cbd9d4;}
+
+/* Padrão geral para cards existentes */
+.card {border-color:#d0dcda;box-shadow:0 5px 18px rgba(20,45,52,.05);}
+:where(input,select,textarea):focus-visible {outline-color:#996b2c;}
+@media(max-width:700px) {
+  .vf-light-active-content strong {min-height:39px;}
+  .vf-tools-groups button {min-height:42px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .btn,.vf-light-active-card,.vf-tools-card {transition:none!important;}
+}

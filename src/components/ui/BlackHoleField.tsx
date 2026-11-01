@@ -8,62 +8,67 @@ const clamp = (value: number, limit: number) =>
   Math.max(-limit, Math.min(limit, value));
 
 /**
- * As linhas ilustram a convergência de dados da lupa para a região próxima
- * ao horizonte de eventos (limbo esquerdo do disco). São curvas artísticas,
- * não geodésicas relativísticas nem representação de evidências reais.
+ * Fluxo gráfico conceitual: linhas nascem na lupa e convergem para o limbo
+ * aparente do disco de acreção da imagem. Não são geodésicas físicas.
  *
- * Variação determinística: dispersão de origem, curvaturas intermediárias e
- * pontos de aproximação tangencial diferentes, sem Math.random().
+ * A sequência é determinística para evitar diferenças de SSR/hidratação.
+ * Prioriza a percepção de densidade sem criar 96 animações simultâneas:
+ * 96 linhas estáticas, 48 partículas móveis e 20 trilhas binárias.
  */
-const STREAM_COUNT = 34;
+const STREAM_COUNT = 96;
 const STREAMS = Array.from({ length: STREAM_COUNT }, (_, index) => {
-  const normalized = (index - (STREAM_COUNT - 1) / 2) / ((STREAM_COUNT - 1) / 2);
-  const ripple = Math.sin(index * 1.17) * 12 + Math.cos(index * .63) * 7;
-  const startX = 400 + (index % 5) * 11;
-  const startY = 315 + normalized * 194 + ripple;
+  const position = (index - (STREAM_COUNT - 1) / 2) / ((STREAM_COUNT - 1) / 2);
+  const ripple = Math.sin(index * 1.37) * 14 + Math.cos(index * .77) * 8;
+  const startX = 393 + (index % 7) * 9;
+  const startY = 315 + position * 218 + ripple;
 
-  const shoulderX = 640 + (index % 4) * 13;
-  const shoulderY = 318 + normalized * 207 + Math.sin(index * .82) * 23;
-  const middleX = 823 + (index % 7) * 8;
-  const middleY = 318 + normalized * 146 + Math.cos(index * 1.49) * 25;
+  const shoulderX = 617 + (index % 6) * 12;
+  const shoulderY = 315 + position * 206 + Math.sin(index * .94) * 24;
+  const middleX = 810 + (index % 9) * 8;
+  const middleY = 316 + position * 148 + Math.cos(index * 1.17) * 18;
 
-  // The visible left edge of the photographed accretion ring, not its center.
-  const approachY = 312 + normalized * 108 + Math.sin(index * .91) * 9;
+  // Approximate the photographed ring's visible left edge, not the physical
+  // event horizon. Tighten the bundle and bend toward its tangent.
+  const approachY = 313 + position * 98 + Math.sin(index * .81) * 8;
   const ringX = 1256 - 175 * Math.sqrt(
     Math.max(.1, 1 - ((approachY - 312) / 192) ** 2)
   );
-  const approachX = ringX - 18 - (index % 3) * 7;
-  const curveShift = Math.sin(index * 2.07) * 17;
+  const approachX = ringX - 23 - (index % 4) * 5;
+  const turbulence = Math.sin(index * 2.09) * 19;
 
   const d = [
     `M${startX.toFixed(1)} ${startY.toFixed(1)}`,
-    // Small turbulent disturbances near the digital evidence.
-    `C${(startX + 93).toFixed(1)} ${(startY + curveShift).toFixed(1)}`,
-    `${(shoulderX - 103).toFixed(1)} ${(shoulderY - ripple).toFixed(1)}`,
+    `C${(startX + 86).toFixed(1)} ${(startY + turbulence).toFixed(1)}`,
+    `${(shoulderX - 91).toFixed(1)} ${(shoulderY - ripple).toFixed(1)}`,
     `${shoulderX.toFixed(1)} ${shoulderY.toFixed(1)}`,
-    // Smoother but irregular trajectory across the field.
-    `C${(shoulderX + 83).toFixed(1)} ${(shoulderY + curveShift * .7).toFixed(1)}`,
-    `${(middleX - 86).toFixed(1)} ${(middleY - curveShift).toFixed(1)}`,
+    `C${(shoulderX + 78).toFixed(1)} ${(shoulderY + turbulence * .78).toFixed(1)}`,
+    `${(middleX - 67).toFixed(1)} ${(middleY - turbulence).toFixed(1)}`,
     `${middleX.toFixed(1)} ${middleY.toFixed(1)}`,
-    // The flow bends and tightens in the photographed ring's vicinity.
-    `C${(middleX + 79).toFixed(1)} ${(middleY + normalized * 21).toFixed(1)}`,
-    `${(approachX - 66).toFixed(1)} ${(approachY - normalized * 31).toFixed(1)}`,
-    `${(approachX - 23).toFixed(1)} ${(approachY - normalized * 13).toFixed(1)}`,
-    `Q${(approachX - 3).toFixed(1)} ${(approachY - normalized * 5).toFixed(1)}`,
+    `C${(middleX + 75).toFixed(1)} ${(middleY + position * 18).toFixed(1)}`,
+    `${(approachX - 66).toFixed(1)} ${(approachY - position * 36).toFixed(1)}`,
+    `${(approachX - 20).toFixed(1)} ${(approachY - position * 11).toFixed(1)}`,
+    `Q${(approachX - 5).toFixed(1)} ${(approachY - position * 4).toFixed(1)}`,
     `${approachX.toFixed(1)} ${approachY.toFixed(1)}`,
   ].join(' ');
 
   return {
     id: index,
     d,
-    opacity: .18 + (index % 6) * .043,
-    delay: -((index * .71) % 8.7),
-    width: index % 7 === 0 ? 1.55 : index % 3 === 0 ? 1.16 : .77,
-    duration: 5.6 + (index % 9) * .64,
+    opacity: .13 + (index % 8) * .029,
+    width: index % 11 === 0 ? 1.42 : index % 4 === 0 ? .95 : .62,
+    duration: 8.4 + (index % 13) * .28,
+    delay: -((index * .83) % 10.4),
   };
 });
 
-const BINARY_STREAMS = [1, 4, 7, 10, 13, 16, 19, 23, 27, 31];
+// Moving marks are deliberately fewer than the static threads to keep the
+// composition responsive on older phones and laptops.
+const PARTICLE_STREAMS = STREAMS.filter(stream => stream.id % 2 === 0);
+const BINARY_STREAMS = [
+  1, 5, 9, 13, 17, 21, 25, 29, 33, 37,
+  41, 45, 49, 53, 57, 61, 65, 69, 77, 89,
+];
+
 const BINARY_WORDS = [
   '010110101011001',
   '101100101101110',
@@ -73,8 +78,10 @@ const BINARY_WORDS = [
 ];
 
 /**
- * Three visual depths, updated via requestAnimationFrame and CSS variables.
- * Reduced motion removes particle animation; artwork cannot capture clicks.
+ * Animations follow the entire Bézier curve with increasing speed:
+ * cubic spline progress (0.70,0,0.90,0.35) starts slowly and accelerates
+ * toward the destination. A slower overall cadence does not imply
+ * constant-speed motion. Reduced-motion users see only static flow lines.
  */
 export const BlackHoleField = () => {
   const root = useRef<HTMLDivElement>(null);
@@ -107,7 +114,6 @@ export const BlackHoleField = () => {
       if (bounds.width < 1 || bounds.height < 1 ||
           event.clientX < bounds.left || event.clientX > bounds.right ||
           event.clientY < bounds.top || event.clientY > bounds.bottom) {
-        // Do not leave the field displaced when the pointer exits the banner.
         if (x !== 0 || y !== 0) { x = 0; y = 0; schedule(); }
         return;
       }
@@ -122,11 +128,7 @@ export const BlackHoleField = () => {
       scroll = clamp(-bounds.top * .055, 25);
       schedule();
     };
-    const resetPointer = () => {
-      x = 0;
-      y = 0;
-      schedule();
-    };
+    const resetPointer = () => { x = 0; y = 0; schedule(); };
     const motionChange = () => {
       if (reduced.matches) { x = 0; y = 0; scroll = 0; }
       schedule();
@@ -161,48 +163,61 @@ export const BlackHoleField = () => {
       <div className="atrator-depth-streams">
         <svg viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice" focusable="false">
           <defs>
-            <linearGradient id="vf-binary-infall" x1="400" y1="320" x2="1115" y2="320" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor="#32F36D" stopOpacity=".28" />
-              <stop offset=".23" stopColor="#4EFF8D" stopOpacity=".84" />
-              <stop offset=".48" stopColor="#40DDB0" stopOpacity=".8" />
-              <stop offset=".71" stopColor="#80C8D0" stopOpacity=".72" />
-              <stop offset=".91" stopColor="#DABF90" stopOpacity=".48" />
+            <linearGradient id="vf-binary-infall" x1="395" y1="320" x2="1115" y2="320" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stopColor="#32F36D" stopOpacity=".15" />
+              <stop offset=".2" stopColor="#4EFF8D" stopOpacity=".75" />
+              <stop offset=".47" stopColor="#40DDB0" stopOpacity=".82" />
+              <stop offset=".72" stopColor="#80C8D0" stopOpacity=".8" />
+              <stop offset=".92" stopColor="#DABF90" stopOpacity=".64" />
               <stop offset="1" stopColor="#F5D7A0" stopOpacity="0" />
             </linearGradient>
-            <linearGradient id="vf-flow-haze" x1="430" y1="320" x2="1115" y2="320" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#18FA61" stopOpacity="0" />
-              <stop offset=".4" stopColor="#3EDFB1" stopOpacity=".11" />
-              <stop offset=".78" stopColor="#B7D7C1" stopOpacity=".12" />
-              <stop offset="1" stopColor="#F4C37A" stopOpacity="0" />
-            </linearGradient>
+            <radialGradient id="vf-particle-light">
+              <stop offset="0" stopColor="#F5FFEA" stopOpacity=".95" />
+              <stop offset=".45" stopColor="#5EFF98" stopOpacity=".8" />
+              <stop offset="1" stopColor="#1CEB71" stopOpacity="0" />
+            </radialGradient>
           </defs>
           <g className="atrator-flow-field" fill="none">
             {STREAMS.map(stream => (
-              <g key={stream.id}>
-                <path id={`vf-infall-${stream.id}`} d={stream.d}
-                  stroke="url(#vf-binary-infall)" strokeWidth={stream.width}
-                  strokeLinecap="round" opacity={stream.opacity} />
-                <path d={stream.d} className="atrator-infall-particles"
-                  stroke="url(#vf-binary-infall)" strokeWidth={stream.width + .65}
-                  strokeLinecap="round" strokeDasharray="1 48"
-                  style={{
-                    animationDelay: `${stream.delay}s`,
-                    animationDuration: `${stream.duration}s`,
-                    opacity: stream.opacity * .79,
-                  }} />
+              <path key={stream.id}
+                id={`vf-infall-${stream.id}`}
+                d={stream.d}
+                stroke="url(#vf-binary-infall)"
+                strokeWidth={stream.width}
+                strokeLinecap="round"
+                opacity={stream.opacity} />
+            ))}
+          </g>
+          <g className="atrator-moving-particles">
+            {PARTICLE_STREAMS.map(stream => (
+              <g key={stream.id} className="atrator-infall-particles"
+                style={{ opacity: .42 + (stream.id % 4) * .12 }}>
+                <ellipse cx="-6" cy="0" rx="12" ry="1.4" fill="url(#vf-particle-light)" />
+                <circle cx="0" cy="0" r="2.2" fill="#A6FCCC" />
+                <animateMotion path={stream.d} dur={`${stream.duration}s`}
+                  begin={`${stream.delay}s`} repeatCount="indefinite"
+                  rotate="auto" calcMode="spline" keyTimes="0;1"
+                  keySplines=".70 0 .90 .35" />
+                <animate attributeName="opacity"
+                  values="0;.30;.80;1;0" keyTimes="0;.13;.55;.91;1"
+                  dur={`${stream.duration}s`} begin={`${stream.delay}s`}
+                  repeatCount="indefinite" />
               </g>
             ))}
           </g>
           <g className="atrator-binary-flow" fill="url(#vf-binary-infall)" fontFamily="monospace"
-            fontSize="13" letterSpacing="3" opacity=".76">
+            fontSize="12" letterSpacing="3" opacity=".83">
             {BINARY_STREAMS.map((id, index) => (
               <text key={id} className="atrator-binary-digits"
-                style={{ opacity: .74 + (index % 4) * .07 }}>
-                <textPath href={`#vf-infall-${id}`} startOffset="-30%">
+                style={{ opacity: .70 + (index % 4) * .08 }}>
+                <textPath href={`#vf-infall-${id}`} startOffset="-32%">
                   {BINARY_WORDS[index % BINARY_WORDS.length]}
                   <animate attributeName="startOffset"
-                    values="-30%;112%" dur={`${7.4 + index * .55}s`}
-                    begin={`${index * .45}s`} repeatCount="indefinite" />
+                    values="-32%;114%" dur={`${9.6 + index * .28}s`}
+                    begin={`${-((index * .89) % 11)}s`}
+                    calcMode="spline" keyTimes="0;1"
+                    keySplines=".70 0 .90 .35"
+                    repeatCount="indefinite" />
                 </textPath>
               </text>
             ))}

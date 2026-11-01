@@ -23,9 +23,9 @@ describe('Vetor Forense — dupla cena e fluxos binários ATRATOR', () => {
     expect(field).not.toContain('https:');
   });
 
-  it('exibe a impressão à esquerda e o horizonte à direita com 34 trajetórias', () => {
+  it('exibe a impressão à esquerda e o horizonte à direita com 96 linhas e 48 partículas', () => {
     expect(field.indexOf('atrator-depth-evidence')).toBeLessThan(field.indexOf('atrator-depth-back'));
-    expect((field.match(/atrator-infall-particles/g) || []).length).toBe(34);
+    expect((field.match(/atrator-infall-particles/g) || []).length).toBe(48);
     expect(field).toContain('atrator-binary-flow');
     expect(field).toContain('010110101011');
     expect(field).toContain('101100101101');

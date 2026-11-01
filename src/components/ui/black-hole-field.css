@@ -51,39 +51,35 @@
     linear-gradient(0deg,rgba(0,8,15,.42) 0%,transparent 20%,transparent 86%,rgba(0,8,15,.17));
 }
 .atrator-depth-streams {
-  inset:0!important;z-index:3;opacity:.9;
+  inset:0!important;z-index:3;opacity:.96;
   transform:translate3d(
     calc(var(--pointer-x) * .78),
     calc(var(--pointer-y) * .55 + var(--scroll-shift) * -.23),0);
 }
 .atrator-depth-streams svg {display:block;width:100%;height:100%;overflow:hidden;}
-/* A curva faz convergir linhas irregularmente ao limbo externo do horizonte.
- * Luz diminui junto à silhueta: não atravessar artificialmente o centro negro. */
+/* Luzes acumulam densidade na aproximação do limbo: o movimento em
+ * cada trajetória usa animateMotion com progressão spline (aceleração real).
+ * O CSS aplica apenas acabamento, sem velocidade linear conflitante. */
 .atrator-flow-field {
-  filter:
-    drop-shadow(0 0 3px rgba(42,255,123,.25))
-    drop-shadow(0 0 8px rgba(54,249,160,.14));
+  filter: drop-shadow(0 0 2px rgba(43,236,134,.24));
+}
+.atrator-moving-particles {
+  pointer-events:none;
+  filter:drop-shadow(0 0 3px rgba(91,255,158,.30));
 }
 .atrator-infall-particles {
-  fill:none;
-  animation:atrator-infall 6.8s linear infinite;
-}
-@keyframes atrator-infall {
-  from {stroke-dashoffset:0;}
-  to {stroke-dashoffset:-160;}
+  pointer-events:none;
 }
 .atrator-binary-flow {
   paint-order:stroke;
-  stroke:rgba(2,18,16,.40);
-  stroke-width:1.8px;
-  filter:
-    drop-shadow(0 0 5px rgba(53,255,133,.40))
-    drop-shadow(0 0 12px rgba(0,255,110,.13));
+  stroke:rgba(2,18,16,.44);
+  stroke-width:1.5px;
+  filter:drop-shadow(0 0 5px rgba(53,255,133,.42));
   mix-blend-mode:screen;
 }
 .atrator-binary-digits {
   font-variant-numeric:tabular-nums;
-  font-weight:600;
+  font-weight:650;
 }
 .atrator-depth-core {
   inset:0!important;z-index:4;opacity:.58;
@@ -103,12 +99,13 @@
   .atrator-depth-evidence {left:-13%;width:66%;}
   .atrator-depth-back {right:-13%;width:72%;}
   .atrator-evidence-photo {object-position:69% 50%;}
-  .atrator-depth-streams {opacity:.68;}
+  .atrator-depth-streams {opacity:.8;}
 }
 @media(max-width:650px) {
   .atrator-depth-evidence {left:-29%;width:88%;}
   .atrator-depth-back {right:-32%;width:86%;}
-  .atrator-depth-streams {opacity:.52;}
+  .atrator-depth-streams {opacity:.62;}
+  .atrator-moving-particles {opacity:.55;}
   .atrator-binary-flow {opacity:.65;}
   .atrator-light-haze {opacity:.6;}
 }
@@ -118,7 +115,7 @@
     transition:none!important;
     will-change:auto;
   }
-  .atrator-infall-particles {animation:none!important;}
+  .atrator-infall-particles {display:none!important;}
   /* Animações SVG de startOffset são decorativas e ficam ocultas neste modo. */
   .atrator-binary-flow {display:none!important;}
 }

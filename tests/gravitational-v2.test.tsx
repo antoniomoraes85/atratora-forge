@@ -17,7 +17,7 @@ describe('Experiência gravitacional ATRATOR v2', () => {
     expect(art).toContain('atrator-infall-particles');
     expect(art).toContain('data-parallax="enabled"');
     expect(art).toContain('aria-hidden="true"');
-    expect((art.match(/atrator-infall-particles/g) ?? []).length).toBe(34);
+    expect((art.match(/atrator-infall-particles/g) ?? []).length).toBe(48);
   });
 
   it('carrega a imagem AVIF local sem requisições externas', () => {
