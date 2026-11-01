@@ -1,65 +1,110 @@
-/* ATRATOR cinematic parallax — photograph-based, lightweight, no WebGL.
- * All layers are noninteractive, respect reduced motion and use transforms.
+/*
+ * ATRATOR / Dual gravitational parallax
+ * A lupa forense fica à esquerda; o horizonte de eventos à direita.
+ * Linhas e sequências 0/1 fluem do vestígio digital para a região de atração.
  */
 .atrator-event-horizon {
-  --pointer-x:0px;--pointer-y:0px;--scroll-shift:0px;
+  --pointer-x:0px; --pointer-y:0px; --scroll-shift:0px;
   position:absolute;inset:0;z-index:0;overflow:hidden;
-  pointer-events:none;background:#071520;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 28% 48%,rgba(14,75,40,.34),transparent 48%),
+    radial-gradient(ellipse at 74% 48%,rgba(40,59,85,.40),transparent 43%),
+    #020b12;
 }
 .atrator-event-horizon>div {
-  position:absolute;inset:0;pointer-events:none;
+  position:absolute;top:0;bottom:0;pointer-events:none;
+  transition:transform 420ms cubic-bezier(.2,.76,.22,1);
   will-change:transform;
-  transition:transform 440ms cubic-bezier(.22,.74,.21,1);
+}
+.atrator-depth-evidence {
+  left:-4%;width:59%;
+  z-index:1;
+  transform:translate3d(
+    calc(var(--pointer-x) * -.54),
+    calc(var(--pointer-y) * -.38 + var(--scroll-shift) * -.54),0);
+  mask-image:linear-gradient(to right,#000 0%,#000 38%,rgba(0,0,0,.88) 63%,transparent 100%);
+}
+.atrator-evidence-photo {
+  position:absolute;inset:-3% 0;display:block;
+  width:100%;height:106%;object-fit:cover;object-position:71% 48%;
+  filter:brightness(.72) contrast(1.15) saturate(1.1);
+  user-select:none;
 }
 .atrator-depth-back {
-  transform:translate3d(calc(var(--pointer-x) * -.7),calc(var(--pointer-y) * -.65 + var(--scroll-shift) * -.9),0);
+  right:-6%;width:64%;z-index:1;
+  transform:translate3d(
+    calc(var(--pointer-x) * .56),
+    calc(var(--pointer-y) * .46 + var(--scroll-shift) * -.79),0);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.47) 17%,#000 38%,#000 100%);
 }
 .atrator-photo {
-  position:absolute;left:5%;top:-7%;width:110%;height:114%;
-  object-fit:cover;object-position:50% 50%;
-  filter:saturate(.91) contrast(1.06) brightness(.87);
-  pointer-events:none;user-select:none;
+  position:absolute;inset:-4% 0;
+  display:block;width:100%;height:108%;object-fit:cover;
+  object-position:50% 50%;filter:saturate(.94) contrast(1.07) brightness(.93);
+  user-select:none;
 }
 .atrator-event-horizon::after {
-  content:"";position:absolute;inset:0;z-index:3;
+  position:absolute;inset:0;content:"";pointer-events:none;z-index:5;
   background:
-    linear-gradient(90deg,#071721 0%,rgba(7,23,33,.98) 13%,rgba(7,23,33,.86) 31%,rgba(7,23,33,.35) 49%,rgba(6,17,27,.05) 65%,rgba(6,17,27,.05) 100%),
-    linear-gradient(0deg,rgba(5,15,23,.52),transparent 19%,transparent 80%,rgba(5,15,23,.23));
+    linear-gradient(90deg,rgba(0,9,12,.32) 0%,transparent 21%,transparent 77%,rgba(0,8,15,.12) 100%),
+    linear-gradient(0deg,rgba(0,8,15,.42) 0%,transparent 20%,transparent 86%,rgba(0,8,15,.17));
 }
 .atrator-depth-streams {
-  opacity:.76;
-  transform:translate3d(calc(var(--pointer-x) * 1.1),calc(var(--pointer-y) * .8 + var(--scroll-shift) * .75),0);
+  inset:0!important;z-index:3;opacity:.9;
+  transform:translate3d(
+    calc(var(--pointer-x) * .78),
+    calc(var(--pointer-y) * .55 + var(--scroll-shift) * -.23),0);
 }
-.atrator-depth-streams svg {width:100%;height:100%;display:block;overflow:hidden;}
-.atrator-flow-field {filter:drop-shadow(0 0 2px rgba(239,203,155,.28));}
-.atrator-infall-particles {animation:atrator-light-infall 12s linear infinite;}
-@keyframes atrator-light-infall {
+.atrator-depth-streams svg {display:block;width:100%;height:100%;overflow:hidden;}
+.atrator-flow-field {filter:drop-shadow(0 0 3px rgba(42,255,123,.25));}
+.atrator-infall-particles {
+  fill:none;
+  animation:atrator-infall 7.5s linear infinite;
+}
+@keyframes atrator-infall {
   from {stroke-dashoffset:0;}
-  to {stroke-dashoffset:-224;}
+  to {stroke-dashoffset:-176;}
+}
+.atrator-binary-flow {
+  paint-order:stroke;
+  stroke:rgba(3,16,15,.34);
+  stroke-width:1.8px;
+  filter:drop-shadow(0 0 5px rgba(53,255,133,.46));
 }
 .atrator-depth-core {
-  opacity:.34;
-  transform:translate3d(calc(var(--pointer-x) * -.18),calc(var(--pointer-y) * -.2 + var(--scroll-shift) * -.14),0);
+  inset:0!important;z-index:4;opacity:.58;
+  transform:translate3d(
+    calc(var(--pointer-x) * -.17),
+    calc(var(--pointer-y) * -.17 + var(--scroll-shift) * .12),0);
 }
 .atrator-light-haze {
   position:absolute;inset:0;
-  background:radial-gradient(ellipse 26% 43% at 64% 49%,rgba(250,214,156,.08),transparent 73%);
+  background:
+    radial-gradient(ellipse 17% 27% at 74% 49%,rgba(246,201,130,.13),transparent 76%),
+    radial-gradient(ellipse 26% 24% at 48% 50%,rgba(35,195,128,.12),transparent 82%);
   mix-blend-mode:screen;
 }
-@media(max-width:960px){
-  .atrator-photo {left:-14%;top:-6%;width:128%;height:112%;object-position:56% 50%;}
-  .atrator-event-horizon::after {
-    background:linear-gradient(90deg,rgba(7,23,33,.95),rgba(7,23,33,.72) 36%,rgba(7,23,33,.25) 75%);
-  }
+@media(max-width:1060px) {
+  .atrator-depth-evidence {left:-13%;width:66%;}
+  .atrator-depth-back {right:-13%;width:72%;}
+  .atrator-evidence-photo {object-position:69% 50%;}
+  .atrator-depth-streams {opacity:.68;}
 }
-@media(max-width:620px){
-  .atrator-photo {left:-35%;top:-4%;width:170%;height:108%;object-position:58% 50%;}
-  .atrator-depth-streams {opacity:.38;}
-  .atrator-event-horizon::after {
-    background:linear-gradient(90deg,rgba(7,23,33,.95) 0%,rgba(7,23,33,.77) 54%,rgba(7,23,33,.36));
-  }
+@media(max-width:650px) {
+  .atrator-depth-evidence {left:-29%;width:88%;}
+  .atrator-depth-back {right:-32%;width:86%;}
+  .atrator-depth-streams {opacity:.52;}
+  .atrator-binary-flow {opacity:.65;}
+  .atrator-light-haze {opacity:.6;}
 }
-@media(prefers-reduced-motion:reduce){
-  .atrator-event-horizon>div {transform:none!important;transition:none!important;will-change:auto;}
+@media(prefers-reduced-motion:reduce) {
+  .atrator-event-horizon>div {
+    transform:none!important;
+    transition:none!important;
+    will-change:auto;
+  }
   .atrator-infall-particles {animation:none!important;}
+  /* Animações SVG de startOffset são decorativas e ficam ocultas neste modo. */
+  .atrator-binary-flow {display:none!important;}
 }

@@ -1,56 +1,69 @@
-/* Vetor Forense · ATRATOR | Home v2
-   Uma área de leitura clara e um único foco cinemático: o campo gravitacional. */
-.vf-light-home {color:var(--text-primary);max-width:1280px;margin:0 auto;}
+/* Vetor Forense / ATRATOR | Dashboard com duas artes e movimento de convergência.
+   Área científica escura na abertura; ferramentas e conteúdo em superfície clara. */
+.vf-light-home {color:var(--text-primary);max-width:none;margin:0;}
 .vf-light-home :is(h1,h2,h3,p) {margin:0;}
 .vf-light-home h2 {font-size:clamp(22px,2.4vw,30px);letter-spacing:-.042em;line-height:1.22;font-weight:750;}
 .vf-light-section-kicker {display:inline-block;font-size:10px;font-weight:800;letter-spacing:.14em;color:#91672d;text-transform:uppercase;}
 
 .vf-light-hero {
-  display:grid;
-  grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);
-  gap:clamp(26px,3.1vw,51px);
-  align-items:stretch;
-  background:#fff;
-  border:1px solid #e2e7e5;
-  border-radius:22px;
-  padding:clamp(22px,3.25vw,43px);
-  box-shadow:0 12px 34px rgba(20,38,44,.035);
+  position:relative;isolation:isolate;
+  display:flex;flex-direction:column;
+  margin:-32px -36px 0;overflow:hidden;
+  background:#fff;border:0;border-radius:0 0 18px 18px;
+  box-shadow:0 14px 32px rgba(20,38,44,.07);
 }
-.vf-light-hero-content {
-  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
-  padding:clamp(10px,1.6vw,25px) 0;
-  min-width:0;
-}
-.vf-light-eyebrow {display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.115em;color:#716653;font-weight:800;line-height:1.5;}
-.vf-light-signal {width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#a78047;}
-.vf-light-hero h1 {
-  font-size:clamp(34px,4vw,53px);line-height:1.12;letter-spacing:-.057em;
-  color:#1f343c;font-weight:790;max-width:590px;margin:23px 0 19px;
-}
-.vf-light-hero h1 em {display:block;font-style:normal;color:#936d36;}
-.vf-light-hero-lead {font-size:clamp(13.5px,1.22vw,16px);line-height:1.8;color:#576a70;max-width:500px;}
-.vf-light-hero-actions {display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:27px;}
-.vf-light-hero-actions .btn {min-height:44px;padding:10px 16px;border-radius:9px;}
-.vf-light-inline-link {display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:#46616a;font-size:12px;font-weight:720;text-decoration:none;}
-.vf-light-inline-link:hover {color:#8d622c;}
-.vf-light-hero-footnote {display:flex;gap:15px;align-items:center;flex-wrap:wrap;color:#718186;font-size:11px;line-height:1.6;margin-top:37px;}
-.vf-light-hero-count {font-weight:850;font-size:12px;color:#263c43;margin-right:4px;}
-.vf-light-footnote-divider {width:1px;height:15px;background:#dce3e1;}
 .vf-light-hero-visual {
   position:relative;isolation:isolate;overflow:hidden;
-  min-height:405px;border-radius:17px;
-  border:1px solid rgba(28,51,61,.15);
-  background:#0a1821;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 32px rgba(12,28,39,.14);
+  width:100%;height:clamp(330px,33vw,530px);
+  background:#030c14;
 }
 .vf-light-visual-label {
-  position:absolute;left:22px;right:22px;bottom:18px;z-index:2;
-  display:flex;align-items:center;gap:9px;
-  border-top:1px solid rgba(218,231,230,.12);padding-top:13px;
-  color:rgba(221,227,223,.7);font-size:9px;font-weight:750;letter-spacing:.12em;pointer-events:none;
+  position:absolute;z-index:6;left:32px;right:32px;bottom:19px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-size:9px;letter-spacing:.11em;color:rgba(226,235,233,.74);
+  font-weight:750;text-shadow:0 1px 8px rgba(0,0,0,.65);
+  pointer-events:none;
 }
-.vf-light-visual-dot {width:6px;height:6px;border-radius:50%;background:#c5a06a;box-shadow:0 0 11px rgba(235,195,138,.5);}
-.vf-light-visual-side {margin-left:auto;font-size:9px;letter-spacing:.04em;font-weight:500;color:rgba(221,227,223,.47);}
+.vf-light-visual-label>span {display:flex;align-items:center;gap:9px;}
+.vf-light-visual-dot {display:inline-block;width:7px;height:7px;border-radius:50%;background:#6aff9f;box-shadow:0 0 11px rgba(78,255,156,.62);}
+.vf-light-visual-direction {color:#d4e7e2;}
+.vf-light-visual-side {font-weight:500;color:rgba(226,235,233,.56);}
+
+.vf-light-hero-content {
+  position:relative;z-index:7;
+  display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);
+  gap:clamp(24px,4vw,60px);
+  align-items:center;padding:clamp(29px,4vw,49px) clamp(28px,5vw,72px);
+  border-top:1px solid #e3e9e6;
+  background:linear-gradient(120deg,#fff 0%,#fff 62%,#f7f9f8 100%);
+}
+.vf-light-hero-primary,.vf-light-hero-secondary {min-width:0;}
+.vf-light-hero-secondary {
+  display:flex;flex-direction:column;align-items:flex-start;gap:17px;
+  padding-left:clamp(18px,3vw,42px);border-left:1px solid #e2e9e6;
+}
+.vf-light-hero-secondary .vf-brand-title {font-size:clamp(17px,1.8vw,22px);font-weight:900;letter-spacing:-.02em;}
+.vf-light-hero-secondary .vf-brand-parent {font-size:10px;}
+.vf-light-eyebrow {
+  display:inline-flex;align-items:center;gap:9px;
+  color:#8e6b38;font-size:10px;font-weight:800;letter-spacing:.115em;line-height:1.5;
+}
+.vf-light-signal {display:inline-block;width:7px;height:7px;border-radius:50%;background:#b48b51;}
+.vf-light-hero h1 {
+  font-size:clamp(28px,3.1vw,43px);line-height:1.14;letter-spacing:-.048em;
+  color:#1e323a;font-weight:800;margin:14px 0 12px;max-width:610px;
+}
+.vf-light-hero h1 em {font-style:normal;color:#88602a;}
+.vf-light-hero-lead {color:#5e7075;font-size:clamp(12.5px,1.18vw,15px);line-height:1.75;max-width:635px;}
+.vf-light-hero-actions {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:2px;}
+.vf-light-hero-actions .btn {min-height:42px;padding:10px 15px;border-radius:9px;font-size:12px;}
+.vf-light-hero-actions .btn-primary {background:#1c3b46;color:#fff;border-color:#1c3b46;box-shadow:none;}
+.vf-light-hero-actions .btn-primary:hover {background:#2e5662;border-color:#2e5662;color:#fff;}
+.vf-light-inline-link {display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#41616a;font-size:12px;font-weight:720;text-decoration:none;}
+.vf-light-inline-link:hover {color:#8d622c;}
+.vf-light-hero-footnote {display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:#667b7e;font-size:10.5px;line-height:1.5;margin-top:1px;}
+.vf-light-hero-count {font-weight:850;color:#233b43;margin-right:3px;}
+.vf-light-footnote-divider {width:1px;height:13px;background:#d6dddb;}
 
 .vf-light-active,.vf-light-roadmap,.vf-light-process {margin-top:65px;}
 .vf-light-heading {display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:20px;}
@@ -122,22 +135,30 @@
 .vf-light-bottom-nav {display:flex;justify-content:space-between;gap:16px;margin:24px 0 4px;}
 .vf-light-bottom-nav a {display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#5a7075;}
 
+
+
 @media(max-width:1080px) {
-  .vf-light-hero {grid-template-columns:minmax(0,1fr);gap:25px;}
-  .vf-light-hero-content {padding:18px 7px 0;}
-  .vf-light-hero h1 {max-width:690px;}
-  .vf-light-hero-visual {min-height:370px;}
+  .vf-light-hero-content {grid-template-columns:minmax(0,1fr) minmax(250px,.7fr);gap:22px;padding:30px 32px;}
+  .vf-light-hero-secondary {padding-left:20px;}
+  .vf-light-hero-secondary .vf-brand-title {font-size:16px;}
   .vf-light-process {grid-template-columns:1fr;}
 }
+@media(max-width:900px) {
+  .vf-light-hero {margin:-20px -16px 0;}
+  .vf-light-hero-visual {height:clamp(325px,45vw,460px);}
+  .vf-light-hero-content {grid-template-columns:1fr;gap:21px;}
+  .vf-light-hero-secondary {padding:19px 0 0;border-left:0;border-top:1px solid #e4eae8;}
+  .vf-light-hero-secondary .vf-brand-title {font-size:18px;}
+}
 @media(max-width:700px) {
-  .vf-light-hero {padding:18px;border-radius:17px;}
-  .vf-light-hero-content {padding:14px 5px 3px;}
-  .vf-light-hero h1 {font-size:clamp(34px,8.8vw,43px);margin:18px 0 15px;}
-  .vf-light-hero-lead {font-size:14px;}
-  .vf-light-hero-footnote {margin-top:23px;}
-  .vf-light-hero-visual {min-height:265px;border-radius:13px;}
-  .vf-light-visual-label {left:14px;right:14px;font-size:8px;bottom:10px;}
-  .vf-light-visual-side {display:none;}
+  .vf-light-hero {border-radius:0 0 15px 15px;}
+  .vf-light-hero-visual {height:330px;}
+  .vf-light-visual-label {left:14px;right:14px;bottom:12px;font-size:8px;}
+  .vf-light-visual-direction {display:none!important;}
+  .vf-light-hero-content {padding:25px 19px;}
+  .vf-light-hero h1 {font-size:clamp(29px,8vw,37px);}
+  .vf-light-hero-lead {font-size:13px;}
+  .vf-light-hero-secondary .vf-brand-emblem {width:72px;height:72px;}
   .vf-light-active,.vf-light-roadmap,.vf-light-process {margin-top:44px;}
   .vf-light-heading {align-items:flex-start;flex-direction:column;gap:8px;}
   .vf-light-active-grid {grid-template-columns:1fr;}
@@ -154,96 +175,4 @@
 @media(prefers-reduced-motion:reduce) {
   .vf-light-active-card {transition:none;}
   .vf-light-active-card:hover {transform:none;}
-}
-
-
-/* === Hero ATRATOR v3: arte cinematográfica em largura integral ===
-   Sobrescreve somente o hero. As ferramentas e o roadmap abaixo mantêm o tema claro.
-*/
-.vf-light-home {max-width:none;margin:0;}
-.vf-light-hero {
-  position:relative;isolation:isolate;
-  display:flex;align-items:center;
-  min-height:clamp(520px,45vw,645px);
-  margin:-32px -36px 0;
-  padding:clamp(46px,6vw,80px) clamp(30px,5vw,72px);
-  border:0;border-radius:0 0 18px 18px;gap:0;
-  overflow:hidden;
-  background:#071721;
-  box-shadow:0 15px 38px rgba(10,29,39,.12);
-}
-.vf-light-hero-content {
-  position:relative;z-index:5;display:flex;
-  flex-direction:column;align-items:flex-start;justify-content:center;
-  width:min(570px,57%);max-width:570px;min-width:0;
-  padding:25px 0;
-}
-.vf-light-hero-visual {
-  position:absolute;inset:0;width:100%;height:100%;min-height:0;
-  border:0;border-radius:inherit;box-shadow:none;background:#061724;
-  z-index:0;pointer-events:none;
-}
-.vf-light-hero .vf-light-eyebrow {
-  color:#e3caa4;font-size:10px;letter-spacing:.13em;line-height:1.55;
-  text-shadow:0 1px 12px rgba(0,0,0,.35);
-}
-.vf-light-hero .vf-light-signal {background:#deb980;box-shadow:0 0 10px rgba(244,203,153,.33);}
-.vf-light-hero h1 {
-  font-size:clamp(39px,4.5vw,64px);font-weight:790;
-  letter-spacing:-.054em;line-height:1.09;
-  color:#fbfcfb;margin:23px 0 22px;max-width:590px;
-  text-shadow:0 2px 19px rgba(2,11,18,.35);
-}
-.vf-light-hero h1 em {color:#f1cca0;font-style:normal;}
-.vf-light-hero .vf-light-hero-lead {
-  color:#d4dfe2;font-size:clamp(14px,1.4vw,17px);
-  line-height:1.76;max-width:490px;
-  text-shadow:0 1px 10px rgba(0,0,0,.25);
-}
-.vf-light-hero .vf-light-hero-actions {margin-top:31px;gap:20px;}
-.vf-light-hero .btn-primary {
-  background:#dfbb82;color:#16252c;border:1px solid #e6c998;
-  box-shadow:0 5px 17px rgba(0,0,0,.18);font-weight:800;
-}
-.vf-light-hero .btn-primary:hover {background:#f0d19a;color:#102329;}
-.vf-light-hero .vf-light-inline-link {
-  color:#f0e6d5;text-shadow:0 1px 7px rgba(0,0,0,.23);
-}
-.vf-light-hero .vf-light-inline-link:hover {color:#fff;}
-.vf-light-hero .vf-light-hero-footnote {
-  margin-top:45px;color:#d4dbdb;font-size:11px;
-  text-shadow:0 1px 7px rgba(0,0,0,.35);
-}
-.vf-light-hero .vf-light-hero-count {color:#e8c58b;}
-.vf-light-hero .vf-light-footnote-divider {background:rgba(230,232,224,.35);}
-.vf-light-hero .vf-light-visual-label {
-  position:absolute;left:auto;right:28px;bottom:19px;z-index:5;
-  display:flex;justify-content:flex-end;align-items:center;
-  width:auto;padding:8px 0 0;border-top:0;
-  color:rgba(234,238,236,.7);font-size:9px;letter-spacing:.12em;
-}
-.vf-light-hero .vf-light-visual-side {color:rgba(234,238,236,.52);}
-
-@media(max-width:1080px){
-  .vf-light-hero {
-    display:flex;min-height:535px;
-    padding:52px 36px;margin:-32px -36px 0;gap:0;
-  }
-  .vf-light-hero-content {width:min(560px,70%);max-width:560px;padding:20px 0;}
-  .vf-light-hero-visual {position:absolute;inset:0;width:100%;height:100%;min-height:0;}
-}
-@media(max-width:900px){
-  .vf-light-hero {margin:-20px -16px 0;padding:50px 26px;min-height:525px;}
-}
-@media(max-width:620px){
-  .vf-light-hero {
-    margin:-20px -16px 0;border-radius:0 0 15px 15px;
-    padding:50px 22px 56px;min-height:560px;
-  }
-  .vf-light-hero-content {width:100%;max-width:500px;padding:10px 0;}
-  .vf-light-hero h1 {font-size:clamp(35px,9vw,46px);line-height:1.12;}
-  .vf-light-hero .vf-light-hero-lead {font-size:14px;}
-  .vf-light-hero .vf-light-hero-footnote {margin-top:35px;}
-  .vf-light-hero .vf-light-visual-label {right:14px;bottom:11px;font-size:8px;}
-  .vf-light-hero .vf-light-visual-side {display:none;}
 }

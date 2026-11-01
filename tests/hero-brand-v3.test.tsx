@@ -23,11 +23,11 @@ describe('Vetor Forense — hero panorâmico e identidade ATRATOR v3', () => {
     expect(bytes.subarray(4, 12).toString('ascii')).toBe('ftypavif');
     const svg = readFileSync('public/favicon.svg', 'utf8');
     expect(svg).toContain('vf-gold');
-    expect(svg).toContain('M14 20 32 54 50 20');
+    expect(svg).toContain('aria-label="Vetor Forense VT"');
     const logo = renderToStaticMarkup(<Logo size={46} />);
     expect(logo).toContain('ECOSSISTEMA');
     expect(logo).toContain('ATRATOR');
-    expect(logo).toContain('Monograma Vetor Forense');
+    expect(logo).toContain('Monograma VT dourado com lupa');
   });
 
   it('regenera todos os ícones PNG e ICO', () => {
@@ -41,7 +41,7 @@ describe('Vetor Forense — hero panorâmico e identidade ATRATOR v3', () => {
 
   it('destaca o hero em largura inteira e oferece ferramentas reais', () => {
     const css = readFileSync('src/pages/Home/home-forensics.css', 'utf8');
-    expect(css).toContain('Hero ATRATOR v3');
+    expect(css).toContain('Dashboard com duas artes');
     expect(css).toContain('margin:-32px -36px 0');
     const html = renderToStaticMarkup(<MemoryRouter><Home /></MemoryRouter>);
     expect(html).toContain('hero/atrator-black-hole.avif');
