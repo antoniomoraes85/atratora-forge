@@ -9,10 +9,10 @@ describe('ATRATOR — convergência Matrix irregular e assinatura central', () =
   const field = renderToStaticMarkup(<BlackHoleField />);
   const home = renderToStaticMarkup(<MemoryRouter><Home /></MemoryRouter>);
 
-  it('usa 34 caminhos distintos e pulsos animados com velocidades variadas', () => {
+  it('usa 96 caminhos distintos e partículas animadas com velocidades variadas', () => {
     const paths = [...field.matchAll(/id="vf-infall-(\d+)" d="([^"]+)"/g)];
-    expect(paths).toHaveLength(34);
-    expect(new Set(paths.map(([, , d]) => d)).size).toBe(34);
+    expect(paths).toHaveLength(96);
+    expect(new Set(paths.map(([, , d]) => d)).size).toBe(96);
     expect(paths.every(([, , d]) => (d.match(/C/g) ?? []).length >= 3 && d.includes('Q'))).toBe(true);
     const pulseDurations = [...field.matchAll(/animation-duration:([\d.]+)s/g)].map(match => match[1]);
     expect(new Set(pulseDurations).size).toBeGreaterThanOrEqual(5);
