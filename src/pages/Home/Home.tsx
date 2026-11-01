@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { TOOLS_CATALOG, type ToolDefinition } from '../../app/config/tools';
 import { BlackHoleField } from '../../components/ui/BlackHoleField';
+import { Logo } from '../../components/ui/Logo';
 import './home-forensics.css';
 
 const tool = (id: string): ToolDefinition => {
@@ -22,33 +23,39 @@ const NEXT_MODULES = [
 export const Home = () => (
   <div className="vf-light-home animate-fade-in">
     <section className="vf-light-hero" aria-labelledby="vf-title">
-      <div className="vf-light-hero-content">
-        <span className="vf-light-eyebrow"><span className="vf-light-signal" /> TECNOLOGIA ATRATOR / VETOR FORENSE</span>
-        <h1 id="vf-title">Análise técnica com <em>método e precisão.</em></h1>
-        <p className="vf-light-hero-lead">
-          Ferramentas objetivas para examinar, interpretar e documentar informações técnicas.
-          Um ambiente em evolução para evidências digitais e perícia computacional.
-        </p>
-        <div className="vf-light-hero-actions">
-          <Link to="/tools" className="btn btn-primary">
-            Explorar ferramentas <ArrowRight size={16} />
-          </Link>
-          <a href="#vf-modules" className="vf-light-inline-link">
-            Ver evolução da plataforma <ChevronRight size={16} />
-          </a>
-        </div>
-        <div className="vf-light-hero-footnote" aria-label="Disponibilidade dos recursos">
-          <span><span className="vf-light-hero-count">02</span> ferramentas disponíveis</span>
-          <span className="vf-light-footnote-divider" aria-hidden="true" />
-          <span><span className="vf-light-hero-count">06</span> módulos digitais planejados</span>
-        </div>
-      </div>
-      <div className="vf-light-hero-visual" aria-label="Ilustração abstrata do campo gravitacional ATRATOR">
+      <div className="vf-light-hero-visual" role="img"
+        aria-label="Arte conceitual: lupa com impressão digital e códigos binários à esquerda, fluxos de dados dirigidos ao buraco negro à direita">
         <BlackHoleField />
         <div className="vf-light-visual-label" aria-hidden="true">
-          <span className="vf-light-visual-dot" />
-          <span>ATRATOR / CAMPO DE ATRAÇÃO</span>
-          <span className="vf-light-visual-side">Visualização conceitual</span>
+          <span><span className="vf-light-visual-dot" /> INVESTIGAÇÃO DIGITAL</span>
+          <span className="vf-light-visual-direction">DADOS → HORIZONTE ATRATOR</span>
+          <span className="vf-light-visual-side">Representação artística</span>
+        </div>
+      </div>
+      <div className="vf-light-hero-content">
+        <div className="vf-light-hero-primary">
+          <span className="vf-light-eyebrow"><span className="vf-light-signal" /> TECNOLOGIA ATRATOR / VETOR FORENSE</span>
+          <h1 id="vf-title">Análise técnica com <em>método e precisão.</em></h1>
+          <p className="vf-light-hero-lead">
+            Ferramentas para examinar, interpretar e documentar informações técnicas.
+            Uma plataforma em evolução para evidências digitais e análise forense computacional.
+          </p>
+        </div>
+        <div className="vf-light-hero-secondary">
+          <Logo size={88} />
+          <div className="vf-light-hero-actions">
+            <Link to="/tools" className="btn btn-primary">
+              Explorar ferramentas <ArrowRight size={16} />
+            </Link>
+            <a href="#vf-modules" className="vf-light-inline-link">
+              Ver evolução <ChevronRight size={16} />
+            </a>
+          </div>
+          <div className="vf-light-hero-footnote" aria-label="Disponibilidade dos recursos">
+            <span><span className="vf-light-hero-count">02</span> ferramentas disponíveis</span>
+            <span className="vf-light-footnote-divider" aria-hidden="true" />
+            <span><span className="vf-light-hero-count">06</span> módulos planejados</span>
+          </div>
         </div>
       </div>
     </section>
