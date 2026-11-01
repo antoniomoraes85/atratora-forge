@@ -22,7 +22,7 @@
 
 > **Atualização visual de 31/10/2026 — investigação digital e ATRATOR:** o hero combina a lupa forense com impressão digital à esquerda e o buraco negro à direita, conectados por linhas e códigos binários em movimento. A marca **VT** aparece no menu, na apresentação principal e nos favicons. A interface técnica abaixo permanece clara e os módulos continuam com status reais. [Documento da implementação](docs/PARALLAX_FORENSE_ATRATOR_20261031.md).
 
-## 1. Visão Geral
+> **Revisão visual v4 (01/11/2026):** 34 linhas Matrix com curvatura irregular convergem para a proximidade da borda do buraco negro; 10 trilhas binárias animadas reforçam o movimento. O nome **VETOR FORENSE** aparece em destaque prateado no centro da arte e a legenda inferior passa a **“CIÊNCIA + INVESTIGAÇÃO • CONVERGÊNCIA FORENSE”**. [Documentação](docs/MATRIX_HORIZON_V4_20261101.md).\n\n## 1. Visão Geral
 
 > **Reposicionamento da dashboard — 31/10/2026:** Vetor Forense passa a apresentar uma **visão de produto** para evidências digitais, relatórios técnicos e análise de dispositivos móveis. **Esses módulos ainda são planejados**, não oferecem exame de celulares nem emissão de laudo oficial. Permanecem funcionais os módulos atuais de dinâmica veicular e conversão `.CROQUI`. Consulte [Direção do Produto](docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md).
 
