@@ -4,6 +4,7 @@ import { AppRoutes } from './app/routes/AppRoutes';
 import './styles/global.css';
 import './styles/vetor-forense.css';
 import './styles/layout-clean.css';
+import './styles/professional-ui.css';
 
 const rootElement = document.getElementById('root');
 
