@@ -26,10 +26,14 @@ export const Home = () => (
       <div className="vf-light-hero-visual" role="img"
         aria-label="Arte conceitual: lupa com impressão digital e códigos binários à esquerda, fluxos de dados dirigidos ao buraco negro à direita">
         <BlackHoleField />
+        <div className="vf-light-art-brand" aria-hidden="true">
+          <div className="vf-light-art-brand-rule" />
+          <strong className="vf-light-art-brand-name">VETOR <span>FORENSE</span></strong>
+          <small>TECNOLOGIA ATRATOR</small>
+        </div>
         <div className="vf-light-visual-label" aria-hidden="true">
           <span><span className="vf-light-visual-dot" /> INVESTIGAÇÃO DIGITAL</span>
-          <span className="vf-light-visual-direction">DADOS → HORIZONTE ATRATOR</span>
-          <span className="vf-light-visual-side">Representação artística</span>
+          <span className="vf-light-visual-direction">CIÊNCIA + INVESTIGAÇÃO <b>•</b> CONVERGÊNCIA FORENSE</span>
         </div>
       </div>
       <div className="vf-light-hero-content">

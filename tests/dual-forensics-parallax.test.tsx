@@ -23,9 +23,9 @@ describe('Vetor Forense — dupla cena e fluxos binários ATRATOR', () => {
     expect(field).not.toContain('https:');
   });
 
-  it('exibe a impressão à esquerda e o horizonte à direita com 24 trajetórias', () => {
+  it('exibe a impressão à esquerda e o horizonte à direita com 34 trajetórias', () => {
     expect(field.indexOf('atrator-depth-evidence')).toBeLessThan(field.indexOf('atrator-depth-back'));
-    expect((field.match(/atrator-infall-particles/g) || []).length).toBe(24);
+    expect((field.match(/atrator-infall-particles/g) || []).length).toBe(34);
     expect(field).toContain('atrator-binary-flow');
     expect(field).toContain('010110101011');
     expect(field).toContain('101100101101');
@@ -49,7 +49,12 @@ describe('Vetor Forense — dupla cena e fluxos binários ATRATOR', () => {
     expect(logo).toContain('Monograma VT dourado');
     expect(home).toContain('brand/vt-emblem.webp');
     expect(home).toContain('INVESTIGAÇÃO DIGITAL');
-    expect(home).toContain('DADOS');
+    expect(home).toContain('CIÊNCIA + INVESTIGAÇÃO');
+    expect(home).toContain('CONVERGÊNCIA FORENSE');
+    expect(home).toContain('VETOR');
+    expect(home).toContain('FORENSE');
+    expect(home).not.toContain('Representação artística');
+    expect(home).not.toContain('DADOS → HORIZONTE ATRATOR');
   });
 
   it('preserva as rotas de ferramentas reais e os limites da plataforma', () => {
