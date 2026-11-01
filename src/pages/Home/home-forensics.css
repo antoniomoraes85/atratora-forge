@@ -17,6 +17,41 @@
   width:100%;height:clamp(330px,33vw,530px);
   background:#030c14;
 }
+/* Marca central sobre a arte; acabamento metálico, sem caixa opaca.
+ * A sombra radial restringe o contraste ao texto e mantém as duas imagens visíveis. */
+.vf-light-art-brand {
+  position:absolute;z-index:6;left:50%;top:48%;
+  transform:translate(-50%,-50%);pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:min(88%,940px);padding:40px 18px 32px;
+  text-align:center;isolation:isolate;
+}
+.vf-light-art-brand::before {
+  content:"";position:absolute;inset:-18% -7%;z-index:-1;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(0,8,13,.79) 0%,rgba(0,8,13,.57) 42%,rgba(0,8,13,.13) 75%,transparent 100%);
+  filter:blur(15px);
+}
+.vf-light-art-brand-rule {
+  height:2px;width:clamp(65px,8vw,118px);margin-bottom:17px;
+  background:linear-gradient(90deg,transparent,#d5b77b 33%,#fff3d5 50%,#d5b77b 67%,transparent);
+  box-shadow:0 0 11px rgba(255,210,144,.45);
+}
+.vf-light-art-brand-name {
+  display:block;font-family:var(--font-sans);
+  font-size:clamp(31px,4.5vw,69px);font-weight:900;
+  letter-spacing:.085em;line-height:1.04;white-space:nowrap;
+  color:#e4e9ed;
+  background:linear-gradient(180deg,#fff 5%,#e8edf1 22%,#a4b6c1 49%,#fff 62%,#c4cdd4 83%,#f1f3f5 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 7px rgba(0,0,0,.9));
+}
+.vf-light-art-brand-name span {font-weight:850;}
+.vf-light-art-brand small {
+  color:#e9c994;margin-top:13px;font-size:clamp(9px,1vw,12px);
+  font-weight:800;letter-spacing:.32em;text-shadow:0 2px 10px rgba(0,0,0,.9);
+}
+
 .vf-light-visual-label {
   position:absolute;z-index:6;left:32px;right:32px;bottom:19px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -26,7 +61,12 @@
 }
 .vf-light-visual-label>span {display:flex;align-items:center;gap:9px;}
 .vf-light-visual-dot {display:inline-block;width:7px;height:7px;border-radius:50%;background:#6aff9f;box-shadow:0 0 11px rgba(78,255,156,.62);}
-.vf-light-visual-direction {color:#d4e7e2;}
+.vf-light-visual-direction {
+  position:absolute;left:50%;transform:translateX(-50%);
+  color:#e0e7e4;text-align:center;font-size:clamp(8px,.78vw,11px);
+  letter-spacing:.11em;white-space:nowrap;
+}
+.vf-light-visual-direction b {font-weight:700;color:#e2c18b;margin:0 4px;}
 .vf-light-visual-side {font-weight:500;color:rgba(226,235,233,.56);}
 
 .vf-light-hero-content {
@@ -154,7 +194,17 @@
   .vf-light-hero {border-radius:0 0 15px 15px;}
   .vf-light-hero-visual {height:330px;}
   .vf-light-visual-label {left:14px;right:14px;bottom:12px;font-size:8px;}
-  .vf-light-visual-direction {display:none!important;}
+  .vf-light-art-brand {top:47%;width:96%;padding:20px 7px;}
+  .vf-light-art-brand::before {inset:-23% -1%;filter:blur(12px);}
+  .vf-light-art-brand-name {font-size:clamp(20px,5.5vw,35px);letter-spacing:.038em;}
+  .vf-light-art-brand small {letter-spacing:.18em;font-size:8px;}
+  .vf-light-art-brand-rule {margin-bottom:11px;}
+  .vf-light-visual-direction {
+    display:block!important;position:absolute;
+    left:auto;right:0;transform:none;
+    max-width:65%;white-space:normal;
+    font-size:7.3px;line-height:1.5;letter-spacing:.025em;text-align:right;
+  }
   .vf-light-hero-content {padding:25px 19px;}
   .vf-light-hero h1 {font-size:clamp(29px,8vw,37px);}
   .vf-light-hero-lead {font-size:13px;}
