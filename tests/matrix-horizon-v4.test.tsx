@@ -14,13 +14,13 @@ describe('ATRATOR — convergência Matrix irregular e assinatura central', () =
     expect(paths).toHaveLength(96);
     expect(new Set(paths.map(([, , d]) => d)).size).toBe(96);
     expect(paths.every(([, , d]) => (d.match(/C/g) ?? []).length >= 3 && d.includes('Q'))).toBe(true);
-    const pulseDurations = [...field.matchAll(/animation-duration:([\d.]+)s/g)].map(match => match[1]);
+    const pulseDurations = [...field.matchAll(/<animateMotion[^>]*dur="([\d.]+)s"/g)].map(match => match[1]);
     expect(new Set(pulseDurations).size).toBeGreaterThanOrEqual(5);
   });
 
-  it('leva dez sequências Matrix ao longo de caminhos curvos', () => {
-    expect((field.match(/class="atrator-binary-digits"/g) ?? []).length).toBe(10);
-    expect((field.match(/attributeName="startOffset"/g) ?? []).length).toBe(10);
+  it('leva vinte sequências Matrix ao longo de caminhos curvos', () => {
+    expect((field.match(/class="atrator-binary-digits"/g) ?? []).length).toBe(20);
+    expect((field.match(/attributeName="startOffset"/g) ?? []).length).toBe(20);
     expect(field).toContain('010110101011001');
     expect(field).toContain('101100101101110');
     expect(field).toContain('001011010111010');
