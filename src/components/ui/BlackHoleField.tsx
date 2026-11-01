@@ -8,32 +8,73 @@ const clamp = (value: number, limit: number) =>
   Math.max(-limit, Math.min(limit, value));
 
 /**
- * Trajetórias ilustrativas: saem da impressão digital à esquerda e convergem
- * para o horizonte de eventos do buraco negro à direita. Não representam
- * geodésicas físicas, evidência real nem processamento de dados do usuário.
+ * As linhas ilustram a convergência de dados da lupa para a região próxima
+ * ao horizonte de eventos (limbo esquerdo do disco). São curvas artísticas,
+ * não geodésicas relativísticas nem representação de evidências reais.
+ *
+ * Variação determinística: dispersão de origem, curvaturas intermediárias e
+ * pontos de aproximação tangencial diferentes, sem Math.random().
  */
-const STREAMS = Array.from({ length: 24 }, (_, index) => {
-  const spread = index - 11.5;
-  const startX = 455 + (index % 4) * 11;
-  const startY = 311 + spread * 9.6;
-  const endX = 1190 + (index % 3) * 2;
-  const endY = 320 + spread * 1.65;
-  const c1x = 670 + (index % 3) * 9;
-  const c1y = 306 + spread * 11.4;
-  const c2x = 1017;
-  const c2y = 323 + spread * 4.1;
+const STREAM_COUNT = 34;
+const STREAMS = Array.from({ length: STREAM_COUNT }, (_, index) => {
+  const normalized = (index - (STREAM_COUNT - 1) / 2) / ((STREAM_COUNT - 1) / 2);
+  const ripple = Math.sin(index * 1.17) * 12 + Math.cos(index * .63) * 7;
+  const startX = 400 + (index % 5) * 11;
+  const startY = 315 + normalized * 194 + ripple;
+
+  const shoulderX = 640 + (index % 4) * 13;
+  const shoulderY = 318 + normalized * 207 + Math.sin(index * .82) * 23;
+  const middleX = 823 + (index % 7) * 8;
+  const middleY = 318 + normalized * 146 + Math.cos(index * 1.49) * 25;
+
+  // The visible left edge of the photographed accretion ring, not its center.
+  const approachY = 312 + normalized * 108 + Math.sin(index * .91) * 9;
+  const ringX = 1256 - 175 * Math.sqrt(
+    Math.max(.1, 1 - ((approachY - 312) / 192) ** 2)
+  );
+  const approachX = ringX - 18 - (index % 3) * 7;
+  const curveShift = Math.sin(index * 2.07) * 17;
+
+  const d = [
+    `M${startX.toFixed(1)} ${startY.toFixed(1)}`,
+    // Small turbulent disturbances near the digital evidence.
+    `C${(startX + 93).toFixed(1)} ${(startY + curveShift).toFixed(1)}`,
+    `${(shoulderX - 103).toFixed(1)} ${(shoulderY - ripple).toFixed(1)}`,
+    `${shoulderX.toFixed(1)} ${shoulderY.toFixed(1)}`,
+    // Smoother but irregular trajectory across the field.
+    `C${(shoulderX + 83).toFixed(1)} ${(shoulderY + curveShift * .7).toFixed(1)}`,
+    `${(middleX - 86).toFixed(1)} ${(middleY - curveShift).toFixed(1)}`,
+    `${middleX.toFixed(1)} ${middleY.toFixed(1)}`,
+    // The flow bends and tightens in the photographed ring's vicinity.
+    `C${(middleX + 79).toFixed(1)} ${(middleY + normalized * 21).toFixed(1)}`,
+    `${(approachX - 66).toFixed(1)} ${(approachY - normalized * 31).toFixed(1)}`,
+    `${(approachX - 23).toFixed(1)} ${(approachY - normalized * 13).toFixed(1)}`,
+    `Q${(approachX - 3).toFixed(1)} ${(approachY - normalized * 5).toFixed(1)}`,
+    `${approachX.toFixed(1)} ${approachY.toFixed(1)}`,
+  ].join(' ');
+
   return {
     id: index,
-    d: `M${startX.toFixed(1)} ${startY.toFixed(1)} C${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x} ${c2y.toFixed(1)} ${endX} ${endY.toFixed(1)}`,
-    opacity: .28 + (index % 5) * .065,
-    delay: -(index * .73) % 11,
+    d,
+    opacity: .18 + (index % 6) * .043,
+    delay: -((index * .71) % 8.7),
+    width: index % 7 === 0 ? 1.55 : index % 3 === 0 ? 1.16 : .77,
+    duration: 5.6 + (index % 9) * .64,
   };
 });
 
+const BINARY_STREAMS = [1, 4, 7, 10, 13, 16, 19, 23, 27, 31];
+const BINARY_WORDS = [
+  '010110101011001',
+  '101100101101110',
+  '001011010111010',
+  '110010101001101',
+  '010101101001011',
+];
+
 /**
- * Composição em duas cenas com profundidades independentes.
- * Parallax por pointer/scroll escreve apenas CSS variables em rAF e não
- * re-renderiza React. A arte é decorativa, não bloqueia eventos.
+ * Three visual depths, updated via requestAnimationFrame and CSS variables.
+ * Reduced motion removes particle animation; artwork cannot capture clicks.
  */
 export const BlackHoleField = () => {
   const root = useRef<HTMLDivElement>(null);
@@ -63,10 +104,13 @@ export const BlackHoleField = () => {
     const pointer = (event: PointerEvent) => {
       if (reduced.matches || !fine.matches) return;
       const bounds = node.getBoundingClientRect();
-      // Restringe o efeito à área visual, mesmo com listener na janela.
       if (bounds.width < 1 || bounds.height < 1 ||
           event.clientX < bounds.left || event.clientX > bounds.right ||
-          event.clientY < bounds.top || event.clientY > bounds.bottom) return;
+          event.clientY < bounds.top || event.clientY > bounds.bottom) {
+        // Do not leave the field displaced when the pointer exits the banner.
+        if (x !== 0 || y !== 0) { x = 0; y = 0; schedule(); }
+        return;
+      }
       x = clamp(((event.clientX - bounds.left) / bounds.width - .5) * 46, 23);
       y = clamp(((event.clientY - bounds.top) / bounds.height - .5) * 30, 15);
       schedule();
@@ -117,17 +161,18 @@ export const BlackHoleField = () => {
       <div className="atrator-depth-streams">
         <svg viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice" focusable="false">
           <defs>
-            <linearGradient id="vf-binary-infall" x1="440" y1="320" x2="1200" y2="320" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor="#40FF79" stopOpacity=".70" />
-              <stop offset=".25" stopColor="#36F9A0" stopOpacity=".95" />
-              <stop offset=".55" stopColor="#60C9C8" stopOpacity=".9" />
-              <stop offset=".80" stopColor="#D8C09A" stopOpacity=".85" />
-              <stop offset="1" stopColor="#F9D69B" stopOpacity=".15" />
+            <linearGradient id="vf-binary-infall" x1="400" y1="320" x2="1115" y2="320" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stopColor="#32F36D" stopOpacity=".28" />
+              <stop offset=".23" stopColor="#4EFF8D" stopOpacity=".84" />
+              <stop offset=".48" stopColor="#40DDB0" stopOpacity=".8" />
+              <stop offset=".71" stopColor="#80C8D0" stopOpacity=".72" />
+              <stop offset=".91" stopColor="#DABF90" stopOpacity=".48" />
+              <stop offset="1" stopColor="#F5D7A0" stopOpacity="0" />
             </linearGradient>
-            <linearGradient id="vf-flow-haze" x1="400" y1="320" x2="1210" y2="320" gradientUnits="userSpaceOnUse">
+            <linearGradient id="vf-flow-haze" x1="430" y1="320" x2="1115" y2="320" gradientUnits="userSpaceOnUse">
               <stop stopColor="#18FA61" stopOpacity="0" />
-              <stop offset=".44" stopColor="#3EDFB1" stopOpacity=".14" />
-              <stop offset=".75" stopColor="#B7D7C1" stopOpacity=".12" />
+              <stop offset=".4" stopColor="#3EDFB1" stopOpacity=".11" />
+              <stop offset=".78" stopColor="#B7D7C1" stopOpacity=".12" />
               <stop offset="1" stopColor="#F4C37A" stopOpacity="0" />
             </linearGradient>
           </defs>
@@ -135,25 +180,29 @@ export const BlackHoleField = () => {
             {STREAMS.map(stream => (
               <g key={stream.id}>
                 <path id={`vf-infall-${stream.id}`} d={stream.d}
-                  stroke="url(#vf-binary-infall)"
-                  strokeWidth={stream.id % 6 === 0 ? 1.7 : .9}
+                  stroke="url(#vf-binary-infall)" strokeWidth={stream.width}
                   strokeLinecap="round" opacity={stream.opacity} />
                 <path d={stream.d} className="atrator-infall-particles"
-                  stroke="url(#vf-binary-infall)" strokeWidth="2.25"
-                  strokeLinecap="round" strokeDasharray="2 42"
-                  style={{ animationDelay: `${stream.delay}s`, opacity: stream.opacity * .86 }} />
+                  stroke="url(#vf-binary-infall)" strokeWidth={stream.width + .65}
+                  strokeLinecap="round" strokeDasharray="1 48"
+                  style={{
+                    animationDelay: `${stream.delay}s`,
+                    animationDuration: `${stream.duration}s`,
+                    opacity: stream.opacity * .79,
+                  }} />
               </g>
             ))}
           </g>
-          <g className="atrator-binary-flow" fill="#66F6A4" fontFamily="monospace"
-            fontSize="14" letterSpacing="4" opacity=".84">
-            {[2, 5, 8, 11, 14, 17, 20].map((id, index) => (
-              <text key={id} className="atrator-binary-digits">
-                <textPath href={`#vf-infall-${id}`} startOffset="0%">
-                  {index % 2 ? '101100101101' : '010110101011'}
+          <g className="atrator-binary-flow" fill="url(#vf-binary-infall)" fontFamily="monospace"
+            fontSize="13" letterSpacing="3" opacity=".76">
+            {BINARY_STREAMS.map((id, index) => (
+              <text key={id} className="atrator-binary-digits"
+                style={{ opacity: .74 + (index % 4) * .07 }}>
+                <textPath href={`#vf-infall-${id}`} startOffset="-30%">
+                  {BINARY_WORDS[index % BINARY_WORDS.length]}
                   <animate attributeName="startOffset"
-                    values="-24%;112%" dur={`${8 + index * .8}s`}
-                    begin={`${index * .9}s`} repeatCount="indefinite" />
+                    values="-30%;112%" dur={`${7.4 + index * .55}s`}
+                    begin={`${index * .45}s`} repeatCount="indefinite" />
                 </textPath>
               </text>
             ))}
