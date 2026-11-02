@@ -16,38 +16,47 @@ const shouldPlay = () => {
   }
 };
 
-/** Abertura curta, uma única vez por aba. Não interrompe navegação interna. */
+/** Abertura curta, uma única vez por aba, com acesso imediato ao conteúdo. */
 export const IntroSplash = () => {
   const [visible, setVisible] = useState(shouldPlay);
   const skipRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const dismiss = () => {
+    try { window.sessionStorage.setItem(SESSION_KEY, '1'); } catch { /* armazenamento opcional */ }
+    setVisible(false);
+    // Restore keyboard location after the overlay unmounts.
+    window.requestAnimationFrame(() => previousFocusRef.current?.focus());
+  };
 
   useEffect(() => {
     if (!visible) return;
 
-    const previousFocus = document.activeElement instanceof HTMLElement
-      ? document.activeElement : null;
+    if (!previousFocusRef.current && document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
     skipRef.current?.focus();
 
-    const close = () => {
-      try { window.sessionStorage.setItem(SESSION_KEY, '1'); } catch { /* opcional */ }
-      setVisible(false);
-      previousFocus?.focus();
-    };
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' || event.key === 'Enter') close();
+      if (event.key === 'Escape') dismiss();
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        skipRef.current?.focus();
+      }
     };
-    const timer = window.setTimeout(close, DURATION_MS);
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const onMotionChange = () => {
+      if (reduced?.matches) dismiss();
+    };
+    const timer = window.setTimeout(dismiss, DURATION_MS);
     window.addEventListener('keydown', onKey);
+    reduced?.addEventListener?.('change', onMotionChange);
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener('keydown', onKey);
+      reduced?.removeEventListener?.('change', onMotionChange);
     };
   }, [visible]);
-
-  const skip = () => {
-    try { window.sessionStorage.setItem(SESSION_KEY, '1'); } catch { /* opcional */ }
-    setVisible(false);
-  };
 
   if (!visible) return null;
 
@@ -63,7 +72,9 @@ export const IntroSplash = () => {
         <span className="vf-intro-subtitle">CIÊNCIA · INVESTIGAÇÃO · TECNOLOGIA ATRATOR</span>
       </div>
       <button type="button" ref={skipRef} className="vf-intro-skip"
-        onClick={skip} aria-label="Pular apresentação">Pular apresentação <span aria-hidden="true">→</span></button>
+        onClick={dismiss} aria-label="Pular apresentação">
+        Pular apresentação <span aria-hidden="true">→</span>
+      </button>
     </div>
   );
 };
