@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { NAV_SECTIONS, NAV_ITEMS } from '../src/app/config/navigation';
 import { Sidebar } from '../src/components/layout/Sidebar';
 import { Header } from '../src/components/layout/Header';
+import { Footer } from '../src/components/layout/Footer';
 import { Home } from '../src/pages/Home/Home';
 import { Features } from '../src/pages/Features/Features';
 import { Institutional } from '../src/pages/Institutional/Institutional';
@@ -109,4 +110,23 @@ describe('Vetor Forense v6 — portal institucional + animação', () => {
     expect(css).toContain('vf-intro-exit');
     expect(readFileSync('src/components/layout/Layout.tsx','utf8')).toContain('<IntroSplash />');
   });
+
+  it('destaca a página selecionada no cabeçalho sem esconder atalhos', () => {
+    const html = renderToStaticMarkup(
+      <MemoryRouter initialEntries={['/features']}><Header /></MemoryRouter>
+    );
+    expect(html).toContain('class="vf-shell-top-link is-active"');
+    expect(html).toContain('href="/features"');
+    expect(html).toContain('href="/institutional"');
+  });
+
+  it('oferece rodapé institucional com acesso a FAQ, contato e limites técnicos', () => {
+    const html = render(<Footer />);
+    expect(html).toContain('Missão e valores');
+    expect(html).toContain('href="/contact"');
+    expect(html).toContain('href="/faq"');
+    expect(html).toContain('não produz laudo oficial');
+    expect(html).toContain('não certifica cadeia de custódia');
+  });
+
 });
