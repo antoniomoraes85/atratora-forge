@@ -7,6 +7,11 @@ import { CroquiConverter } from '../../pages/CroquiConverter/CroquiConverter';
 import { Projects } from '../../pages/Projects/Projects';
 import { About } from '../../pages/About/About';
 import { Guides } from '../../pages/Guides/Guides';
+import { Features } from '../../pages/Features/Features';
+import { Institutional } from '../../pages/Institutional/Institutional';
+import { FAQ } from '../../pages/FAQ/FAQ';
+import { Roadmap } from '../../pages/Roadmap/Roadmap';
+import { Contact } from '../../pages/Contact/Contact';
 
 // Carregamento Lazy da página de Guia Interativo
 const InteractiveGuide = React.lazy(() =>
@@ -30,7 +35,12 @@ export const AppRoutes: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
           <Route path="/tools" element={<Tools />} />
+          <Route path="/institutional" element={<Institutional />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/tools/croqui-converter" element={<CroquiConverter />} />
 
           {/* Vetor Forense */}
