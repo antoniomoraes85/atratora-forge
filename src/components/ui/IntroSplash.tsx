@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './intro-splash.css';
 
-// Separate key lets visitors see the redesigned introduction once.
-const SESSION_KEY = 'vf-intro-seen-v2';
-const DURATION_MS = 4100;
+// New session key intentionally reveals this revised intro once to prior visitors.
+const SESSION_KEY = 'vf-intro-seen-v3';
+const DURATION_MS = 3700;
 
 const shouldPlay = () => {
   if (typeof window === 'undefined') return false;
@@ -12,15 +12,18 @@ const shouldPlay = () => {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
     return true;
   } catch {
-    // Storage failures must never leave an overlay blocking the application.
+    // Storage failure must never block access to the product.
     return false;
   }
 };
 
 /**
- * Logo writing sequence: draw the original VT paths, type the product name,
- * then reveal a binary magnifier layered over the signature.
- * One entry per tab session; Escape, Tab and skip always work.
+ * Cinematic logo signature: metallic gold VT draws itself, steel wordmark
+ * appears, then BOTH are rapidly absorbed into a black hole behind them.
+ * The magnifier is intentionally absent from this introduction.
+ *
+ * Runs once per tab session. The skip button, Escape, focus management and
+ * reduced-motion preference remain available.
  */
 export const IntroSplash = () => {
   const [visible, setVisible] = useState(shouldPlay);
@@ -67,41 +70,42 @@ export const IntroSplash = () => {
   return (
     <div className="vf-intro-splash" role="dialog" aria-modal="true"
       aria-label="Apresentação do Vetor Forense">
+      <div className="vf-intro-gravity" aria-hidden="true">
+        <span className="vf-intro-horizon">
+          <span className="vf-intro-horizon-orbit" />
+          <span className="vf-intro-horizon-sheen" />
+          <span className="vf-intro-horizon-shadow" />
+        </span>
+        <span className="vf-intro-accretion-plane" />
+      </div>
+
       <div className="vf-intro-stage">
-        <div className="vf-intro-vt" aria-hidden="true">
-          {/* Exact VT letter paths from the approved brand symbol SVG. */}
-          <svg className="vf-intro-vt-glyph" viewBox="0 0 64 64"
-            focusable="false" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="vf-intro-letter-gold" x1="7" y1="8"
-                x2="55" y2="59" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#fff2cb" />
-                <stop offset=".38" stopColor="#e4b866" />
-                <stop offset="1" stopColor="#966122" />
-              </linearGradient>
-            </defs>
-            <path className="vf-intro-draw-v"
-              d="M12 21 29 49 43 21" fill="none"
-              stroke="#edf2f3" strokeWidth="6"
-              strokeLinejoin="round" strokeLinecap="round"
-              pathLength="100" />
-            <path className="vf-intro-draw-t"
-              d="M33 20H54M43 20 35 47" fill="none"
-              stroke="url(#vf-intro-letter-gold)" strokeWidth="5.4"
-              strokeLinejoin="round" strokeLinecap="round"
-              pathLength="100" />
-          </svg>
-          <div className="vf-intro-loupe" aria-hidden="true">
-            <span className="vf-intro-loupe-glass"
-              style={{
-                backgroundImage: `url("${import.meta.env.BASE_URL}hero/fingerprint-matrix.webp")`,
-              }}>
-              <span className="vf-intro-bits">01010110<br />10110011<br />00101101</span>
-            </span>
-            <span className="vf-intro-loupe-handle" />
-          </div>
-        </div>
-        <div className="vf-intro-writing" aria-hidden="true">
+        <svg className="vf-intro-vt-glyph" viewBox="0 0 64 64"
+          focusable="false" aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="vf-intro-letter-gold" x1="6" y1="8"
+              x2="53" y2="59" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#fff5d6" />
+              <stop offset=".20" stopColor="#f0cf8c" />
+              <stop offset=".42" stopColor="#a97028" />
+              <stop offset=".58" stopColor="#ffe7a9" />
+              <stop offset=".81" stopColor="#d19b47" />
+              <stop offset="1" stopColor="#794918" />
+            </linearGradient>
+          </defs>
+          <path className="vf-intro-draw-v"
+            d="M12 21 29 49 43 21" fill="none"
+            stroke="url(#vf-intro-letter-gold)" strokeWidth="6"
+            strokeLinejoin="round" strokeLinecap="round"
+            pathLength="100" />
+          <path className="vf-intro-draw-t"
+            d="M33 20H54M43 20 35 47" fill="none"
+            stroke="url(#vf-intro-letter-gold)" strokeWidth="5.4"
+            strokeLinejoin="round" strokeLinecap="round"
+            pathLength="100" />
+        </svg>
+        <div className="vf-intro-writing">
           <span className="vf-intro-typewriter">Vetor Forense</span>
         </div>
       </div>
