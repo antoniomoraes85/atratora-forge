@@ -160,6 +160,13 @@ export const BlackHoleField = () => {
           width="1672" height="941" decoding="async" />
       </div>
 
+      {/* Movimento luminoso próximo ao anel de acreção da fotografia.
+          A sombra central permanece escura; não é simulação relativística. */}
+      <div className="atrator-depth-horizon">
+        <span className="atrator-horizon-orbit" />
+        <span className="atrator-horizon-sheen" />
+      </div>
+
       <div className="atrator-depth-streams">
         <svg viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice" focusable="false">
           <defs>
