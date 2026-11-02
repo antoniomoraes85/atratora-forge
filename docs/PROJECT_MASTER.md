@@ -5,6 +5,19 @@
 
 ---
 
+## ATUALIZAÇÃO V7 — 02/11/2026 (ABERTURA VT + DISCO ORBITAL)
+
+**Escopo:** refinamento visual do portal V6, sem mudança de versão semântica de produto ou de capacidades operacionais. Branch `feat/vt-write-on-orbit-v7-20261102`.
+
+- **Intro:** tela preta; só letras VT desenhadas com paths da identidade SVG aprovada; depois efeito de escrita de **Vetor Forense**; por fim **lupa binária** sobreposta. Total 4,1s; uma vez por aba (nova chave v2), opção de pular, Escape/Tab, foco restaurado e preferência de movimento reduzido.
+- **Hero:** imagem do buraco negro preservada, mas anel luminoso com gradientes cônicos rotativos, arcos SVG e traços com deslocamento, brilho pulsante; efeito executado automaticamente sem ponteiro. A sombra central permanece escura. A física não é simulada.
+- **Compatibilidade:** preservados 96 fluxos, 48 partículas, 20 trilhas binárias e os módulos de dinâmica veicular/conversão de croquis.
+- **Critério de liberação:** TypeScript, testes, build e deploy GitHub Pages; vistoria visual em hardware real segue separada dos testes.
+- **Documentação:** [VT_INTRO_DISCO_ORBITAL_V7_20261102.md](VT_INTRO_DISCO_ORBITAL_V7_20261102.md).
+- **Pendência existente de segurança:** auditoria das vulnerabilidades npm, não abordada na revisão de animação.
+
+---
+
 ## ESTADO VIGENTE — 02/11/2026 (PORTAL V6)
 
 **Atenção:** a seção histórica abaixo descreve marcos V0.1/V0.2 e contém formulações antigas sobre tema escuro e roadmap. Para retomada de trabalho, este quadro é o estado atual, sujeito a validação no GitHub.

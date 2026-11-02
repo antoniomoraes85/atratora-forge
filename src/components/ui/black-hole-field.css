@@ -96,55 +96,104 @@
   mix-blend-mode:screen;
 }
 
-/* Accretion-ring light movement: optical effect near the photographic rim.
- * Not a moving physical event horizon. The central shadow stays unobstructed. */
+/* A fotografia é estática; o anel luminoso recebe atividade orbital real
+ * em CSS/SVG. O centro escuro permanece livre de manchas e flashes.
+ * É uma metáfora de disco de acreção, não modelo físico do horizonte. */
 .atrator-depth-horizon {
-  inset:0!important;z-index:2;
+  inset:0!important;z-index:5;
   transform:translate3d(
     calc(var(--pointer-x) * .56),
     calc(var(--pointer-y) * .46 + var(--scroll-shift) * -.79),0);
 }
-.atrator-horizon-orbit,.atrator-horizon-sheen {
-  position:absolute;left:78.5%;top:48.9%;pointer-events:none;
-  width:clamp(190px,23.6%,375px);aspect-ratio:1;border-radius:50%;
+.atrator-horizon-assembly {
+  position:absolute;left:78.5%;top:48.9%;
+  width:clamp(240px,31%,500px);aspect-ratio:1;
   transform:translate(-50%,-50%);
+  pointer-events:none;isolation:isolate;
+  filter:drop-shadow(0 0 10px rgba(242,200,140,.16));
+}
+.atrator-horizon-orbit,.atrator-horizon-sheen {
+  position:absolute;inset:0;
+  border-radius:50%;pointer-events:none;
   mix-blend-mode:screen;
-  -webkit-mask-image:radial-gradient(circle,transparent 0 43%,#000 51% 55%,transparent 65%);
-  mask-image:radial-gradient(circle,transparent 0 43%,#000 51% 55%,transparent 65%);
+  /* The illuminated ring sits near the outer edge, not in the black core. */
+  -webkit-mask-image:radial-gradient(circle,transparent 0 46%,#000 53% 62%,transparent 71%);
+  mask-image:radial-gradient(circle,transparent 0 46%,#000 53% 62%,transparent 71%);
 }
 .atrator-horizon-orbit {
-  background:conic-gradient(from 24deg,
-    transparent 0deg,rgba(255,219,154,.06) 38deg,
-    rgba(255,218,148,.83) 72deg,rgba(168,206,245,.10) 106deg,
-    transparent 145deg,rgba(120,169,224,.5) 188deg,
-    rgba(255,220,152,.15) 226deg,transparent 258deg,
-    rgba(201,232,255,.7) 307deg,transparent 356deg);
-  filter:blur(2px) drop-shadow(0 0 8px rgba(234,193,126,.48));
-  opacity:.65;
-  animation:vf-horizon-orbit 15s linear infinite;
+  background:conic-gradient(from 6deg,
+    transparent 0deg,rgba(255,234,191,.08) 28deg,
+    rgba(255,232,179,.96) 69deg,
+    rgba(254,194,119,.42) 104deg,transparent 147deg,
+    rgba(139,198,255,.78) 199deg,
+    rgba(218,235,255,.22) 232deg,transparent 276deg,
+    rgba(255,219,161,.90) 317deg,transparent 356deg);
+  filter:blur(3px);
+  opacity:.9;
+  animation:vf-horizon-orbit 8.5s linear infinite;
 }
 .atrator-horizon-sheen {
-  width:clamp(202px,24.8%,395px);
-  background:conic-gradient(from 0deg,
-    transparent 0deg,rgba(249,205,145,.15) 45deg,
-    rgba(245,213,163,.58) 68deg,transparent 90deg,
-    transparent 180deg,rgba(124,190,248,.42) 233deg,
-    transparent 273deg,rgba(241,219,173,.25) 338deg,transparent 360deg);
-  filter:blur(5px);
-  opacity:.39;
-  animation:vf-horizon-counter 24s linear infinite,vf-horizon-breathe 6s ease-in-out infinite alternate;
+  background:conic-gradient(from 60deg,
+    transparent 0deg,rgba(255,242,201,.92) 54deg,
+    transparent 82deg,rgba(147,196,255,.65) 146deg,
+    transparent 184deg,rgba(250,216,153,.9) 248deg,
+    transparent 288deg,rgba(141,197,247,.70) 327deg,
+    transparent 359deg);
+  filter:blur(6px);
+  opacity:.72;
+  animation:vf-horizon-counter 13s linear infinite,
+    vf-horizon-breathe 3.1s ease-in-out infinite alternate;
+}
+.atrator-horizon-tracers {
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+  overflow:visible;pointer-events:none;
+  filter:drop-shadow(0 0 4px rgba(255,216,166,.48));
+}
+.atrator-horizon-static-ring {
+  filter:drop-shadow(0 0 4px rgba(255,210,139,.18));
+}
+.atrator-horizon-flow {
+  transform-origin:200px 200px;
+  animation:vf-horizon-flow-turn 7.2s linear infinite;
+}
+.atrator-horizon-fast-arc {
+  filter:drop-shadow(0 0 6px rgba(254,221,167,.8));
+  animation:vf-horizon-dash 2.4s linear infinite;
+}
+.atrator-horizon-blue-arc {
+  filter:drop-shadow(0 0 6px rgba(154,208,255,.62));
+  animation:vf-horizon-dash 3.2s linear infinite reverse;
+}
+.atrator-horizon-light-trail {
+  animation:vf-horizon-dash 1.8s linear infinite;
+}
+.atrator-horizon-disk-current {
+  animation:vf-horizon-disk-stream 2.5s linear infinite;
 }
 @keyframes vf-horizon-orbit {
-  from {transform:translate(-50%,-50%) rotate(0deg);}
-  to {transform:translate(-50%,-50%) rotate(360deg);}
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
 }
 @keyframes vf-horizon-counter {
-  from {transform:translate(-50%,-50%) rotate(0deg);}
-  to {transform:translate(-50%,-50%) rotate(-360deg);}
+  from {transform:rotate(0deg);}
+  to {transform:rotate(-360deg);}
+}
+@keyframes vf-horizon-flow-turn {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+@keyframes vf-horizon-dash {
+  from {stroke-dashoffset:0;}
+  to {stroke-dashoffset:-190;}
+}
+@keyframes vf-horizon-disk-stream {
+  from {stroke-dashoffset:0;opacity:.58;}
+  50% {opacity:1;}
+  to {stroke-dashoffset:-105;opacity:.58;}
 }
 @keyframes vf-horizon-breathe {
-  from {opacity:.26;}
-  to {opacity:.5;}
+  from {opacity:.42;}
+  to {opacity:.88;}
 }
 
 @media(max-width:1060px) {
@@ -160,7 +209,9 @@
   .atrator-moving-particles {opacity:.55;}
   .atrator-binary-flow {opacity:.65;}
   .atrator-light-haze {opacity:.6;}
-  .atrator-horizon-orbit,.atrator-horizon-sheen {opacity:.32;}
+  .atrator-horizon-assembly {left:92%;top:48.9%;width:clamp(180px,46%,255px);}
+  .atrator-horizon-orbit,.atrator-horizon-sheen {opacity:.58;}
+  .atrator-horizon-tracers {opacity:.78;}
 }
 @media(prefers-reduced-motion:reduce) {
   .atrator-event-horizon>div {
@@ -172,4 +223,7 @@
   /* Animações SVG de startOffset são decorativas e ficam ocultas neste modo. */
   .atrator-binary-flow {display:none!important;}
   .atrator-horizon-orbit,.atrator-horizon-sheen {animation:none!important;opacity:.2;}
+  .atrator-horizon-flow,.atrator-horizon-fast-arc,.atrator-horizon-blue-arc,
+  .atrator-horizon-light-trail,.atrator-horizon-disk-current {animation:none!important;}
+  .atrator-horizon-tracers {opacity:.35;}
 }

@@ -1,5 +1,7 @@
 # Arquitetura do Sistema — Atratora Forge
 
+> **ANIMAÇÃO V7 (02/11/2026):** `IntroSplash.tsx` desenha os traçados vetoriais VT originais por `stroke-dashoffset`, revela a palavra-marca em passos e adiciona lupa binária com asset local. `BlackHoleField.tsx` adiciona apenas um overlay SVG/CSS no **anel luminoso aparente** (rotativos 7–13 segundos e dash loops), mantendo a imagem AVIF fixa e a sombra central. O efeito é autônomo, puramente decorativo, respeita movimento reduzido e não altera a camada algorítmica, a coleta de dados nem a navegação. [Detalhes](VT_INTRO_DISCO_ORBITAL_V7_20261102.md).
+
 > **ATUALIZAÇÃO DE ARQUITETURA — PORTAL V6 (02/11/2026).** O conteúdo histórico abaixo documenta marcos anteriores. O portal atual usa `src/app/config/navigation.ts` para os quatro grupos de navegação e `src/components/layout/{Sidebar,Header,Layout,Footer}.tsx` para o shell. Novas páginas em `src/pages/{Features,Institutional,FAQ,Roadmap,Contact}` são registradas em `AppRoutes.tsx` com `HashRouter`; estilos editoriais em `portal-navigation.css` e `portal-sections.css`. `FeatureShowcase.tsx` obtém status e rotas do catálogo único, oferecendo botão apenas para ferramentas reais. `IntroSplash.tsx` é camada temporária sem backend (sessão via `sessionStorage`), sem bloquear navegação em movimento reduzido. O `BlackHoleField.tsx` sobrepõe anel luminoso animado à arte local sem alterar geometria ou modelos físicos; mantêm-se 96 linhas/48 partículas/20 sequências. [Detalhes](PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
 
 

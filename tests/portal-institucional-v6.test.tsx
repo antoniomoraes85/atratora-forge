@@ -105,7 +105,7 @@ describe('Vetor Forense v6 — portal institucional + animação', () => {
     expect(splash).toContain('window.sessionStorage.getItem');
     expect(splash).toContain('prefers-reduced-motion: reduce');
     expect(splash).toContain('Pular apresentação');
-    expect(splash).toContain('DURATION_MS = 1850');
+    expect(splash).toContain('DURATION_MS = 4100');
     expect(css).toContain('background:#010406');
     expect(css).toContain('vf-intro-exit');
     expect(readFileSync('src/components/layout/Layout.tsx','utf8')).toContain('<IntroSplash />');

@@ -2,6 +2,10 @@
 
 **Versão:** 0.3.0 — Dashboard de expansão digital (31/10/2026)  
 **Ecossistema:** ATRATOR  
+
+
+> **Animações v7 — 02/11/2026:** na abertura preta, os traçados **VT da marca aprovada** são desenhados progressivamente, o nome **Vetor Forense** aparece em escrita sequencial e a **lupa binária** surge sobreposta em seguida. No hero, a fotografia do buraco negro preserva o centro escuro enquanto arcos e filamentos dourados/azulados do anel de acreção exibem **rotação e brilho em movimento**. O fluxo Matrix (96 linhas/48 partículas/20 binários) e as duas ferramentas reais continuam intactos. [Registro técnico](docs/VT_INTRO_DISCO_ORBITAL_V7_20261102.md).
+
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
 
 > **Portal institucional v6 — 02/11/2026:** navegação em **Explorar, Aprender, Institucional e Evolução**, nova página de [Funcionalidades](https://antoniomoraes85.github.io/atratora-forge/#/features) com imagens ilustrativas e status operacional, [Missão/Visão/Valores](https://antoniomoraes85.github.io/atratora-forge/#/institutional), [FAQ](https://antoniomoraes85.github.io/atratora-forge/#/faq), [Roadmap](https://antoniomoraes85.github.io/atratora-forge/#/roadmap) e [Contato](https://antoniomoraes85.github.io/atratora-forge/#/contact). Incluída abertura cinematográfica preta com **VT** (pulável, uma vez por sessão) e luz orbital aparente no anel do buraco negro; preservadas as **96 linhas Matrix, 48 partículas e 20 códigos binários**, assim como os dois módulos reais. [Registro técnico](docs/PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
