@@ -160,11 +160,54 @@ export const BlackHoleField = () => {
           width="1672" height="941" decoding="async" />
       </div>
 
-      {/* Movimento luminoso próximo ao anel de acreção da fotografia.
-          A sombra central permanece escura; não é simulação relativística. */}
+      {/* Camadas orbitais alinhadas à borda fotografada do disco.
+          São efeitos visuais; não representam a rotação física do horizonte. */}
       <div className="atrator-depth-horizon">
-        <span className="atrator-horizon-orbit" />
-        <span className="atrator-horizon-sheen" />
+        <div className="atrator-horizon-assembly">
+          <span className="atrator-horizon-orbit" />
+          <span className="atrator-horizon-sheen" />
+          <svg className="atrator-horizon-tracers" viewBox="0 0 400 400"
+            focusable="false" aria-hidden="true">
+            <defs>
+              <linearGradient id="vf-horizon-streak-gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#fff5cf" stopOpacity=".98" />
+                <stop offset=".52" stopColor="#f7c87c" stopOpacity=".8" />
+                <stop offset="1" stopColor="#ca8356" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="vf-horizon-streak-blue" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#dcefff" stopOpacity=".88" />
+                <stop offset=".65" stopColor="#85bdff" stopOpacity=".64" />
+                <stop offset="1" stopColor="#629de4" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <g className="atrator-horizon-static-ring" fill="none">
+              <circle cx="200" cy="200" r="154" stroke="#fbd297" strokeWidth="1.4" opacity=".27" />
+              <circle cx="200" cy="200" r="165" stroke="#8db9ee" strokeWidth="2" opacity=".19" />
+            </g>
+            <g className="atrator-horizon-flow" fill="none" strokeLinecap="round">
+              <circle cx="200" cy="200" r="154"
+                stroke="url(#vf-horizon-streak-gold)" strokeWidth="5"
+                strokeDasharray="165 802" className="atrator-horizon-fast-arc" />
+              <circle cx="200" cy="200" r="166"
+                stroke="url(#vf-horizon-streak-blue)" strokeWidth="3.5"
+                strokeDasharray="90 953" className="atrator-horizon-blue-arc" />
+              <circle cx="200" cy="200" r="147"
+                stroke="#ffe3a9" strokeOpacity=".67" strokeWidth="1.7"
+                strokeDasharray="11 65 19 829" className="atrator-horizon-light-trail" />
+              <circle cx="200" cy="200" r="161"
+                stroke="#a4d3ff" strokeOpacity=".54" strokeWidth="2"
+                strokeDasharray="22 140 33 816" className="atrator-horizon-light-trail" />
+            </g>
+            <g className="atrator-horizon-disk-current" fill="none" strokeLinecap="round">
+              <path d="M24 207 C100 235 302 180 376 197"
+                stroke="#ffe6bd" strokeWidth="2.6" opacity=".64"
+                strokeDasharray="10 26" />
+              <path d="M28 219 C119 228 311 195 376 204"
+                stroke="#a4d4f8" strokeWidth="1.6" opacity=".43"
+                strokeDasharray="9 38" />
+            </g>
+          </svg>
+        </div>
       </div>
 
       <div className="atrator-depth-streams">
