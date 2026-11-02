@@ -4,6 +4,8 @@ Plano de lançamento e evolução contínua da plataforma **Vetor Forense**, des
 
 ---
 
+> **Refinamento visual V7 — implementado em código (02/11/2026):** VT desenhado → escrita de “Vetor Forense” → lupa binária sobreposta durante a vinheta de entrada; anel luminoso do buraco negro com movimento orbital perceptível, preservando a arte e fluxo Matrix. **Nenhum módulo adicional foi liberado.** [Registro técnico](VT_INTRO_DISCO_ORBITAL_V7_20261102.md).
+
 > **Portal institucional V6 — entregue em código (02/11/2026):** menu por quatro áreas, página de funcionalidades com imagens, missão/visão/valores, FAQ, Roadmap e Contato; introdução VT por sessão e movimento luminoso no disco do buraco negro. Esses recursos são **interface e apresentação institucional**, não módulos de perícia digital. As duas ferramentas operacionais permanecem dinâmica veicular e conversor `.croqui`. A ordem científica/comercial das futuras frentes continua Evidence → Reports → Mobile → Media/Documents. [Registro da V6](PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
 
 > **Nota de alinhamento — 31/10/2026:** os marcos V0.1–V1.0 abaixo documentam o roadmap histórico de croquis, cartografia e dinâmica veicular; **não representam a ordem comercial atual**. O foco prioritário novo é **Evidence → Reports → Mobile → Media/Documents**, sem descontinuar as funções existentes. O plano e os limites de maturidade ficam em [PRODUCT_STRATEGY_EVIDENCE_20261031.md](PRODUCT_STRATEGY_EVIDENCE_20261031.md). O desenho da dashboard foi atualizado, mas as funcionalidades digitais **não foram implementadas**.
