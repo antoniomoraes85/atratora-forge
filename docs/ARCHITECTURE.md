@@ -1,5 +1,8 @@
 # Arquitetura do Sistema — Atratora Forge
 
+> **ATUALIZAÇÃO DE ARQUITETURA — PORTAL V6 (02/11/2026).** O conteúdo histórico abaixo documenta marcos anteriores. O portal atual usa `src/app/config/navigation.ts` para os quatro grupos de navegação e `src/components/layout/{Sidebar,Header,Layout,Footer}.tsx` para o shell. Novas páginas em `src/pages/{Features,Institutional,FAQ,Roadmap,Contact}` são registradas em `AppRoutes.tsx` com `HashRouter`; estilos editoriais em `portal-navigation.css` e `portal-sections.css`. `FeatureShowcase.tsx` obtém status e rotas do catálogo único, oferecendo botão apenas para ferramentas reais. `IntroSplash.tsx` é camada temporária sem backend (sessão via `sessionStorage`), sem bloquear navegação em movimento reduzido. O `BlackHoleField.tsx` sobrepõe anel luminoso animado à arte local sem alterar geometria ou modelos físicos; mantêm-se 96 linhas/48 partículas/20 sequências. [Detalhes](PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
+
+
 Este documento descreve as decisões e padrões arquiteturais que regem o código-fonte da plataforma **Atratora Forge**, desenvolvida pela **Atratora Labs**.
 
 ---
