@@ -48,7 +48,7 @@
   position:absolute;right:clamp(18px,4vw,52px);bottom:clamp(18px,4vw,45px);
   z-index:3;padding:9px 13px;border:1px solid rgba(225,237,233,.37);
   border-radius:8px;background:rgba(255,255,255,.06);color:#f0f4f5;
-  font:600 12px inherit;cursor:pointer;
+  font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;
 }
 .vf-intro-skip:hover,.vf-intro-skip:focus-visible {
   border-color:#e7c487;background:rgba(230,193,128,.13);
