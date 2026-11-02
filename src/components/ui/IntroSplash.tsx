@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './intro-splash.css';
 
 const SESSION_KEY = 'vf-intro-seen-v1';
@@ -22,12 +22,12 @@ export const IntroSplash = () => {
   const skipRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  const dismiss = () => {
+  const dismiss = useCallback(() => {
     try { window.sessionStorage.setItem(SESSION_KEY, '1'); } catch { /* armazenamento opcional */ }
     setVisible(false);
     // Restore keyboard location after the overlay unmounts.
     window.requestAnimationFrame(() => previousFocusRef.current?.focus());
-  };
+  }, []);
 
   useEffect(() => {
     if (!visible) return;
@@ -56,7 +56,7 @@ export const IntroSplash = () => {
       window.removeEventListener('keydown', onKey);
       reduced?.removeEventListener?.('change', onMotionChange);
     };
-  }, [visible]);
+  }, [visible, dismiss]);
 
   if (!visible) return null;
 
