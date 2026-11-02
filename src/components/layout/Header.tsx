@@ -1,4 +1,5 @@
 import { Menu, ShieldCheck } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -21,6 +22,13 @@ export const Header = ({
         <p>{subtitle}</p>
       </div>
     </div>
+    <nav className="vf-shell-top-links" aria-label="Acesso rápido">
+      <NavLink to="/" end>Home</NavLink>
+      <NavLink to="/features">Funcionalidades</NavLink>
+      <NavLink to="/tools">Catálogo</NavLink>
+      <NavLink to="/guides">Guias</NavLink>
+      <NavLink to="/institutional">Institucional</NavLink>
+    </nav>
     <div className="vf-shell-header-right">
       <span className="vf-shell-local-badge" title="Ferramentas operacionais atuais utilizam processamento local. Módulos de evidências digitais ainda estão planejados.">
         <ShieldCheck size={15} />
