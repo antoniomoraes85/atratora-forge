@@ -23,14 +23,17 @@ describe('Vetor Forense v7 — assinatura escrita e disco luminoso ativo', () =>
     expect(intro).not.toContain('CIÊNCIA · INVESTIGAÇÃO · TECNOLOGIA ATRATOR');
   });
 
-  it('ordena os estágios: letra, escrita e lupa binária sobreposta', () => {
-    expect(introCss).toContain('vf-intro-trace 1.14s .15s');
-    expect(introCss).toContain('vf-intro-trace .98s .58s');
-    expect(introCss).toContain('vf-intro-type 1.18s 1.35s steps(13,end)');
-    expect(introCss).toContain('vf-intro-loupe-reveal .78s 2.57s');
-    expect(introCss).toContain('vf-intro-exit 4.1s');
-    expect(intro).toContain('DURATION_MS = 4100');
-    expect(intro).toContain('vf-intro-seen-v2');
+  it('ordena os estágios: VT ouro, escrita metálica aço e sucção gravitacional', () => {
+    expect(introCss).toContain('vf-intro-trace .98s .12s');
+    expect(introCss).toContain('vf-intro-trace 1.02s .40s');
+    expect(introCss).toContain('vf-intro-type 1.10s 1.30s steps(13,end)');
+    expect(introCss).toContain('animation:vf-intro-infall 3.7s');
+    expect(introCss).toContain('vf-intro-exit 3.7s');
+    expect(intro).toContain('DURATION_MS = 3700');
+    expect(intro).toContain('vf-intro-seen-v3');
+    expect(intro).toContain('vf-intro-gravity');
+    expect(intro).not.toContain('vf-intro-loupe');
+    expect(intro).not.toContain('vf-intro-bits');
     expect(intro).toContain('Pular apresentação');
     expect(intro).toContain("event.key === 'Escape'");
     expect(intro).toContain("event.key === 'Tab'");

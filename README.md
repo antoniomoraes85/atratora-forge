@@ -4,6 +4,8 @@
 **Ecossistema:** ATRATOR  
 
 
+> **Introdução V8 — 02/11/2026:** removida a lupa da **animação inicial**. As duas letras **VT** surgem em **ouro metálico**, o nome **Vetor Forense** em **aço/prata** e ambos são atraídos com aceleração para um **buraco negro central ao fundo**. A abertura dura 3,7s, pode ser pulada e é exibida uma vez por sessão de aba. O hero original e as duas ferramentas reais permanecem inalterados. [Detalhes técnicos](docs/INTRO_GRAVITACIONAL_V8_20261102.md).
+
 > **Animações v7 — 02/11/2026:** na abertura preta, os traçados **VT da marca aprovada** são desenhados progressivamente, o nome **Vetor Forense** aparece em escrita sequencial e a **lupa binária** surge sobreposta em seguida. No hero, a fotografia do buraco negro preserva o centro escuro enquanto arcos e filamentos dourados/azulados do anel de acreção exibem **rotação e brilho em movimento**. O fluxo Matrix (96 linhas/48 partículas/20 binários) e as duas ferramentas reais continuam intactos. [Registro técnico](docs/VT_INTRO_DISCO_ORBITAL_V7_20261102.md).
 
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
