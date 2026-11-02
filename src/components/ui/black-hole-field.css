@@ -95,6 +95,58 @@
     radial-gradient(ellipse 24% 22% at 48% 50%,rgba(35,195,128,.10),transparent 82%);
   mix-blend-mode:screen;
 }
+
+/* Accretion-ring light movement: optical effect near the photographic rim.
+ * Not a moving physical event horizon. The central shadow stays unobstructed. */
+.atrator-depth-horizon {
+  inset:0!important;z-index:2;
+  transform:translate3d(
+    calc(var(--pointer-x) * .56),
+    calc(var(--pointer-y) * .46 + var(--scroll-shift) * -.79),0);
+}
+.atrator-horizon-orbit,.atrator-horizon-sheen {
+  position:absolute;left:78.5%;top:48.9%;pointer-events:none;
+  width:clamp(190px,23.6%,375px);aspect-ratio:1;border-radius:50%;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(circle,transparent 0 43%,#000 51% 55%,transparent 65%);
+  mask-image:radial-gradient(circle,transparent 0 43%,#000 51% 55%,transparent 65%);
+}
+.atrator-horizon-orbit {
+  background:conic-gradient(from 24deg,
+    transparent 0deg,rgba(255,219,154,.06) 38deg,
+    rgba(255,218,148,.83) 72deg,rgba(168,206,245,.10) 106deg,
+    transparent 145deg,rgba(120,169,224,.5) 188deg,
+    rgba(255,220,152,.15) 226deg,transparent 258deg,
+    rgba(201,232,255,.7) 307deg,transparent 356deg);
+  filter:blur(2px) drop-shadow(0 0 8px rgba(234,193,126,.48));
+  opacity:.65;
+  animation:vf-horizon-orbit 15s linear infinite;
+}
+.atrator-horizon-sheen {
+  width:clamp(202px,24.8%,395px);
+  background:conic-gradient(from 0deg,
+    transparent 0deg,rgba(249,205,145,.15) 45deg,
+    rgba(245,213,163,.58) 68deg,transparent 90deg,
+    transparent 180deg,rgba(124,190,248,.42) 233deg,
+    transparent 273deg,rgba(241,219,173,.25) 338deg,transparent 360deg);
+  filter:blur(5px);
+  opacity:.39;
+  animation:vf-horizon-counter 24s linear infinite,vf-horizon-breathe 6s ease-in-out infinite alternate;
+}
+@keyframes vf-horizon-orbit {
+  from {transform:translate(-50%,-50%) rotate(0deg);}
+  to {transform:translate(-50%,-50%) rotate(360deg);}
+}
+@keyframes vf-horizon-counter {
+  from {transform:translate(-50%,-50%) rotate(0deg);}
+  to {transform:translate(-50%,-50%) rotate(-360deg);}
+}
+@keyframes vf-horizon-breathe {
+  from {opacity:.26;}
+  to {opacity:.5;}
+}
+
 @media(max-width:1060px) {
   .atrator-depth-evidence {left:-13%;width:66%;}
   .atrator-depth-back {right:-13%;width:72%;}
@@ -108,6 +160,7 @@
   .atrator-moving-particles {opacity:.55;}
   .atrator-binary-flow {opacity:.65;}
   .atrator-light-haze {opacity:.6;}
+  .atrator-horizon-orbit,.atrator-horizon-sheen {opacity:.32;}
 }
 @media(prefers-reduced-motion:reduce) {
   .atrator-event-horizon>div {
@@ -118,4 +171,5 @@
   .atrator-infall-particles {display:none!important;}
   /* Animações SVG de startOffset são decorativas e ficam ocultas neste modo. */
   .atrator-binary-flow {display:none!important;}
+  .atrator-horizon-orbit,.atrator-horizon-sheen {animation:none!important;opacity:.2;}
 }

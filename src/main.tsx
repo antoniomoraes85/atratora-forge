@@ -5,6 +5,7 @@ import './styles/global.css';
 import './styles/vetor-forense.css';
 import './styles/layout-clean.css';
 import './styles/professional-ui.css';
+import './styles/portal-navigation.css';
 
 const rootElement = document.getElementById('root');
 
