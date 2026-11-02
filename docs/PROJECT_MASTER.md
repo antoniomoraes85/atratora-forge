@@ -5,6 +5,19 @@
 
 ---
 
+## ESTADO MAIS RECENTE — INTRO V8 (02/11/2026)
+
+**Escopo e prioridade:** substitui apenas a animação de abertura anterior V7. A Home (hero animado, lupa permanente na composição principal e buraco negro luminoso), menus e ferramentas continuam sem alteração. Branch `feat/intro-gravitational-infall-v8-20261102`.
+
+- **Vinheta V8:** preto/cosmos discreto, buraco negro CSS ao fundo; traçados VT originais ambos com gradiente **ouro metálico**, nome **Vetor Forense** com gradiente **aço/prata**, e **sucção rápida acelerada dos dois juntos** em direção à região central, seguida de fade. **A lupa deixa de existir apenas na intro**, permanecendo no hero da Home.
+- **Tempo:** 3,7 segundos; VT (0–1,4s), palavra-marca (1,3–2,4s), captura (2,44–3,22s) e transição final.
+- **Acessibilidade:** botão Pular, Escape, teclado, `prefers-reduced-motion`, `sessionStorage` chave v3 para exibir a nova versão uma vez por aba, com foco recuperado.
+- **Código:** `IntroSplash.tsx`, `intro-splash.css`, testes v8 e ajustes v6/v7; [registro de implementação](INTRO_GRAVITACIONAL_V8_20261102.md).
+- **Limites:** animação conceitual, sem simulação física; avaliação estética e desempenho mobile ainda exigem inspeção real. Módulos operacionais, algoritmos, formatos e regras de dados preservados.
+- **Próximos passos:** validar CI, merge, deploy Pages; tratar vulnerabilidades npm pendentes de auditoria em atividade separada.
+
+---
+
 ## ATUALIZAÇÃO V7 — 02/11/2026 (ABERTURA VT + DISCO ORBITAL)
 
 **Escopo:** refinamento visual do portal V6, sem mudança de versão semântica de produto ou de capacidades operacionais. Branch `feat/vt-write-on-orbit-v7-20261102`.
