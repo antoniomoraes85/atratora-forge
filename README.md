@@ -4,6 +4,10 @@
 **Ecossistema:** ATRATOR  
 **Desenvolvedor:** José Antônio Coutinho de Moraes Filho
 
+> **Portal institucional v6 — 02/11/2026:** navegação em **Explorar, Aprender, Institucional e Evolução**, nova página de [Funcionalidades](https://antoniomoraes85.github.io/atratora-forge/#/features) com imagens ilustrativas e status operacional, [Missão/Visão/Valores](https://antoniomoraes85.github.io/atratora-forge/#/institutional), [FAQ](https://antoniomoraes85.github.io/atratora-forge/#/faq), [Roadmap](https://antoniomoraes85.github.io/atratora-forge/#/roadmap) e [Contato](https://antoniomoraes85.github.io/atratora-forge/#/contact). Incluída abertura cinematográfica preta com **VT** (pulável, uma vez por sessão) e luz orbital aparente no anel do buraco negro; preservadas as **96 linhas Matrix, 48 partículas e 20 códigos binários**, assim como os dois módulos reais. [Registro técnico](docs/PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
+
+
+
 > Plataforma modular e privada de ferramentas inteligentes para automação, conversão e análise de fluxos técnicos e operacionais.**  
 > Desenvolvida pela **ATRATOR** sob autoria de **José Antônio Coutinho de Moraes Filho**.
 
@@ -22,7 +26,9 @@
 
 > **Atualização visual de 31/10/2026 — investigação digital e ATRATOR:** o hero combina a lupa forense com impressão digital à esquerda e o buraco negro à direita, conectados por linhas e códigos binários em movimento. A marca **VT** aparece no menu, na apresentação principal e nos favicons. A interface técnica abaixo permanece clara e os módulos continuam com status reais. [Documento da implementação](docs/PARALLAX_FORENSE_ATRATOR_20261031.md).
 
-> **Revisão visual v4 (01/11/2026):** 34 linhas Matrix com curvatura irregular convergem para a proximidade da borda do buraco negro; 10 trilhas binárias animadas reforçam o movimento. O nome **VETOR FORENSE** aparece em destaque prateado no centro da arte e a legenda inferior passa a **“CIÊNCIA + INVESTIGAÇÃO • CONVERGÊNCIA FORENSE”**. [Documentação](docs/MATRIX_HORIZON_V4_20261101.md).\n\n## 1. Visão Geral
+> **Revisão visual v4 (01/11/2026):** 34 linhas Matrix com curvatura irregular convergem para a proximidade da borda do buraco negro; 10 trilhas binárias animadas reforçam o movimento. O nome **VETOR FORENSE** aparece em destaque prateado no centro da arte e a legenda inferior passa a **“CIÊNCIA + INVESTIGAÇÃO • CONVERGÊNCIA FORENSE”**. [Documentação](docs/MATRIX_HORIZON_V4_20261101.md).
+
+## 1. Visão Geral
 
 > **Reposicionamento da dashboard — 31/10/2026:** Vetor Forense passa a apresentar uma **visão de produto** para evidências digitais, relatórios técnicos e análise de dispositivos móveis. **Esses módulos ainda são planejados**, não oferecem exame de celulares nem emissão de laudo oficial. Permanecem funcionais os módulos atuais de dinâmica veicular e conversão `.CROQUI`. Consulte [Direção do Produto](docs/PRODUCT_STRATEGY_EVIDENCE_20261031.md).
 
