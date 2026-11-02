@@ -122,7 +122,7 @@
 }
 @keyframes vf-intro-type {
   from {width:0;}
-  to {width:13ch;}
+  to {width:15ch;}
 }
 @keyframes vf-intro-caret {
   from {border-right-color:#e9c88b;}
