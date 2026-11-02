@@ -90,3 +90,21 @@
 @media(prefers-reduced-motion:reduce) {
   .vf-shell-nav-item {transition:none;}
 }
+
+/* Footer com navegação editorial e limites de uso explícitos */
+.vf-shell-footer {background:#fff;border-top:1px solid #cadbd5;padding:29px 34px 22px;}
+.vf-shell-footer-inner {max-width:1260px;display:grid;grid-template-columns:minmax(200px,.8fr) minmax(0,1.2fr);align-items:start;gap:25px;}
+.vf-shell-footer-intro {display:flex;flex-direction:column;gap:10px;}
+.vf-shell-footer-brand {font-size:13px;font-weight:850;color:#1f424d;}
+.vf-shell-footer-copy {font-size:12px;color:#425f68;line-height:1.65;}
+.vf-shell-footer-meta {display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#376957;}
+.vf-shell-footer-links {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px 16px;}
+.vf-shell-footer-links a {display:inline-flex;align-items:center;gap:4px;min-height:36px;font-weight:730;font-size:12px;color:#2a505b;text-decoration:none;}
+.vf-shell-footer-links a:hover {color:#9b6c30;text-decoration:underline;}
+.vf-shell-footer-links a:focus-visible {outline:3px solid #a77832;outline-offset:3px;}
+.vf-shell-footer-disclaimer {max-width:1260px;margin:16px auto 0;padding-top:14px;border-top:1px solid #e2ebe7;color:#62767b;font-size:10.5px;line-height:1.6;}
+@media(max-width:750px) {
+  .vf-shell-footer {padding:23px 20px;}
+  .vf-shell-footer-inner {grid-template-columns:1fr;}
+  .vf-shell-footer-links {justify-content:flex-start;}
+}
