@@ -5,6 +5,26 @@
 
 ---
 
+## ESTADO VIGENTE — 02/11/2026 (PORTAL V6)
+
+**Atenção:** a seção histórica abaixo descreve marcos V0.1/V0.2 e contém formulações antigas sobre tema escuro e roadmap. Para retomada de trabalho, este quadro é o estado atual, sujeito a validação no GitHub.
+
+- **Repositório principal:** `antoniomoraes85/atratora-forge`, `main`. Desenvolvimento desta revisão na PR #11, branch `feat/portal-institucional-splash-20261102`.
+- **Versão semântica:** `0.3.0` em `package.json`; a expressão *V6* identifica revisão de UI/UX, não lançamento de função forense.
+- **Operacionais:** Reconstrução de Dinâmica Veicular (`#/tools/vetor-forense`) e Conversor de Croquis (`#/tools/croqui-converter`).
+- **Planejados:** Evidence, Reports, Mobile, Media, Documents, Fraud. Estágios adicionais indicados pelo catálogo; Projetos Locais é futuro.
+- **Produto/branding:** portal claro com azul-petróleo, VT dourado, palavra-marca prata e hero lupa–Matrix–buraco negro.
+- **Navegação:** Explorar (Home, Funcionalidades, Catálogo), Aprender (Guias, FAQ), Institucional (Missão/Visão/Valores, Sobre, Contato), Evolução (Roadmap, Projetos).
+- **Páginas acrescentadas:** `/features`, `/institutional`, `/faq`, `/roadmap`, `/contact` sob `HashRouter`.
+- **Animações:** splash preto VT de 1,85s uma vez por sessão, acessível e pulável. Brilho orbital no anel fotográfico do buraco negro. Fluxos preservados com 96 linhas/48 partículas/20 textos Matrix. Efeitos são ilustrativos, não geodésicos físicos.
+- **Testes:** GitHub Actions na branch confirmou 12 arquivos/99 testes aprovados, TypeScript e build (run `41428550253`). A inspeção visual final no navegador não foi certificada.
+- **Segurança pendente:** auditoria npm acusou 26 vulnerabilidades transitivas (20 moderadas/4 altas/2 críticas). Evitar prometer certificação de segurança ou cadeia de custódia.
+- **Documentação desta entrega:** [PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md](PORTAL_INSTITUCIONAL_ANIMACOES_20261102.md).
+- **Prioridade imediata:** integração após CI, confirmar GitHub Pages e revisar alinhamento visual do anel em desktop/mobile. Posteriormente, investigação de dependências npm e teste de performance em dispositivos reais.
+- **Não alterado:** motores de cálculo, serializer do `.croqui`, armazenamento local, dissertação MPC/RL e pré-projeto de doutorado.
+
+---
+
 ## 1. Identificação Geral
 
 # PROMPT MASTER DE EXECUÇÃO — VETOR FORENSE
