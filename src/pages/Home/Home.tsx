@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, BadgeCheck, BookOpen, ChevronRight, FileImage,
-  FileText, LockKeyhole, ShieldCheck, Smartphone, Zap,
+  FileText, LockKeyhole, ShieldCheck, Smartphone, Zap, Target, Compass, Eye,
 } from 'lucide-react';
 import { TOOLS_CATALOG, type ToolDefinition } from '../../app/config/tools';
 import { BlackHoleField } from '../../components/ui/BlackHoleField';
 import { Logo } from '../../components/ui/Logo';
+import { FeatureShowcase } from '../../components/features/FeatureShowcase';
+import '../../styles/portal-sections.css';
 import './home-forensics.css';
 
 const tool = (id: string): ToolDefinition => {
@@ -48,12 +50,15 @@ export const Home = () => (
         <div className="vf-light-hero-secondary">
           <Logo size={88} />
           <div className="vf-light-hero-actions">
-            <Link to="/tools" className="btn btn-primary">
-              Explorar ferramentas <ArrowRight size={16} />
+            <Link to="/features" className="btn btn-primary">
+              Explorar funcionalidades <ArrowRight size={16} />
             </Link>
-            <a href="#vf-modules" className="vf-light-inline-link">
-              Ver evolução <ChevronRight size={16} />
-            </a>
+            <Link to="/tools" className="btn btn-secondary">
+              Ver catálogo <ChevronRight size={16} />
+            </Link>
+            <Link to="/institutional" className="vf-light-inline-link">
+              Conhecer a plataforma <ChevronRight size={16} />
+            </Link>
           </div>
           <div className="vf-light-hero-footnote" aria-label="Disponibilidade dos recursos">
             <span><span className="vf-light-hero-count">02</span> ferramentas disponíveis</span>
@@ -97,6 +102,18 @@ export const Home = () => (
       </div>
     </section>
 
+    <section className="vf-light-feature-showcase vf-portal-section" id="vf-features" aria-labelledby="vf-feature-title">
+      <div className="vf-portal-section-top">
+        <div>
+          <span className="vf-light-section-kicker">CONHEÇA A PLATAFORMA</span>
+          <h2 id="vf-feature-title">Funcionalidades em destaque</h2>
+          <p>Entenda o objetivo de cada módulo com imagens ilustrativas e status real de disponibilidade.</p>
+        </div>
+        <Link to="/features" className="vf-light-inline-link">Conheça todas <ArrowRight size={16} /></Link>
+      </div>
+      <FeatureShowcase limit={4} />
+    </section>
+
     <section className="vf-light-roadmap" id="vf-modules" aria-labelledby="vf-modules-title">
       <div className="vf-light-heading">
         <div>
@@ -133,6 +150,20 @@ export const Home = () => (
       </div>
     </section>
 
+    <section className="vf-light-identity" aria-labelledby="vf-identity-title">
+      <div className="vf-light-identity-heading">
+        <span className="vf-light-section-kicker">IDENTIDADE ATRATOR</span>
+        <h2 id="vf-identity-title">Ciência e investigação unidas pelo método.</h2>
+        <p>Uma plataforma independente criada para oferecer ferramentas técnicas com precisão, transparência e responsabilidade.</p>
+        <Link className="vf-light-identity-link" to="/institutional">Nossa identidade <ArrowRight size={17} /></Link>
+      </div>
+      <div className="vf-light-identity-grid">
+        <article><Compass size={23} /><h3>Missão</h3><p>Aproximar método científico e necessidades de análise técnica.</p></article>
+        <article><Eye size={23} /><h3>Visão</h3><p>Ser uma plataforma modular de referência em clareza e rigor técnico.</p></article>
+        <article><Target size={23} /><h3>Valores</h3><p>Independência, transparência, responsabilidade e evolução contínua.</p></article>
+      </div>
+    </section>
+
     <section className="vf-light-process" aria-labelledby="vf-process-title">
       <div>
         <span className="vf-light-section-kicker">PRINCÍPIO DE PROJETO</span>
@@ -145,6 +176,12 @@ export const Home = () => (
         <li><span>03</span><strong>Examinar</strong><small>Método e limitações</small></li>
         <li><span>04</span><strong>Documentar</strong><small>Conclusão revisável</small></li>
       </ol>
+    </section>
+
+    <section className="vf-light-resource-hub" aria-label="Guias, suporte e evolução">
+      <div><BookOpen size={25} /><h2>Aprenda a utilizar</h2><p>Guias e tutoriais que distinguem funções reais e interfaces conceituais.</p><Link to="/guides">Explorar guias <ArrowRight size={16} /></Link></div>
+      <div><Target size={25} /><h2>Acompanhe a evolução</h2><p>Fases de desenvolvimento, prioridades e limites de cada módulo.</p><Link to="/roadmap">Consultar roadmap <ArrowRight size={16} /></Link></div>
+      <div><ShieldCheck size={25} /><h2>Tire suas dúvidas</h2><p>Entenda privacidade, escopo e condições de utilização.</p><Link to="/faq">Perguntas frequentes <ArrowRight size={16} /></Link></div>
     </section>
 
     <section className="vf-light-legal">
